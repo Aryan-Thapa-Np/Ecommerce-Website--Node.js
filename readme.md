@@ -21,8 +21,8 @@ Key Features:
 
 Tech Stack:
 
-Backend: Node.js + Express for scalable server-side development. 
+• Backend: Node.js + Express for scalable server-side development. 
 
-Frontend: HTML,Ejs, CSS, JavaScript for a responsive and dynamic user interface.
+• Frontend: HTML,Ejs, CSS, JavaScript for a responsive and dynamic user interface.
 
 This project delivers a modern, user-friendly ecommerce solution tailored to diverse purchasing needs with a focus on performance and security.
