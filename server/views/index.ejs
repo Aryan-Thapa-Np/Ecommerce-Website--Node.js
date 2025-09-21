@@ -1,0 +1,366 @@
+<% function normalizeImageUrl(url) { if (!url) return url; url=url.replace(/\\/g, '/' ); if (url.startsWith('public/'))
+  return '/' + url.slice(7); if (url.startsWith('/public/')) return '/' + url.slice(8); return url; } %>
+  <!DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+      <%= typeof title !=='undefined' ? title : 'Cartify' %>
+    </title>
+    <meta name="description"
+      content="Cartify - Your one-stop shop for subscriptions, game top-ups, and featured products. Get the best deals on Netflix, Spotify, gaming credits and more.">
+    <meta name="keywords"
+      content="subscriptions, game top-ups, Netflix, Spotify, gaming, online shopping, digital products">
+
+
+    <!-- Default CSS -->
+    <link rel="stylesheet" href="/css/homepage.css">
+    <link rel="stylesheet" href="/css/utils/header+footer.css">
+    <link rel="stylesheet" href="/css/utils/toast.css">
+
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+    <!-- SEO Structured Data -->
+    <script type="application/ld+json">
+    <%- JSON.stringify({
+      "@context": "https://schema.org",
+      "@type": "WebSite",
+      "name": "Cartify",
+      "description": "Your one-stop shop for subscriptions, game top-ups, and featured products",
+      "url": "https://cartify.com",
+      "potentialAction": {
+        "@type": "SearchAction",
+        "target": {
+          "@type": "EntryPoint",
+          "urlTemplate": "https://cartify.com/search?q={search_term_string}"
+        },
+        "query-input": "required name=search_term_string"
+      }
+    }, null, 2) %>
+    </script>
+  </head>
+
+  <body>
+
+
+    <%- include('partials/header') %>
+
+      <!-- Loading Overlay -->
+      <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+          <div class="loading-spinner"></div>
+          <p>Loading homepage...</p>
+        </div>
+      </div>
+
+      <!-- Main Content -->
+      <main class="page-content">
+        <!-- Image Slider -->
+        <section class="slider">
+          <button class="slider-nav prev"><i class="fa-solid fa-chevron-left"></i></button>
+          <button class="slider-nav next"><i class="fa-solid fa-chevron-right"></i></button>
+          <div class="slider-track">
+            <% if (typeof sliderImages !=='undefined' && sliderImages.length> 0) { %>
+              <% sliderImages.forEach(image=> { %>
+                <div class="slider-item">
+                  <% if (image.link_url) { %>
+                    <a href="<%= image.link_url %>" class="slider-link">
+                      <% } %>
+                        <img class="slider-img" src="<%= normalizeImageUrl(image.image_url) %>"
+                          alt="<%= image.alt_text || 'Slider Image' %>">
+                        <div class="slider-content">
+                          <h2 class="slider-title">
+                            <%= image.title %>
+                          </h2>
+                          <% if (image.description) { %>
+                            <p class="slider-description">
+                              <%= image.description %>
+                            </p>
+                            <% } %>
+                              <% if (image.button_text && image.button_url) { %>
+                                <a href="<%= image.button_url %>" class="btn btn-primary slider-cta">
+                                  <%= image.button_text %>
+                                </a>
+                                <% } %>
+                        </div>
+                        <% if (image.link_url) { %>
+                    </a>
+                    <% } %>
+                </div>
+                <% }); %>
+                  <% } else { %>
+                    <!-- No data available -->
+                    <div class="slider-item">
+                      <div class="no-data-message">
+                        <i class="fa-solid fa-image"></i>
+                        <p>No slider images available</p>
+                      </div>
+                    </div>
+                    <% } %>
+          </div>
+          <div class="slider-dots"></div>
+        </section>
+
+        <!-- Marquee Products Section -->
+        <section class="marquee-section">
+          <div class="marquee-track">
+            <% if (typeof promoImages !=='undefined' && promoImages.length> 0) { %>
+              <!-- First set of items -->
+              <% promoImages.forEach(image=> { %>
+                <div class="marquee-item">
+                  <img src="<%= normalizeImageUrl(image.image_url) %>" alt="<%= image.alt_text || 'Product' %>"
+                    class="marquee-img">
+                </div>
+                <% }); %>
+
+                  <!-- Duplicate set for seamless loop -->
+                  <% promoImages.forEach(image=> { %>
+                    <div class="marquee-item">
+                      <img src="<%= normalizeImageUrl(image.image_url) %>" alt="<%= image.alt_text || 'Product' %>"
+                        class="marquee-img">
+                    </div>
+                    <% }); %>
+                      <% } else { %>
+                        <!-- No data available -->
+                        <div class="marquee-item">
+                          <div class="no-data-message">
+                            <i class="fa-solid fa-images"></i>
+                            <p>No promo images available</p>
+                          </div>
+                        </div>
+                        <% } %>
+          </div>
+        </section>
+
+        <!-- Update the Subscriptions Section -->
+        <section class="section">
+          <div class="section-header">
+            <h2 class="section-title">Popular Subscriptions</h2>
+            <a href="/search?category=Subscriptions" class="view-all">View All <i
+                class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <div class="subscriptions-slider slider">
+            <button class="slider-nav prev"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="slider-nav next"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="subscriptions-track">
+              <% if (typeof subscriptions !=='undefined' && subscriptions.length> 0) { %>
+                <% subscriptions.forEach(subscription=> { %>
+                  <div class="subscriptions-item" data-subscription-id="<%= subscription.id %>">
+                    <% if (subscription.plans && subscription.plans.length> 0) { %>
+                      <% const defaultPlan=subscription.plans.find(plan=> plan.is_active) || subscription.plans[0]; %>
+                        <a href="/subscription/<%= subscription.id %>?plan=<%= defaultPlan.id %>"
+                          class="subscription-link">
+                          <img class="subscriptions-logo" src="<%= normalizeImageUrl(subscription.logo_url) %>"
+                            alt="<%= subscription.name %>">
+                          <div class="subscription-title">
+                            <%= subscription.name %>
+                          </div>
+                          <div class="subscription-price">
+                            NPR <%= defaultPlan.price.toLocaleString() %>/<%= defaultPlan.billing_cycle %>
+                          </div>
+                          <ul class="subscription-features">
+                            <% if (defaultPlan.features) { %>
+                              <% JSON.parse(defaultPlan.features).forEach(feature=> { %>
+                                <li><i class="<%= feature.icon || 'fa-solid fa-check' %>"></i>
+                                  <%= feature.text %>
+                                </li>
+                                <% }); %>
+                                  <% } else { %>
+                                    <li><i class="fa-solid fa-check"></i> Premium features</li>
+                                    <li><i class="fa-solid fa-check"></i> Ad-free experience</li>
+                                    <li><i class="fa-solid fa-check"></i> High quality content</li>
+                                    <% } %>
+                          </ul>
+                        </a>
+                        <% } %>
+                  </div>
+                  <% }); %>
+                    <% } else { %>
+                      <!-- No data available -->
+                      <div class="subscriptions-item">
+                        <div class="no-data-message">
+                          <i class="fa-solid fa-ticket"></i>
+                          <p>No subscriptions available</p>
+                        </div>
+                      </div>
+                      <% } %>
+            </div>
+            <div class="slider-dots"></div>
+          </div>
+        </section>
+
+        <!-- Game Top-up Section -->
+        <section class="section">
+          <div class="section-header">
+            <h2 class="section-title">Game Top-up</h2>
+            <a href="/search?category=Game Top-up" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <div class="game-grid">
+            <% if (typeof games !=='undefined' && games.length> 0) { %>
+              <% games.forEach(game=> { %>
+                <% if (game.variants && game.variants.length> 0) { %>
+                  <% const inGameVariants=game.variants.filter(v=> v.topup_type === 'in_game' && v.is_active); %>
+                    <% const passVariants=game.variants.filter(v=> v.topup_type === 'pass' && v.is_active); %>
+
+                      <% if (inGameVariants.length> 0) { %>
+                        <% const minPrice=Math.min(...inGameVariants.map(v=> v.price)); %>
+                          <% const maxPrice=Math.max(...inGameVariants.map(v=> v.price)); %>
+                            <div class="game-card" data-game-id="<%= game.id %>">
+                              <a href="/game/<%= game.id %>/topup" class="game-link">
+                                <img src="<%= normalizeImageUrl(game.game_image_url) %>" alt="<%= game.game_name %>"
+                                  class="game-img">
+                                <div class="game-content">
+                                  <span class="game-pass-tag">In-Game</span>
+                                  <h3>
+                                    <%= game.game_name %>
+                                  </h3>
+                                  <p>
+                                    <%= inGameVariants[0].description || 'Top-up Credits' %>
+                                  </p>
+                                  <div class="price-range">NPR <%= minPrice.toLocaleString() %> - NPR <%=
+                                        maxPrice.toLocaleString() %>
+                                  </div>
+                                </div>
+                              </a>
+                            </div>
+                            <% } %>
+
+                              <% if (passVariants.length> 0) { %>
+                                <% const passVariant=passVariants[0]; %>
+                                  <div class="game-card" data-game-id="<%= game.id %>">
+                                    <a href="/game/<%= game.id %>/pass?variant=<%= passVariant.id %>" class="game-link">
+                                      <img src="<%= normalizeImageUrl(game.game_image_url) %>"
+                                        alt="<%= game.game_name %> Pass" class="game-img">
+                                      <div class="game-content">
+                                        <span class="game-pass-tag">
+                                          <%= passVariant.variant_name %>
+                                        </span>
+                                        <h3>
+                                          <%= game.game_name %>
+                                        </h3>
+                                        <p>
+                                          <%= passVariant.description || 'Monthly Pass' %>
+                                        </p>
+                                        <div class="price-range">NPR <%= passVariant.price.toLocaleString() %>/<%=
+                                              passVariant.quantity %>
+                                        </div>
+                                      </div>
+                                    </a>
+                                  </div>
+                                  <% } %>
+                                    <% } %>
+                                      <% }); %>
+                                        <% } else { %>
+                                          <!-- No data available -->
+                                          <div class="game-card">
+                                            <div class="no-data-message">
+                                              <i class="fa-solid fa-gamepad"></i>
+                                              <p>No games available</p>
+                                            </div>
+                                          </div>
+                                          <% } %>
+          </div>
+        </section>
+
+        <!-- Products Section -->
+        <section class="section">
+          <div class="section-header">
+            <h2 class="section-title">Featured Products</h2>
+            <a href="/search?category=Products" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+          </div>
+          <div class="products-grid">
+            <% if (typeof products !=='undefined' && products.length> 0) { %>
+              <% products.forEach(product=> { %>
+                <% 
+                  // Check if image_url is a video file
+                  const isVideo = product.image_url && /\.(mp4|webm|mov|avi|mkv)$/i.test(product.image_url);
+                  // Calculate discount if applicable
+                  let discount = null;
+                  if (product.original_price && product.original_price > product.current_price) {
+                    discount = Math.round(100 * (product.original_price - product.current_price) / product.original_price);
+                  }
+                %>
+                <div class="product-card" data-product-id="<%= product.id %>" onclick="viewProductDetails('<%= product.slug %>')" style="cursor:pointer; position:relative;">
+                  <% if (discount) { %>
+                    <span class="discount-label"><%= discount %>% OFF</span>
+                  <% } %>
+                  <% if (!product.image_url || isVideo) { %>
+                      <div class="product-img placeholder-img">
+                        <i class="fas fa-image"></i>
+                      </div>
+                      <% } else { %>
+                        <img class="product-img" src="<%= normalizeImageUrl(product.image_url) %>"
+                          alt="<%= product.name %>"
+                          onerror="this.onerror=null; this.classList.add('img-error'); this.src='data:image/svg+xml,%3Csvg xmlns=\'http://www.w3.org/2000/svg\' viewBox=\'0 0 4 3\'%3E%3C/svg%3E';">
+                        <% } %>
+                          <div class="product-content">
+                            <div class="product-tags">
+                              <% let tagsArr=Array.isArray(product.tags) ? product.tags : (typeof
+                                product.tags==='string' && product.tags.trim().startsWith('[') ?
+                                JSON.parse(product.tags) : (product.tags ? [product.tags] : [])); tagsArr.forEach(tag=>
+                                {
+                                %>
+                                <% if (tag.includes('New')) { %>
+                                  <span class="tag tag-new">
+                                    <%= tag %>
+                                  </span>
+                                  <% } else if (tag.includes('-')) { %>
+                                    <span class="tag tag-discount">
+                                      <%= tag %>
+                                    </span>
+                                    <% } else { %>
+                                      <span class="tag">
+                                        <%= tag %>
+                                      </span>
+                                      <% } %>
+                                        <% }); %>
+                            </div>
+                            <h3 class="product-title" title="<%= product.name %>">
+                              <%= product.name.length > 30 ? product.name.substring(0, 30) + '...' : product.name %>
+                            </h3>
+                            <div class="product-price">
+                              NPR <%= product.current_price.toLocaleString() %>
+                                <% if (product.original_price && product.original_price> product.current_price) { %>
+                                  <span class="price-original">NPR <%= product.original_price.toLocaleString() %></span>
+                                  <% } %>
+                            </div>
+                            <div class="product-meta">
+                              <div class="product-rating">
+                                <i class="fa-solid fa-star"></i>
+                                <%= (Number(product.rating) || 0).toFixed(1) %> (<%= product.review_count %> reviews)
+                              </div>
+                              <div class="<%= product.stock_status === 'in_stock' ? 'text-success' : 'text-danger' %>">
+                                <i
+                                  class="fa-solid fa-<%= product.stock_status === 'in_stock' ? 'check' : 'times' %>-circle"></i>
+                                <%= product.stock_status==='in_stock' ? 'In Stock' : 'Out of Stock' %>
+                              </div>
+                            </div>
+                          </div>
+                </div>
+                <% }); %>
+                  <% } else { %>
+                    <!-- No data available -->
+                    <div class="product-card">
+                      <div class="no-data-message">
+                        <i class="fa-solid fa-box"></i>
+                        <p>No products available</p>
+                      </div>
+                    </div>
+                    <% } %>
+          </div>
+        </section>
+      </main>
+
+      <%- include('partials/footer') %>
+
+
+        <!-- Default JavaScript -->
+        <script src="/js/homepage.js" type="module"></script>
+        <script src="/js/header.js" type="module"></script>
+
+  </body>
+
+  </html>

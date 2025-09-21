@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !=='undefined' ? title : 'Cartify' %></title>
+  <meta name="description" content="<%= product.description || 'Game top-up details' %>">
+
+  <!-- Default CSS -->
+  <link rel="stylesheet" href="/css/homepage.css">
+  <link rel="stylesheet" href="/css/utils/header+footer.css">
+  <link rel="stylesheet" href="/css/game-topup-details.css">
+  <link rel="stylesheet" href="/css/utils/toast.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p>Loading game details...</p>
+    </div>
+  </div>
+
+  <%- include('partials/header') %>
+
+  <div class="page-content">
+    <div id="product-details" class="product-details-container">
+      <!-- Product Type Badge -->
+      <div class="product-type-badge game">
+        <i class="fa-solid fa-gamepad"></i> <%= isGamePass ? 'Game Pass' : 'Game Top-up' %>
+      </div>
+
+      <!-- Product Main Info -->
+      <div class="product-main">
+        <div class="product-image-wrapper">
+          <img src="<%= product.game_image_url %>" alt="<%= product.game_name %>" class="product-image">
+        </div>
+
+        <div class="product-info">
+          <h1 class="product-title"><%= product.game_name %></h1>
+
+          <div class="product-meta">
+            <div class="stock-status <%= product.is_active ? 'in_stock' : 'out_of_stock' %>">
+              <i class="fa-solid fa-<%= product.is_active ? 'check' : 'times' %>-circle"></i>
+              <%= product.is_active ? 'Available' : 'Unavailable' %>
+            </div>
+          </div>
+
+          <div class="product-description">
+            <%= product.description %>
+          </div>
+
+          <!-- Variants Section -->
+          <div id="variants-section" class="variants-section">
+            <h3 class="variants-title">Select <%= isGamePass ? 'Pass Type' : 'Top-up Amount' %></h3>
+            
+            <div id="variant-carousel" class="variant-carousel">
+              <button id="variant-prev" class="nav-btn prev-btn" aria-label="Previous variant">
+                <i class="fa-solid fa-chevron-left"></i>
+              </button>
+              
+              <div class="variant-viewport">
+                <div id="variant-track" class="variant-track">
+                  <!-- Variants will be loaded dynamically -->
+                </div>
+              </div>
+              
+              <button id="variant-next" class="nav-btn next-btn" aria-label="Next variant">
+                <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <div class="quantity-controls">
+            <button id="quantity-minus" class="quantity-btn minus" aria-label="Decrease quantity">
+              <i class="fa-solid fa-minus"></i>
+            </button>
+            <input type="number" id="quantity-input" class="quantity-input" value="1" min="1" max="99">
+            <button id="quantity-plus" class="quantity-btn plus" aria-label="Increase quantity">
+              <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+
+          <div class="product-actions">
+            <button id="add-to-cart" class="btn btn-primary" <%= !product.is_active ? 'disabled' : '' %>>
+              <i class="fa-solid fa-cart-plus"></i> Add to Cart
+            </button>
+            <button id="add-to-wishlist" class="btn btn-outline">
+              <i class="fa-regular fa-heart"></i> Add to Wishlist
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Similar Games Section -->
+      <div id="similar-games" class="similar-games-section">
+        <div class="section-header" style="display: flex; align-items: center; justify-content: space-between; gap: 1rem;">
+          <h2 style="margin: 0;">Similar Games</h2>
+          <div class="carousel-header-nav" style="display: flex; gap: 0.5rem;">
+            <button id="similar-prev" class="nav-btn prev-btn" aria-label="Previous games">
+              <i class="fa-solid fa-chevron-left"></i>
+            </button>
+            <button id="similar-next" class="nav-btn next-btn" aria-label="Next games">
+              <i class="fa-solid fa-chevron-right"></i>
+            </button>
+          </div>
+        </div>
+        <div id="similar-carousel" class="similar-carousel">
+          <div class="similar-viewport">
+            <div id="similar-track" class="similar-track">
+              <!-- Similar games will be loaded dynamically -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Vouch Section -->
+      <div id="vouch-section" class="vouch-section">
+        <div class="section-header">
+          <h2>Customer Vouches</h2>
+          <div class="vouch-stats">
+            <div class="average-rating">
+              <span id="rating-value" class="rating-value">0.0</span>
+              <div id="rating-stars" class="stars"></div>
+              <span id="total-vouches" class="total-vouches">(0 vouches)</span>
+            </div>
+          </div>
+        </div>
+
+        <div id="vouches-container" class="vouches-container">
+          <div id="vouches-list" class="vouches-list">
+            <!-- Vouches will be loaded dynamically -->
+          </div>
+          <button id="load-more-vouches" class="btn btn-outline" style="display: none;">Load More</button>
+        </div>
+
+        <div class="vouch-form-container">
+          <form id="vouch-form" class="vouch-form">
+            <div class="rating-input">
+              <label>Your Rating:</label>
+              <div class="star-rating">
+                <i class="fa-regular fa-star" data-rating="1"></i>
+                <i class="fa-regular fa-star" data-rating="2"></i>
+                <i class="fa-regular fa-star" data-rating="3"></i>
+                <i class="fa-regular fa-star" data-rating="4"></i>
+                <i class="fa-regular fa-star" data-rating="5"></i>
+              </div>
+            </div>
+            <div class="vouch-input">
+              <textarea placeholder="Share your experience with this game..." maxlength="500"></textarea>
+              <button type="submit" class="btn btn-primary">Submit Vouch</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+
+  <script type="module" src="/js/game-topup-details.js"></script>
+  <script src="/js/header.js" type="module"></script>
+
+  <!-- Delete Confirmation Modal -->
+  <div id="delete-vouch-modal" class="modal delete-modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3>Delete Vouch</h3>
+        <button class="modal-close" id="close-delete-modal">
+          <i class="fa-solid fa-times"></i>
+        </button>
+      </div>
+      <div class="modal-body">
+        <p>Are you sure you want to delete this vouch? This action cannot be undone.</p>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-outline" id="cancel-delete">Cancel</button>
+        <button class="btn btn-danger" id="confirm-delete">Delete</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Loading overlay handler
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        const overlay = document.getElementById('loading-overlay');
+        overlay.style.opacity = '0';
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 300); // Wait for fade out animation
+      }, 1000);
+    });
+  </script>
+</body>
+
+</html>

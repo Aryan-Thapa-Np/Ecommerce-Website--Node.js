@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Account Status - Cartify</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            min-height: 100vh;
+        }
+
+        .status-card {
+            background: #ffffff;
+            border: 1px solid #e5e7eb;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .fade-in {
+            animation: fadeIn 0.8s ease-out;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+        }
+
+        .status-badge {
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .status-locked {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .status-banned {
+            background: #fef2f2;
+            color: #dc2626;
+            border: 1px solid #fecaca;
+        }
+
+        .status-suspended {
+            background: #fef3c7;
+            color: #d97706;
+            border: 1px solid #fde68a;
+        }
+
+        .info-card {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+
+        .divider {
+            height: 1px;
+            background: linear-gradient(90deg, transparent, #e2e8f0, transparent);
+            margin: 24px 0;
+        }
+
+        @keyframes fadeIn {
+            0% {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes pulse {
+
+            0%,
+            100% {
+                opacity: 1;
+            }
+
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        .header-brand {
+            background: linear-gradient(135deg, #3b82f6 0%, #1d4ed8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="min-h-screen flex flex-col">
+        <!-- Header -->
+        <header class="bg-white border-b border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center">
+                        <div class="flex-shrink-0">
+                            <div class="text-xl sm:text-2xl font-bold header-brand flex items-center">
+                                <i class="fas fa-shield-alt mr-2"></i>
+                                Cartify
+                            </div>
+                        </div>
+                    </div>
+                    <nav class="flex space-x-4 sm:space-x-8">
+                        <a href="/support" class="text-gray-600 text-sm sm:text-base font-medium">
+                            <i class="fas fa-headset mr-1 sm:mr-2"></i>
+                            <span class="hidden sm:inline">Support</span>
+                        </a>
+                        <a href="/help" class="text-gray-600 text-sm sm:text-base font-medium">
+                            <i class="fas fa-question-circle mr-1 sm:mr-2"></i>
+                            <span class="hidden sm:inline">Help</span>
+                        </a>
+                    </nav>
+                </div>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main class="flex-1 flex items-center justify-center px-4 py-8 sm:py-12">
+            <div class="status-card rounded-lg sm:rounded-2xl max-w-2xl w-full fade-in">
+                <div class="p-6 sm:p-8 lg:p-12">
+                    <% if (accountStatus==='locked' ) { %>
+                        <div class="text-center mb-6 sm:mb-8">
+                            <div
+                                class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-red-100 rounded-full mb-4 sm:mb-6">
+                                <i class="fas fa-lock text-2xl sm:text-3xl text-red-600"></i>
+                            </div>
+                            <div class="status-badge status-locked inline-block mb-3 sm:mb-4">Account Locked</div>
+                            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Access Temporarily
+                                Restricted</h1>
+                            <p class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-md mx-auto px-4 sm:px-0">
+                                Your account has been temporarily locked due to multiple unsuccessful login attempts.
+                                This is a security measure to protect your account.
+                            </p>
+                        </div>
+                        <% } else if (accountStatus==='banned' ) { %>
+                            <div class="text-center mb-6 sm:mb-8">
+                                <div
+                                    class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-red-100 rounded-full mb-4 sm:mb-6">
+                                    <i class="fas fa-ban text-2xl sm:text-3xl text-red-600"></i>
+                                </div>
+                                <div class="status-badge status-banned inline-block mb-3 sm:mb-4">Account Banned</div>
+                                <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Account
+                                    Permanently Restricted</h1>
+                                <p
+                                    class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-md mx-auto px-4 sm:px-0">
+                                    Your account has been permanently banned due to a violation of our Terms of Service.
+                                    Please contact our support team for more information.
+                                </p>
+                            </div>
+                            <% } else if (accountStatus==='suspended' ) { %>
+                                <div class="text-center mb-6 sm:mb-8">
+                                    <div
+                                        class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-yellow-100 rounded-full mb-4 sm:mb-6">
+                                        <i class="fas fa-pause-circle text-2xl sm:text-3xl text-yellow-600"></i>
+                                    </div>
+                                    <div class="status-badge status-suspended inline-block mb-3 sm:mb-4">Account
+                                        Suspended</div>
+                                    <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Account
+                                        Temporarily Suspended</h1>
+                                    <p
+                                        class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-md mx-auto px-4 sm:px-0">
+                                        Your account has been temporarily suspended. Please review our Terms of Service
+                                        or contact support to resolve this issue.
+                                    </p>
+                                </div>
+                                <% } else { %>
+                                    <div class="text-center mb-6 sm:mb-8">
+                                        <div
+                                            class="inline-flex items-center justify-center w-16 h-16 sm:w-20 sm:h-20 bg-gray-100 rounded-full mb-4 sm:mb-6">
+                                            <i
+                                                class="fas fa-exclamation-triangle text-2xl sm:text-3xl text-gray-600"></i>
+                                        </div>
+                                        <div class="status-badge status-locked inline-block mb-3 sm:mb-4">Account Issue
+                                        </div>
+                                        <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 mb-3 sm:mb-4">Account
+                                            Requires Attention</h1>
+                                        <p
+                                            class="text-gray-600 text-base sm:text-lg leading-relaxed max-w-md mx-auto px-4 sm:px-0">
+                                            There appears to be an issue with your account that requires attention.
+                                            Please contact our support team for assistance.
+                                        </p>
+                                    </div>
+                                    <% } %>
+
+                                        <!-- Account Details -->
+                                        <div class="info-card">
+                                            <div class="grid grid-cols-1 gap-4 sm:gap-6">
+                                                <div>
+                                                    <h3
+                                                        class="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                                                        Reason</h3>
+                                                    <p
+                                                        class="text-gray-900 font-medium text-sm sm:text-base break-words">
+                                                        <%= reason %>
+                                                    </p>
+                                                </div>
+                                                <div>
+                                                    <h3
+                                                        class="text-xs sm:text-sm font-semibold text-gray-500 uppercase tracking-wider mb-2">
+                                                        <% if (accountStatus==='banned' ) { %>
+                                                            Status
+                                                            <% } else { %>
+                                                                Expires
+                                                                <% } %>
+                                                    </h3>
+                                                    <p class="text-gray-900 font-medium text-sm sm:text-base">
+                                                        <% if (expire==null) { %>
+                                                            <span class="text-gray-500">Permanent</span>
+                                                            <% } else { %>
+                                                                <i class="fas fa-clock mr-2 text-gray-400"></i>
+                                                                <span id="time-remaining"
+                                                                    data-expire="<%= expire.toISOString() %>"></span>
+                                                                <% } %>
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="divider"></div>
+
+                                        <!-- Support Contact -->
+                                        <div class="text-center mb-6 sm:mb-8">
+                                            <h3 class="text-lg font-semibold text-gray-900 mb-3">Need Help?</h3>
+                                            <p class="text-gray-600 mb-4 text-sm sm:text-base px-4 sm:px-0">
+                                                If you believe this action was taken in error, please contact our
+                                                support team.
+                                            </p>
+                                            <a href="mailto:<%= supportEmail %>"
+                                                class="inline-flex items-center text-blue-600 font-medium text-sm sm:text-base">
+                                                <i class="fas fa-envelope mr-2"></i>
+                                                <span class="break-all">
+                                                    <%= supportEmail %>
+                                                </span>
+                                            </a>
+                                        </div>
+
+                                        <!-- Action Buttons -->
+                                        <div class="flex flex-col gap-3 sm:gap-4">
+                                            <a href="/login"
+                                                class="btn-primary text-white py-3 px-6 sm:px-8 rounded-lg font-semibold inline-flex items-center justify-center text-sm sm:text-base">
+                                                <i class="fas fa-sign-in-alt mr-2"></i>
+                                                Return to Login
+                                            </a>
+                                            <a href="/support"
+                                                class="bg-gray-100 text-gray-700 py-3 px-6 sm:px-8 rounded-lg font-semibold inline-flex items-center justify-center text-sm sm:text-base">
+                                                <i class="fas fa-headset mr-2"></i>
+                                                Contact Support
+                                            </a>
+                                        </div>
+                </div>
+            </div>
+        </main>
+
+        <!-- Footer -->
+        <footer class="bg-white border-t border-gray-200">
+            <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div class="text-center">
+                    <p class="text-gray-600 mb-4">
+                        &copy; <%= new Date().getFullYear() %> Cartify. All rights reserved.
+                    </p>
+                    <div class="flex justify-center space-x-6">
+                        <a href="/terms" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
+                            Terms of Service
+                        </a>
+                        <a href="/privacy" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
+                            Privacy Policy
+                        </a>
+                        <a href="/contact" class="text-gray-500 hover:text-gray-700 transition-colors duration-200">
+                            Contact Us
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        function updateTimeRemaining() {
+            const timeRemainingElement = document.getElementById('time-remaining');
+            if (!timeRemainingElement) return;
+
+            const expireDate = new Date(timeRemainingElement.dataset.expire);
+            const now = new Date();
+
+            // Calculate the difference in milliseconds
+            const diffMs = expireDate - now;
+
+            if (diffMs <= 0) {
+                timeRemainingElement.textContent = 'Expired';
+                return;
+            }
+
+            // Convert milliseconds to days, hours, minutes, seconds
+            const days = Math.floor(diffMs / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((diffMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((diffMs % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((diffMs % (1000 * 60)) / 1000);
+
+            // Build the display string
+            let timeString = '';
+            if (days > 0) timeString += `${days} day${days !== 1 ? 's' : ''} `;
+            if (hours > 0 || days > 0) timeString += `${hours} hour${hours !== 1 ? 's' : ''} `;
+            timeString += `${minutes} minute${minutes !== 1 ? 's' : ''} `;
+            timeString += `${seconds} second${seconds !== 1 ? 's' : ''}`;
+
+            timeRemainingElement.textContent = timeString.trim();
+        }
+
+        // Update immediately and then every second
+        updateTimeRemaining();
+        setInterval(updateTimeRemaining, 1000);
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,164 @@
+
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <div class="top-bar-left">
+        <a class="top-bar-item" id="customer-support-btn" style="cursor: pointer;"><i class="fa-solid fa-headset"></i> Customer Support</a>
+        <a  class="top-bar-item"><i class="fa-solid fa-phone"></i> +977 1-4444444</a>
+      </div>
+      <div class="top-bar-right">
+      
+        <a href="/help-center" class="top-bar-item">Help Center</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="header">
+    <div class="header-left">
+      <a href="/" class="logo">
+        <span class="logo-icon"><i class="fa-solid fa-store"></i></span>
+        <h2>Cartify</h2>
+      </a>
+      <nav class="nav-menu">
+        <div class="nav-section">
+          <div class="nav-item dropdown">
+            <a href="#" class="category-btn">
+              <i class="fa-solid fa-bars"></i>
+              Categories
+              <i class="fa-solid fa-chevron-down"></i>
+            </a>
+            <div class="dropdown-content mega-menu">
+                  <!-- categories will be populated here -->
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="search-bar">
+        <input class="search-input" type="text" placeholder="Search for products, brands...">
+        <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+      </div>
+      <button class="mobile-search-btn" title="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+
+      <!-- Notifications Dropdown -->
+      <div class="header-dropdown-container">
+        <a href="/user/dashboard" class="header-btn" title="Notifications">
+          <i class="fa-regular fa-bell"></i>
+          <span class="notification-badge"></span>
+        </a>
+        <div class="header-dropdown notification-dropdown">
+          <div class="dropdown-header-notification">
+            <h3>Notifications</h3>
+            <a href="#" class="dropdown-view-all">Clear All</a>
+          </div>
+          <div class="dropdown-content-notification">
+           
+          </div>
+        </div>
+      </div>
+
+      <!-- Wishlist Dropdown -->
+      <div class="header-dropdown-container">
+        <a  class="header-btn wishlsitview" title="Wishlist" id="wishlist-btn">
+          <i class="fa-regular fa-heart"></i>
+          <span class="notification-badge"></span>
+        </a>
+        <div class="header-dropdown wishlist-dropdown">
+          <div class="dropdown-header-wishlist">
+            <h3>Wishlist</h3>
+            <a class="dropdown-view-all wishlsitview" id="view-all-wishlist" style="cursor: pointer;">View All</a>
+          </div>
+          <div class="dropdown-content-wishlist">
+           
+            
+          </div>
+          <div class="dropdown-footer-wishlist">
+            <a  class="dropdown-btn">View Wishlist</a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Cart Dropdown -->
+      <div class="header-dropdown-container">
+        <a  class="header-btn cartview" title="Cart" id="cart-btn">
+          <i class="fa-solid fa-cart-shopping"></i>
+          <span class="notification-badge"></span>
+        </a>
+        <div class="header-dropdown cart-dropdown">
+          <div class="dropdown-header-cart">
+            <h3>Shopping Cart</h3>
+            <a  class="dropdown-view-all cartview" id="view-all-cart" style="cursor: pointer;">View All</a>
+          </div>
+          <div class="dropdown-content-cart">
+           
+          </div>
+          <div class="dropdown-footer-cart">
+            <a href="/checkout" class="dropdown-btn">Checkout Now</a>
+          </div>
+        </div>
+      </div>
+
+      <div class="user-menu">
+       <a href="/user/dashboard"> <img src="<%= typeof user !== 'undefined' && user && user.profile_image ? user.profile_image.replace('public', '') : '/noice/placeholder.webp' %>" class="user-avatar" alt="User"></a>
+        <div class="user-info">
+          <h4>
+            <% if (typeof user !== 'undefined' && user && user.username) { %>
+              <a href="/user/dashboard" class="user-name">
+                <%= user.username.length > 15 ? user.username.substring(0, 12) + '...' : user.username %>
+              </a>
+            <% } else { %>
+              <a href="/login" class="user-name">Login / Register</a>
+            <% } %>
+          </h4>
+       
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Search Container -->
+  <div class="mobile-search-container">
+    <form class="mobile-search-form" onsubmit="event.preventDefault(); window.location.href = '/search?q=' + encodeURIComponent(document.querySelector('.mobile-search-input').value);">
+      <input type="text" class="mobile-search-input" placeholder="Search for products, brands...">
+      <button type="submit" class="btn2 btn-primary">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-bottom-nav">
+    <div class="mobile-nav-grid">
+      <a href="/"
+        class="mobile-nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'home' ? 'active' : '' %>">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+      <a href="/search?category=Game%20Top-up"
+        class="mobile-nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'games' ? 'active' : '' %>">
+        <i class="fa-solid fa-gamepad"></i>
+        <span>Games</span>
+      </a>
+      <a href="/search?category=Subscriptions"
+        class="mobile-nav-item <%= typeof currentPage !== 'undefined' && currentPage === 'subscriptions' ? 'active' : '' %>">
+        <i class="fa-solid fa-ticket"></i>
+        <span>Subscriptions</span>
+      </a>
+      <a  data-auth-required="true"
+        class="mobile-nav-item mobile-nav-cart cartview <%= typeof currentPage !== 'undefined' && currentPage === 'cart' ? 'active' : '' %>">
+          <span class="hello-badge" id="mobilecartnoti"  style="position: absolute; top: 0; margin-left: 20px; background-color: rgb(243, 53, 53);color: white; padding: 0 5px; border-radius: 8px; " ></span>
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Cart</span>
+      
+      </a>
+      <a href="/user/dashboard" data-auth-required="true"
+        class="mobile-nav-item mobile-nav-profile <%= typeof currentPage !== 'undefined' && currentPage === 'profile' ? 'active' : '' %>">
+        <i class="fa-solid fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </nav>

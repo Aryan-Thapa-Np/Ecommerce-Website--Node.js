@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="/css/login.css">
+        <link rel="stylesheet" href="../css/utils/toast.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <div class="auth-container">
+        <div class="auth-sidebar">
+            <div class="sidebar-content">
+                <h2>New Here?</h2>
+                <p>Join Cartify to start your shopping journey</p>
+                <a href="/register" class="btn btn-outline">Create Account</a>
+            </div>
+        </div>
+        <div class="auth-main">
+            <div class="auth-form-container">
+                <h1>Welcome Back</h1>
+                <p class="subtitle">Sign in to continue shopping</p>
+                
+                <div class="oauth-buttons">
+                    <button class="btn-oauth btn-google">
+                        <i class="fab fa-google"></i>
+                        Google
+                    </button>
+                    <!-- <button class="btn-oauth btn-facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        Facebook
+                    </button> -->
+                </div>
+                
+                <div class="divider">
+                    <span>or sign in with email</span>
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="email">Email address</label>
+                        <div class="input-with-icon">
+                            <i class="fa-solid fa-envelope"></i>
+                            <input type="email" id="email" name="email" placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <div class="input-with-icon">
+                            <i class="fas fa-lock"></i>
+                            <input type="password" id="password" name="password" placeholder="Enter your password" required>
+                            <i class="far fa-eye toggle-password"></i>
+                        </div>
+                    </div>
+                    
+                <div class="form-row">
+                    <div class="checkbox-container">
+                        <input type="checkbox" id="remember" name="remember">
+                        <span class="checkmark"></span>
+                        <label for="remember">Remember me</label>
+                    </div>
+                    <a href="/password-reset" class="forgot-link">Forgot password?</a>
+                </div>
+                    
+                    <button type="submit" class="btn btn-primary btn-block">
+                        <span class="btn-text">Sign In</span>
+                        <span class="btn-loader"></span>
+                    </button>
+                </form>
+                
+                <div class="auth-footer">
+                    <p>Don't have an account? <a href="/register">Create Account</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2FA Modal -->
+    <div id="two-factor-modal" class="modal">
+        <div class="modal-content">
+            <h2>Two-Factor Authentication</h2>
+            <p>Enter the 6-digit code sent to your registered device</p>
+            <form id="two-factor-form">
+                <div class="code-input-container">
+                    <input type="text" class="code-input" maxlength="1" required>
+                    <input type="text" class="code-input" maxlength="1" required>
+                    <input type="text" class="code-input" maxlength="1" required>
+                    <input type="text" class="code-input" maxlength="1" required>
+                    <input type="text" class="code-input" maxlength="1" required>
+                    <input type="text" class="code-input" maxlength="1" required>
+                </div>
+                <!-- Error message replaced by toast notification -->
+                <button type="submit" class="btn btn-primary btn-block">
+                    <span class="btn-text">Verify Code</span>
+                    <span class="btn-loader"></span>
+                </button>
+                <button type="button" class="modal-close btn btn-outline btn-block "><i class="fa-solid fa-xmark"></i></button>
+            </form>
+        </div>
+    </div>
+
+ 
+
+     <!-- Email Verification Modal -->
+    <div id="email-verification-modal" class="modal" role="dialog" aria-labelledby="verification-title" aria-modal="true">
+        <div class="modal-content">
+            <button type="button" class="modal-close" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h2 id="verification-title">Verify Your Email</h2>
+            <p>We've sent a 6-digit verification code to your email address. Enter the code below to confirm your email.</p>
+            <form id="email-verification-form">
+                <div class="code-input-container">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*" aria-label="First digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*" aria-label="Second digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*" aria-label="Third digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*" aria-label="Fourth digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*" aria-label="Fifth digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*" aria-label="Sixth digit" placeholder="0">
+                </div>
+                <p class="code-hint">You can paste the code here</p>
+                <button type="submit" class="btn btn-primary btn-block">
+                    <span class="btn-text">Verify Email</span>
+                    <span class="btn-loader"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+    
+    <script src="/js/login.js" type="module"></script>
+</body>
+</html>

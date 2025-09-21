@@ -1,0 +1,539 @@
+<% function normalizeImageUrl(url) { if (!url) return url; url=url.replace(/\\/g, '/' ); if (url.startsWith('public/'))
+  return '/' + url.slice(7); if (url.startsWith('/public/')) return '/' + url.slice(8); return url; } %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Help Center - Carity</title>
+  <meta name="description"
+    content="Carity Help Center - Find answers to your questions about delivery, payment, orders, and more.">
+  <meta name="keywords"
+    content="help center, FAQ, delivery, payment, contact, customer support, Carity">
+
+  <!-- Default CSS -->
+  <link rel="stylesheet" href="/css/utils/header+footer.css">
+  <link rel="stylesheet" href="/css/homepage.css">
+  <link rel="stylesheet" href="/css/utils/toast.css">
+  <link rel="stylesheet" href="/css/help-center.css">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
+  <!-- SEO Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    "mainEntity": [
+      {
+        "@type": "Question",
+        "name": "How do I track my order?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "You can track your order by logging into your account and navigating to the 'My Orders' section. There, you'll find all your orders with their current status and tracking information."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "What payment methods do you accept?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "We accept various payment methods including credit/debit cards (Visa, Mastercard, American Express), PayPal, bank transfers, and mobile payment options."
+        }
+      },
+      {
+        "@type": "Question",
+        "name": "How long does delivery take?",
+        "acceptedAnswer": {
+          "@type": "Answer",
+          "text": "Standard delivery typically takes 3-5 business days within the country. International shipping may take 7-14 business days depending on the destination. Express delivery options are also available at checkout."
+        }
+      }
+    ]
+  }
+  </script>
+</head>
+
+<body>
+  <%- include('partials/header') %>
+
+  <main class="page-content">
+    <div class="help-center-container">
+      <!-- Help Center Header -->
+      <div class="help-center-header">
+        <h1>How can we help you today?</h1>
+        <p>Find answers to frequently asked questions, learn about our services, or get in touch with our support team.</p>
+        
+        <!-- Search Bar -->
+        <div class="search-container">
+          <input type="text" id="helpSearch" placeholder="Search for answers...">
+          <button type="button" id="searchButton">
+            <i class="fas fa-search"></i> Search
+          </button>
+        </div>
+        <div id="searchResults" class="search-results" style="display: none;">
+          <p id="resultsCount"></p>
+        </div>
+      </div>
+
+      <!-- Help Categories -->
+      <div class="help-categories">
+        <div class="category-card" data-category="orders">
+          <div class="category-icon">
+            <i class="fas fa-box"></i>
+          </div>
+          <h3>Orders & Shipping</h3>
+          <p>Track orders, shipping info, returns</p>
+        </div>
+        
+        <div class="category-card" data-category="payment">
+          <div class="category-icon">
+            <i class="fas fa-credit-card"></i>
+          </div>
+          <h3>Payment & Pricing</h3>
+          <p>Payment methods, refunds, pricing</p>
+        </div>
+        
+        <div class="category-card" data-category="account">
+          <div class="category-icon">
+            <i class="fas fa-user"></i>
+          </div>
+          <h3>Account & Security</h3>
+          <p>Login issues, account settings, privacy</p>
+        </div>
+        
+        <div class="category-card" data-category="products">
+          <div class="category-icon">
+            <i class="fas fa-shopping-bag"></i>
+          </div>
+          <h3>Products & Services</h3>
+          <p>Product info, subscriptions, game top-ups</p>
+        </div>
+      </div>
+
+      <!-- FAQ Section -->
+      <section class="faq-section" id="faqs">
+        <h2 class="section-title">Frequently Asked Questions</h2>
+        
+        <div class="faq-container">
+          <!-- Order FAQs -->
+          <div class="faq-item">
+            <div class="faq-question">
+              How do I track my order?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>You can track your order by logging into your account and navigating to the 'My Orders' section. There, you'll find all your orders with their current status and tracking information. If you've provided an email address during checkout, you'll also receive shipping updates via email.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              How long does delivery take?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>Standard delivery typically takes 3-5 business days within the country. International shipping may take 7-14 business days depending on the destination. Express delivery options are also available at checkout for faster delivery. Digital products like game top-ups and subscriptions are usually delivered instantly after payment confirmation.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              What is your return policy?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>We offer a 30-day return policy for most physical products in their original condition. Digital products, including subscriptions and game top-ups, are non-refundable once activated. To initiate a return, please go to your account's 'My Orders' section and select the order you wish to return. Follow the instructions provided to complete the return process.</p>
+            </div>
+          </div>
+          
+          <!-- Payment FAQs -->
+          <div class="faq-item">
+            <div class="faq-question">
+              What payment methods do you accept?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>We accept various payment methods including:</p>
+              <ul>
+                <li>Credit/debit cards (Visa, Mastercard, American Express)</li>
+                <li>PayPal</li>
+                <li>Bank transfers</li>
+                <li>Mobile payment options</li>
+                <li>Cryptocurrency (Bitcoin, Ethereum)</li>
+              </ul>
+              <p>All payments are processed securely through our encrypted payment gateway.</p>
+            </div>
+          </div>
+          
+          <div class="faq-item">
+            <div class="faq-question">
+              How do I request a refund?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>To request a refund, please follow these steps:</p>
+              <ol>
+                <li>Log into your account</li>
+                <li>Go to 'My Orders' and find the order in question</li>
+                <li>Click on 'Request Refund' and fill out the form</li>
+                <li>Our support team will review your request within 48 hours</li>
+              </ol>
+              <p>Please note that refund processing times may vary depending on your payment method, typically taking 5-10 business days to reflect in your account.</p>
+            </div>
+          </div>
+          
+          <!-- Account FAQs -->
+          <div class="faq-item">
+            <div class="faq-question">
+              How do I reset my password?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>To reset your password:</p>
+              <ol>
+                <li>Click on 'Login' at the top of the page</li>
+                <li>Select 'Forgot Password'</li>
+                <li>Enter the email address associated with your account</li>
+                <li>Check your email for a password reset link</li>
+                <li>Follow the instructions to create a new password</li>
+              </ol>
+              <p>If you don't receive the email within 10 minutes, please check your spam folder or contact our support team.</p>
+            </div>
+          </div>
+          
+          <!-- Product FAQs -->
+          <div class="faq-item">
+            <div class="faq-question">
+              How do digital products work?
+              <i class="fas fa-chevron-down"></i>
+            </div>
+            <div class="faq-answer">
+              <p>After purchasing a digital product:</p>
+              <ul>
+                <li>For subscriptions: You'll receive an activation code or direct account credit via email</li>
+                <li>For game top-ups: The credits will be added to your gaming account usually within minutes</li>
+                <li>For software: You'll receive download instructions and license keys via email</li>
+              </ul>
+              <p>All digital product instructions are also available in your account under 'My Purchases'.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Information Sections -->
+      <section class="info-section" id="delivery-info">
+        <h2 class="section-title">Delivery Information</h2>
+        
+        <div class="info-grid">
+          <div class="info-card">
+            <h3><i class="fas fa-truck"></i> Shipping Methods</h3>
+            <p>We offer several shipping options to meet your needs:</p>
+            <ul>
+              <li><strong>Standard Shipping:</strong> 3-5 business days</li>
+              <li><strong>Express Shipping:</strong> 1-2 business days</li>
+              <li><strong>International Shipping:</strong> 7-14 business days</li>
+              <li><strong>Digital Delivery:</strong> Instant (for eligible products)</li>
+            </ul>
+            <p>Shipping costs are calculated at checkout based on your location and selected shipping method.</p>
+          </div>
+          
+          <div class="info-card">
+            <h3><i class="fas fa-map-marker-alt"></i> Delivery Areas</h3>
+            <p>We currently deliver to most countries worldwide. Some restrictions may apply for certain products or regions due to local regulations. During checkout, you'll be notified if there are any delivery restrictions for your location.</p>
+            <p>For digital products, there are generally no geographical restrictions, but some subscription services may have regional limitations set by the service providers.</p>
+          </div>
+        </div>
+      </section>
+      
+      <section class="info-section" id="payment-info">
+        <h2 class="section-title">Payment Information</h2>
+        
+        <div class="info-grid">
+          <div class="info-card">
+            <h3><i class="fas fa-lock"></i> Secure Payments</h3>
+            <p>All transactions on Carity are secured with industry-standard SSL encryption. We never store your complete credit card information on our servers. Our payment processing complies with PCI DSS standards to ensure the highest level of security for your financial data.</p>
+          </div>
+          
+          <div class="info-card">
+            <h3><i class="fas fa-money-bill-wave"></i> Payment Options</h3>
+            <p>We offer a variety of payment methods to make your shopping experience convenient:</p>
+            <ul>
+              <li>Major credit and debit cards (Visa, Mastercard, American Express)</li>
+              <li>PayPal</li>
+              <li>Bank transfers</li>
+              <li>Mobile payment solutions</li>
+              <li>Cryptocurrency (Bitcoin, Ethereum)</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Contact Section -->
+      <section class="contact-section" id="contact">
+        <h2 class="section-title">Contact Us</h2>
+        
+        <div class="contact-grid">
+          <div class="contact-card">
+            <div class="contact-icon">
+              <i class="fas fa-headset"></i>
+            </div>
+            <div class="contact-info">
+              <h4>Customer Support</h4>
+              <p>Our support team is available 24/7 to assist you with any questions or issues.</p>
+              <a  id="customer-support-btn2" class="live-chat-btn" style="cursor: pointer;">Start Live Chat</a>
+            </div>
+          </div>
+          
+          <div class="contact-card">
+            <div class="contact-icon">
+              <i class="fas fa-envelope"></i>
+            </div>
+            <div class="contact-info">
+              <h4>Email Support</h4>
+              <p>support@carity.com</p>
+              <p>We aim to respond to all emails within 24 hours.</p>
+            </div>
+          </div>
+          
+          <div class="contact-card">
+            <div class="contact-icon">
+              <i class="fas fa-phone"></i>
+            </div>
+            <div class="contact-info">
+              <h4>Phone Support</h4>
+              <p>+977 1-4444444</p>
+              <p>Available Monday to Friday, 9 AM - 6 PM</p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <%- include('partials/footer') %>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      // FAQ accordion functionality
+      const faqQuestions = document.querySelectorAll('.faq-question');
+      
+      faqQuestions.forEach(question => {
+        question.addEventListener('click', function() {
+          const answer = this.nextElementSibling;
+          const isActive = this.classList.contains('active');
+          
+          // Close all other open FAQs
+          document.querySelectorAll('.faq-question.active').forEach(activeQuestion => {
+            if (activeQuestion !== this) {
+              activeQuestion.classList.remove('active');
+              activeQuestion.nextElementSibling.classList.remove('active');
+            }
+          });
+          
+          // Toggle current FAQ
+          if (isActive) {
+            this.classList.remove('active');
+            answer.classList.remove('active');
+          } else {
+            this.classList.add('active');
+            answer.classList.add('active');
+          }
+        });
+      });
+      
+      // Category card navigation
+      const categoryCards = document.querySelectorAll('.category-card');
+      
+      categoryCards.forEach(card => {
+        card.addEventListener('click', function() {
+          const category = this.getAttribute('data-category');
+          
+          // Simple navigation based on category
+          switch(category) {
+            case 'orders':
+              document.getElementById('delivery-info').scrollIntoView({ behavior: 'smooth' });
+              break;
+            case 'payment':
+              document.getElementById('payment-info').scrollIntoView({ behavior: 'smooth' });
+              break;
+            case 'account':
+              // Scroll to account section or show relevant FAQs
+              const accountFAQs = document.querySelectorAll('.faq-item:nth-child(6)');
+              if (accountFAQs.length) {
+                accountFAQs[0].scrollIntoView({ behavior: 'smooth' });
+                accountFAQs[0].querySelector('.faq-question').click();
+              } else {
+                document.getElementById('faqs').scrollIntoView({ behavior: 'smooth' });
+              }
+              break;
+            case 'products':
+              // Scroll to products section or show relevant FAQs
+              const productFAQs = document.querySelectorAll('.faq-item:nth-child(7)');
+              if (productFAQs.length) {
+                productFAQs[0].scrollIntoView({ behavior: 'smooth' });
+                productFAQs[0].querySelector('.faq-question').click();
+              } else {
+                document.getElementById('faqs').scrollIntoView({ behavior: 'smooth' });
+              }
+              break;
+          }
+        });
+      });
+      
+      // Search functionality with input sanitization
+      const searchInput = document.getElementById('helpSearch');
+      const searchButton = document.getElementById('searchButton');
+      const searchResults = document.getElementById('searchResults');
+      const resultsCount = document.getElementById('resultsCount');
+      
+      // Input sanitization function
+      function sanitizeInput(input) {
+        // Remove HTML tags and special characters
+        const sanitized = input
+          .replace(/<[^>]*>/g, '')
+          .replace(/[<>]/g, '')
+          .trim();
+        
+        // Escape regex special characters
+        return sanitized.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+      }
+      
+      // Function to highlight text
+      function highlightText(text, term) {
+        try {
+          const regex = new RegExp('(' + term + ')', 'gi');
+          return text.replace(regex, '<span class="search-highlight">$1</span>');
+        } catch (e) {
+          return text;
+        }
+      }
+      
+      // Reset previous search highlights
+      function resetHighlights() {
+        document.querySelectorAll('.search-highlight').forEach(highlight => {
+          const parent = highlight.parentNode;
+          parent.replaceChild(document.createTextNode(highlight.textContent), highlight);
+        });
+      }
+      
+      function performSearch() {
+        // Get and sanitize the search term
+        const rawSearchTerm = searchInput.value.trim();
+        if (!rawSearchTerm || rawSearchTerm.length < 2) {
+          alert('Please enter at least 2 characters to search.');
+          return;
+        }
+        
+        const searchTerm = sanitizeInput(rawSearchTerm.toLowerCase());
+        
+        // Reset previous search state
+        resetHighlights();
+        const faqItems = document.querySelectorAll('.faq-item');
+        let matchCount = 0;
+        
+        // Close all FAQs first
+        document.querySelectorAll('.faq-question.active').forEach(activeQuestion => {
+          activeQuestion.classList.remove('active');
+          activeQuestion.nextElementSibling.classList.remove('active');
+        });
+        
+        try {
+          // Create a safe regex for searching
+          const searchRegex = new RegExp(searchTerm, 'i');
+          
+          // Search through FAQs
+          faqItems.forEach(item => {
+            const questionEl = item.querySelector('.faq-question');
+            const answerEl = item.querySelector('.faq-answer');
+            
+            const questionText = questionEl.textContent;
+            const answerText = answerEl.textContent;
+            
+            // Remove any existing highlights
+            item.classList.remove('search-result');
+            
+            if (searchRegex.test(questionText) || searchRegex.test(answerText)) {
+              // Open this FAQ
+              questionEl.classList.add('active');
+              answerEl.classList.add('active');
+              
+              // Mark as search result
+              item.classList.add('search-result');
+              matchCount++;
+              
+              // Highlight matching text (excluding the icon)
+              const questionTextNode = Array.from(questionEl.childNodes)
+                .find(node => node.nodeType === Node.TEXT_NODE);
+              
+              if (questionTextNode && searchRegex.test(questionTextNode.textContent)) {
+                const span = document.createElement('span');
+                span.innerHTML = highlightText(questionTextNode.textContent, searchTerm);
+                questionEl.replaceChild(span, questionTextNode);
+              }
+              
+              // Highlight in answer paragraphs
+              answerEl.querySelectorAll('p, li').forEach(element => {
+                if (searchRegex.test(element.textContent)) {
+                  element.innerHTML = highlightText(element.textContent, searchTerm);
+                }
+              });
+              
+              // If this is the first match, scroll to it
+              if (matchCount === 1) {
+                item.scrollIntoView({ behavior: 'smooth', block: 'center' });
+              }
+            }
+          });
+          
+          // Update results count
+          if (matchCount > 0) {
+            resultsCount.textContent = `Found ${matchCount} result${matchCount !== 1 ? 's' : ''} for "${rawSearchTerm}"`;
+            searchResults.style.display = 'block';
+          } else {
+            resultsCount.textContent = `No results found for "${rawSearchTerm}". Please try a different search term.`;
+            searchResults.style.display = 'block';
+          }
+          
+        } catch (error) {
+          console.error('Search error:', error);
+          alert('An error occurred during search. Please try a different search term.');
+        }
+      }
+      
+      // Make sure the search button exists before adding event listener
+      if (searchButton) {
+        searchButton.addEventListener('click', performSearch);
+      }
+      
+      // Add event listener to search input for Enter key
+      if (searchInput) {
+        searchInput.addEventListener('keypress', function(e) {
+          if (e.key === 'Enter') {
+            e.preventDefault(); // Prevent form submission if in a form
+            performSearch();
+          }
+        });
+        
+        // Clear results when input is cleared
+        searchInput.addEventListener('input', function() {
+          if (this.value.trim() === '') {
+            resetHighlights();
+            searchResults.style.display = 'none';
+            
+            // Close all FAQs that were opened by search
+            document.querySelectorAll('.faq-item.search-result').forEach(item => {
+              item.classList.remove('search-result');
+              item.querySelector('.faq-question').classList.remove('active');
+              item.querySelector('.faq-answer').classList.remove('active');
+            });
+          }
+        });
+      }
+    });
+  </script>
+  <script src="/js/header.js" type="module"></script>
+</body>
+
+</html> 

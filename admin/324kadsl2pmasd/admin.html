@@ -1,0 +1,2764 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../csaodnoa2/admin.css">
+    <link rel="stylesheet" href="../csaodnoa2/utils/notifications.css">
+    <link rel="stylesheet" href="../csaodnoa2/utils/toast.css">
+    <link rel="stylesheet" href="../csaodnoa2/admin_chat.css">
+    <link rel="stylesheet" href="../csaodnoa2/orders.css">
+
+
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Loading admin dashboard...</p>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <h2>
+                    <div class="logo-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                    <a href="/" class="logo-text">Cartify</a>
+                </h2>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-section nav-section-main">
+                    <div class="nav-section-title">Main</div>
+                    <a href="#" class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="orders">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders</span>
+                        <span class="nav-badge orders" id="ordersBadge" style="display: none;">0</span>
+                    </a>
+                    <!-- Chat nav item -->
+                    <a href="#" class="nav-item" data-page="chat">
+                        <i class="fas fa-comments"></i>
+                        <span>Chat</span>
+                        <span class="nav-badge chat" id="chatBadge" style="display: none;">0</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                        <span class="nav-badge notifications" id="notificationsBadge" style="display: none;">0</span>
+                    </a>
+                    <!-- Products nav-item -->
+                    <a href="#" class="nav-item" data-page="products">
+                        <i class="fas fa-box"></i>
+                        <span>Products</span>
+                    </a>
+                    <!-- New Slider nav-item -->
+                    <a href="#" class="nav-item" data-page="slider">
+                        <i class="fas fa-images"></i>
+                        <span>Slider</span>
+                    </a>
+                    <!-- New Promo nav-item -->
+                    <a href="#" class="nav-item" data-page="promo">
+                        <i class="fas fa-ad"></i>
+                        <span>Promo</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="users">
+                        <i class="fas fa-users"></i>
+                        <span>Users</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="games">
+                        <i class="fas fa-gamepad"></i>
+                        <span>Games</span>
+                    </a>
+
+                    <!-- Sidebar: Add Subscriptions nav item -->
+                    <div class="nav-item" data-page="subscriptions">
+                        <i class="fas fa-ticket"></i> Subscriptions
+                    </div>
+
+                    <!-- Active Subscriptions nav item -->
+                    <a href="#" class="nav-item" data-page="activeSubscriptions">
+                        <i class="fas fa-id-card"></i>
+                        <span>Active Subscriptions</span>
+                    </a>
+
+                    <!-- Email Marketing nav item -->
+                    <a href="#" class="nav-item" data-page="emailMarketing">
+                        <i class="fas fa-envelope"></i>
+                        <span>Email Marketing</span>
+                    </a>
+
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Account</div>
+                    <a href="#" class="nav-item" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="nav-item" id="supportLink" data-page="support">
+                        <i class="fas fa-headset"></i>
+                        <span>Support</span>
+                        <span class="nav-badge support" id="supportBadge" style="display: none;">0</span>
+                    </a>
+                    <a class="nav-item" id="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search orders, products...">
+                        <i class="fas fa-search search-icon"></i>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="header-btn">
+                        <i class="fas fa-bell"></i>
+                        <div class="notification-badge">0</div>
+                    </button>
+                    <button class="header-btn">
+                        <i class="fas fa-question-circle"></i>
+                        <span class="nav-badge support2" id="supportBadge2"
+                            style="display: none; position: absolute; right: -5px; top: 0;">0</span>
+                    </button>
+                    <div class="user-menu">
+                        <img src="../noice/placeholder.webp" alt="User" class="user-avatar">
+                        <div class="user-info">
+                            <h4></h4> <!-- User name will be populated here -->
+                            <p></p> <!-- User role will be populated here -->
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div class="page-section active" id="dashboardPage">
+                    <div class="breadcrumb">
+                        <a href="/">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Dashboard</span>
+                    </div>
+
+                    <div class="page-header">
+                        <h1 class="page-title">Dashboard</h1>
+                        <p class="page-subtitle">Welcome back! Here's what's happening with your account.</p>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Total Orders</div>
+                                <div class="stat-icon orders">
+                                    <i class="fas fa-shopping-bag"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="ordersCount">0</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+12% from last month</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Pending Orders</div>
+                                <div class="stat-icon" style="background-color: #f59e0b;">
+                                    <i class="fas fa-clock"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="pendingOrdersCount">0</div>
+                            <div class="stat-change">
+                                <i class="fas fa-info-circle"></i>
+                                <span>Awaiting payment</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Processing Orders</div>
+                                <div class="stat-icon" style="background-color: #3b82f6;">
+                                    <i class="fas fa-cogs"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="processingOrdersCount">0</div>
+                            <div class="stat-change">
+                                <i class="fas fa-spinner"></i>
+                                <span>In progress</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Completed Orders</div>
+                                <div class="stat-icon" style="background-color: #10b981;">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="completedOrdersCount">0</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-check"></i>
+                                <span>Successfully delivered</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Failed Orders</div>
+                                <div class="stat-icon" style="background-color: #ef4444;">
+                                    <i class="fas fa-times-circle"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="failedOrdersCount">0</div>
+                            <div class="stat-change negative">
+                                <i class="fas fa-exclamation-triangle"></i>
+                                <span>Require attention</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Total Income</div>
+                                <div class="stat-icon" style="background-color: #047857;">
+                                    <i class="fas fa-money-bill-wave"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="totalIncomeValue">NPR 0</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-chart-line"></i>
+                                <span>From completed orders</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Pending Income</div>
+                                <div class="stat-icon" style="background-color: #9333ea;">
+                                    <i class="fas fa-hourglass-half"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="pendingIncomeValue">NPR 0</div>
+                            <div class="stat-change">
+                                <i class="fas fa-clock"></i>
+                                <span>Paid but not completed</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Grid -->
+                    <div class="content-grid">
+                        <div class="content-card">
+                            <div class="content-card-header">
+                                <h3 class="content-card-title">Recent Orders</h3>
+                            </div>
+                            <div class="content-card-body">
+                                <div class="empty-state">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <h3>No recent orders</h3>
+                                    <p>Your order history will appear here once you make your first purchase.</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-card">
+                            <div class="content-card-header">
+                                <h3 class="content-card-title">Recent Activity</h3>
+                            </div>
+                            <div class="content-card-body" id="activity">
+                            </div>
+                        </div>
+
+                        <!-- Support Tickets Card -->
+                        <div class="content-card">
+                            <div class="content-card-header">
+                                <h3 class="content-card-title">Support Tickets</h3>
+                            </div>
+                            <div class="content-card-body" id="dashboard-support-tickets">
+                                <div class="empty-state">
+                                    <i class="fas fa-headset"></i>
+                                    <h3>No support tickets</h3>
+                                    <p>Support tickets will appear here when customers need assistance.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Page -->
+                <div class="page-section" id="chatPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Customer Chat</span>
+                    </div>
+
+                    <div class="page-header">
+                        <h1 class="page-title">Customer Chat</h1>
+                        <p class="page-subtitle">Manage customer conversations in real-time</p>
+                    </div>
+
+                    <div class="chat-layout">
+                        <!-- Chat Sidebar (Message List) -->
+                        <div class="chat-sidebar" id="chatSidebar">
+                            <div class="chat-sidebar-header">
+                                <h3 class="chat-sidebar-title">Conversations</h3>
+                                <div class="chat-sidebar-actions">
+                                    <button class="chat-sidebar-btn" id="chatRefreshBtn" title="Refresh">
+                                        <i class="fas fa-sync-alt"></i>
+                                    </button>
+                                </div>
+                            </div>
+
+                            <div class="chat-search-container">
+                                <div class="chat-search">
+                                    <i class="fas fa-search chat-search-icon"></i>
+                                    <input type="text" class="chat-search-input" id="chatSearchInput"
+                                        placeholder="Search conversations...">
+                                </div>
+                            </div>
+
+                            <div class="chat-filters">
+                                <button class="chat-filter active" data-filter="all">All</button>
+                                <button class="chat-filter" data-filter="unread">Unread</button>
+                                <button class="chat-filter" data-filter="today" >Today</button>
+                                <button class="chat-filter" data-filter="yesterday" >Yesterday</button>
+                                <button class="chat-filter" data-filter="high">High Priority</button>
+                                <button class="chat-filter" data-filter="medium">Medium Priority</button>
+                                <button class="chat-filter" data-filter="low">Low Priority</button>
+                            </div>
+
+                            <ul class="chat-list" id="chatList">
+                                <!-- Chat list items will be populated here -->
+                                <div class="chat-empty-state" id="chatListEmptyState">
+                                    <i class="fas fa-comments"></i>
+                                    <h3>No conversations</h3>
+                                    <p>Customer conversations will appear here.</p>
+                                </div>
+                            </ul>
+                        </div>
+
+                        <!-- Chat Content Area -->
+                        <div class="chat-content" id="chatContent">
+                            <!-- Initial empty state -->
+                            <div class="chat-empty-state" id="chatContentEmptyState">
+                                <i class="fas fa-comments"></i>
+                                <h3>Select a conversation</h3>
+                                <p>Choose a conversation from the list to start chatting.</p>
+                            </div>
+
+                            <!-- Chat interface (hidden initially) -->
+                            <div id="chatInterface" style="display: none; height: 100vh;  flex-direction: column;">
+                                <div class="chat-header">
+                                    <div class="chat-header-info">
+                                        <button class="chat-header-btn mobile-back" id="chatBackBtn">
+                                            <i class="fas fa-arrow-left"></i>
+                                        </button>
+                                        <div class="chat-header-avatar">
+                                            <img src="../noice/placeholder.webp" alt="User" id="chatUserAvatar">
+                                        </div>
+                                        <div class="chat-header-user">
+                                            <div class="chat-header-name" id="chatUserName">Customer Name</div>
+
+                                        </div>
+                                    </div>
+                                    <div class="chat-header-actions">
+                                        <button class="chat-header-btn" id="chatPriorityBtn" title="Set Priority">
+                                            <i class="fas fa-flag"></i>
+                                        </button>
+
+                                    </div>
+                                </div>
+
+                                <div class="chat-messages" id="chatMessages">
+                                    <!-- Messages will be populated here -->
+                                </div>
+
+                                <div class="chat-input-container">
+                                    <div id="chatFilePreview" class="chat-file-preview" style="display: none;">
+                                        <!-- File preview will be shown here -->
+                                    </div>
+
+                                    <div class="chat-input-actions">
+                                        <input type="file" id="chatFileInput" class="chat-file-input"
+                                            accept="image/*,video/*">
+                                        <button class="chat-input-btn" id="chatFileBtn" title="Attach file">
+                                            <i class="fas fa-paperclip"></i>
+                                        </button>
+                                        <button class="chat-input-btn" id="chatTemplateBtn" title="Quick Responses">
+                                            <i class="fas fa-reply-all"></i>
+                                        </button>
+                                    </div>
+
+                                    <div class="chat-input-main">
+                                        <textarea id="chatInput" class="chat-input" placeholder="Type a message..."
+                                            rows="1"></textarea>
+                                        <button class="chat-send-btn" id="chatSendBtn" disabled>
+                                            <i class="fas fa-paper-plane"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Modal for viewing larger images -->
+                    <div class="chat-image-modal" id="chatImageModal">
+                        <button class="chat-image-close" id="chatImageClose">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <img id="chatModalImage" src="" alt="Enlarged image">
+                    </div>
+
+                    <!-- Priority Selection Modal -->
+                    <div class="action-modal" id="priorityModal">
+                        <div class="action-modal-content">
+                            <div class="action-modal-header">
+                                <h2><i class="fas fa-flag"></i> Set Conversation Priority</h2>
+                                <button class="modal-close" id="priorityModalClose">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="action-modal-body">
+                                <div class="form-group">
+                                    <label for="prioritySelect">Priority Level</label>
+                                    <select id="prioritySelect" class="form-input">
+                                        <option value="high">High</option>
+                                        <option value="medium">Medium</option>
+                                        <option value="low">Low</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="action-modal-footer">
+                                <button class="btn btn-secondary" id="priorityCancelBtn">Cancel</button>
+                                <button class="btn btn-primary" id="prioritySaveBtn">Save</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Quick Response Templates Modal -->
+                    <div class="action-modal" id="templatesModal">
+                        <div class="action-modal-content">
+                            <div class="action-modal-header">
+                                <h2><i class="fas fa-reply-all"></i> Quick Responses</h2>
+                                <button class="modal-close" id="templatesModalClose">
+                                    <i class="fas fa-times"></i>
+                                </button>
+                            </div>
+                            <div class="action-modal-body">
+                                <div class="form-group">
+                                    <input type="text" id="templateSearchInput" class="form-input"
+                                        placeholder="Search templates...">
+                                </div>
+                                <div id="templatesList" style="max-height: 300px; overflow-y: auto;">
+                                    <!-- Templates will be populated here -->
+                                    <div class="template-item"
+                                        data-template="Hello! Thank you for reaching out to our support team. How can I assist you today?">
+                                        <div class="template-content">Hello! Thank you for reaching out to our support
+                                            team. How can I assist you today?</div>
+                                        <button class="template-use-btn"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                    <div class="template-item"
+                                        data-template="I understand your concern. Let me look into this for you right away.">
+                                        <div class="template-content">I understand your concern. Let me look into this
+                                            for you right away.</div>
+                                        <button class="template-use-btn"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                    <div class="template-item"
+                                        data-template="Is there anything else I can help you with today?">
+                                        <div class="template-content">Is there anything else I can help you with today?
+                                        </div>
+                                        <button class="template-use-btn"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                    <div class="template-item"
+                                        data-template="Thank you for your patience. I'm still working on resolving your issue.">
+                                        <div class="template-content">Thank you for your patience. I'm still working on
+                                            resolving your issue.</div>
+                                        <button class="template-use-btn"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                    <div class="template-item"
+                                        data-template="I'm happy to inform you that your issue has been resolved.">
+                                        <div class="template-content">I'm happy to inform you that your issue has been
+                                            resolved.</div>
+                                        <button class="template-use-btn"><i class="fas fa-plus"></i></button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-modal-footer">
+                                <button class="btn btn-secondary" id="templatesCancelBtn">Close</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Notifications Page -->
+                <div class="page-section" id="notificationsPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/" id="home">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Notifications</span>
+                    </div>
+
+                    <div class="page-header">
+                        <h1 class="page-title">Notifications</h1>
+                        <p class="page-subtitle">Here are your latest updates.</p>
+                    </div>
+
+                    <div class="notifications-list">
+                        <!-- Notifications will be dynamically inserted here -->
+                        <div class="empty-state">
+                            <i class="fas fa-bell-slash"></i>
+                            <h3>No new notifications</h3>
+                            <p>You're all caught up!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page-section" id="settingsPage" style="display: none;">
+                    <!-- Profile Details Subsection -->
+                    <div class="settings-section">
+                        <div class="settings-header">
+                            <h3 class="settings-title">
+                                <i class="fas fa-user"></i>
+                                Profile Details
+                            </h3>
+                            <p class="settings-description">Update your profile information and photo.</p>
+                        </div>
+                        <div class="settings-body">
+                            <form id="profileForm" enctype="multipart/form-data" autocomplete="off">
+                                <div style="display: flex; align-items: center; gap: 32px; flex-wrap: wrap;">
+                                    <div style="text-align: center;">
+                                        <img id="profilePreview" src="../noice/placeholder.webp" alt="Profile"
+                                            style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid #e2e8f0;margin-bottom:8px;">
+                                        <br>
+                                        <input type="file" name="profileImage" accept="image/*" style="display:none"
+                                            id="profileImageInput">
+                                        <button type="button" class="avatar-upload-btn" id="profileImageUploadBtn"
+                                            onclick="document.getElementById('profileImageInput').click();">Upload
+                                            Photo</button>
+                                        <button type="button" id="profileImageSaveBtn" class="btn btn-primary"
+                                            style="margin-top:8px; padding:10px 20px; display:none;">
+                                            <i class="fas fa-save"></i> Save
+                                        </button>
+                                        <button type="button" id="profileImageCancelBtn" class="btn btn-secondary"
+                                            style="margin-top:8px; padding:10px 20px; display:none;">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+
+                                    <div style="flex:1;min-width:220px;">
+                                        <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+                                            <label class="form-label" style="flex:0 0 60px;">Name</label>
+                                            <input type="text" class="form-input" name="name" value=" "
+                                                id="profileNameInput" disabled style="flex:1;">
+                                            <button type="button" id="profileNameEditBtn" class="btn btn-secondary"
+                                                style="padding:6px 10px;">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" id="profileNameSaveBtn" class="btn btn-primary"
+                                                style="padding:6px 10px;display:none;">
+                                                <i class="fas fa-save"></i>
+                                            </button>
+                                            <button type="button" id="profileNameCancelBtn" class="btn btn-secondary"
+                                                style="padding:6px 10px;display:none;">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+                                            <label class="form-label" style="flex:0 0 60px;">Email</label>
+                                            <input type="email" class="form-input" name="email" value=" "
+                                                id="profileEmailInput" disabled style="flex:1;">
+                                            <button type="button" id="profileEmailEditBtn" class="btn btn-secondary"
+                                                style="padding:6px 10px;">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" id="profileEmailSaveBtn" class="btn btn-primary"
+                                                style="padding:6px 10px;display:none;">
+                                                <i class="fas fa-save"></i>
+                                            </button>
+                                            <button type="button" id="profileEmailCancelBtn" class="btn btn-secondary"
+                                                style="padding:6px 10px;display:none;">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <div class="settings-header">
+                            <h3 class="settings-title">
+                                <i class="fas fa-shield-alt"></i>
+                                Security Settings
+                            </h3>
+                            <p class="settings-description">Manage your account security and authentication methods.</p>
+                        </div>
+                        <div class="settings-body">
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Two-Factor Authentication (2FA)</h4>
+                                    <p>Secure your account with an authenticator app</p>
+                                </div>
+                                <div class="security-status">
+                                    <span class="status-badge status-disabled" id="test">Disabled</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="toggle-2fa-authenticator">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Email Verification</h4>
+                                    <p>Receive verification codes via email</p>
+                                </div>
+                                <div class="security-status">
+                                    <span class="status-badge status-disabled" id="test">Disabled</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="toggle-2fa-email">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <div class="settings-header">
+                            <h3 class="settings-title">
+                                <i class="fas fa-shield-alt"></i>
+                                Session Management
+                            </h3>
+                            <p class="settings-description">Manage your active sessions across different devices.</p>
+                        </div>
+                        <div class="settings-body">
+                            <div id="activeSessions">
+                                <!-- Sessions will be loaded here -->
+                                <div class="loading-spinner centered"></div>
+                            </div>
+                            <div class="security-item mt-4">
+                                <div class="security-info">
+                                    <h4>Revoke All Other Sessions</h4>
+                                    <p>This will sign out all other devices except your current one.</p>
+                                </div>
+                                <div class="security-status">
+                                    <button id="revokeAllBtn" class="btn btn-warning">
+                                        <i class="fas fa-ban"></i>
+                                        Revoke All Others
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Send Notification Section -->
+                    <div class="settings-section" id="sendNotificationSection">
+                        <div class="settings-header">
+                            <h3 class="settings-title">
+                                <i class="fas fa-bell"></i>
+                                Send Notification
+                            </h3>
+                            <p class="settings-description">Send a notification to all users. (Admins only)</p>
+                        </div>
+                        <div class="settings-body">
+                            <div class="form-group"
+                                style="display: flex; flex-direction: column; gap: 12px; max-width: 500px;">
+                                <label for="notificationMessage" class="form-label">Message</label>
+                                <textarea id="notificationMessage" class="form-input" rows="3"
+                                    placeholder="Type your notification message..."></textarea>
+                            </div>
+                            <button id="sendNotificationBtn" class="btn btn-primary"
+                                style="margin-top: 12px; min-width: 120px;">
+                                <i class="fas fa-paper-plane"></i> Send
+                            </button>
+                            <div id="notificationFeedback" style="margin-top: 10px;"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- End Send Notification Section -->
+
+                <!-- Users Page -->
+                <div class="page-section" id="usersPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/" id="home">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Users</span>
+                    </div>
+
+                    <div class="page-header">
+                        <h1 class="page-title">User Management</h1>
+                        <p class="page-subtitle">Manage all users and their permissions</p>
+                    </div>
+
+                    <div class="users-controls">
+                        <div class="users-search">
+                            <input type="text" id="userSearchInput" placeholder="Search users..." class="search-input">
+                            <div class="users-filters">
+                                <select id="statusFilter" class="filter-select">
+                                    <option value="">All Status</option>
+                                    <option value="active">Active</option>
+                                    <option value="locked">Locked</option>
+                                    <option value="banned">Banned</option>
+                                    <option value="suspended">Suspended</option>
+                                </select>
+                                <select id="roleFilter" class="filter-select">
+                                    <option value="">All Roles</option>
+                                    <option value="admin">Admin</option>
+                                    <option value="staff">Staff</option>
+                                    <option value="customer">Customer</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="createUserBtn" class="btn btn-primary">
+                            <i class="fas fa-plus"></i>
+                            Create User
+                        </button>
+                    </div>
+
+                    <div class="users-table-container">
+                        <div class="users-table-header">
+                            <div class="column-toggles">
+                                <button class="btn btn-secondary" id="toggleColumnsBtn">
+                                    <i class="fas fa-columns"></i>
+                                    Columns
+                                </button>
+                                <div class="column-toggle-dropdown" style="display: none;">
+                                    <label><input type="checkbox" data-column="email" checked> Email</label>
+                                    <label><input type="checkbox" data-column="username" checked> Username</label>
+                                    <label><input type="checkbox" data-column="role" checked> Role</label>
+                                    <label><input type="checkbox" data-column="status" checked> Status</label>
+                                    <label><input type="checkbox" data-column="emailVerified" checked> Email
+                                        Verified</label>
+                                    <label><input type="checkbox" data-column="2fa" checked> 2FA</label>
+                                    <label><input type="checkbox" data-column="created" checked> Created</label>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="users-table-wrapper">
+                            <table class="users-table">
+                                <thead>
+                                    <tr>
+                                        <th class="sortable" data-sort="email">Email <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="username">Username <i class="fas fa-sort"></i>
+                                        </th>
+                                        <th class="sortable" data-sort="role">Role <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="status">Status <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="emailVerified">Email Verified <i
+                                                class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="2fa">2FA <i class="fas fa-sort"></i></th>
+                                        <th class="sortable" data-sort="created">Created <i class="fas fa-sort"></i>
+                                        </th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="usersTableBody">
+                                    <!-- Users will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="users-table-footer">
+                            <div class="table-info">
+                                Showing <span id="showing-start">0</span> to <span id="showing-end">0</span> of <span
+                                    id="total-entries">0</span> entries
+                            </div>
+                            <div class="table-pagination">
+                                <button class="btn btn-secondary" id="prevPage" disabled>
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <span id="currentPage">1</span> of <span id="totalPages">1</span>
+                                <button class="btn btn-secondary" id="nextPage" disabled>
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Products Page -->
+                <div class="page-section" id="productsPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/" id="products-home">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Products</span>
+                    </div>
+                    <div class="page-header">
+                        <h1 class="page-title">Product Management</h1>
+                        <p class="page-subtitle">Manage all products, images, and videos</p>
+                    </div>
+                    <div class="products-controls">
+                        <div class="products-search-bar">
+                            <span class="products-search-icon"><i class="fas fa-search"></i></span>
+                            <input type="text" id="products-search-input" class="products-search-input"
+                                placeholder="Search products...">
+                            <div class="products-filters">
+                                <select id="products-category-filter" class="products-filter-select">
+                                    <option value="">All Categories</option>
+                                </select>
+                                <select id="products-stock-filter" class="products-filter-select">
+                                    <option value="">All Stock</option>
+                                    <option value="in_stock">In Stock</option>
+                                    <option value="out_of_stock">Out of Stock</option>
+                                    <option value="low_stock">Low Stock</option>
+                                </select>
+                            </div>
+                        </div>
+                        <button id="products-create-btn" class="btn btn-primary products-create-btn">
+                            <i class="fas fa-plus"></i> Create Product
+                        </button>
+                    </div>
+                    <div class="products-list-section" id="products-list-section">
+                        <div class="products-table-container">
+                            <div class="products-table-header">
+                                <div class="column-toggles">
+                                    <button class="btn btn-secondary" id="products-toggle-columns-btn">
+                                        <i class="fas fa-columns"></i>
+                                        Columns
+                                    </button>
+                                    <div class="column-toggle-dropdown" id="products-column-toggles"
+                                        style="display: none;">
+                                        <!-- Column checkboxes will be populated dynamically -->
+                                    </div>
+                                </div>
+                            </div>
+                            <table class="products-table" id="products-table">
+                                <thead id="products-table-head">
+                                    <tr>
+                                        <th>Name</th>
+                                        <th>Category</th>
+                                        <th>Current Price</th>
+                                        <th>Stock</th>
+                                        <th>Featured</th>
+                                        <th>Active</th>
+                                        <th>Created</th>
+                                        <th>Media</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="products-table-body">
+                                    <!-- Products will be loaded here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="products-create-section" id="products-create-section" style="display:none;">
+                        <form id="products-create-form" enctype="multipart/form-data" autocomplete="off">
+                            <div style="display:flex;align-items:center;gap:16px;margin-bottom:16px;">
+                                <button type="button" class="btn btn-secondary products-back-btn"
+                                    id="products-back-btn">
+                                    <i class="fas fa-arrow-left"></i> Back
+                                </button>
+                                <h2 style="margin:0;">Create New Product</h2>
+                            </div>
+                            <div class="products-form-grid">
+                                <div class="form-group">
+                                    <label for="products-name">Name <span class="required">*</span></label>
+                                    <input type="text" name="name" id="products-name" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="products-slug">Slug <span class="required">*</span></label>
+                                    <input type="text" name="slug" id="products-slug" required>
+                                </div>
+                                <div class="form-group description-group">
+                                    <label for="products-description">Description <span
+                                            class="required">*</span></label>
+                                    <textarea name="description" id="products-description" required></textarea>
+                                </div>
+                                <div class="form-group long-description-group description-group"
+                                    style="grid-column: 1 / -1;">
+                                    <label for="products-long-description">Long Description <span
+                                            class="required">*</span></label>
+                                    <textarea name="long_description" id="products-long-description" rows="8" required
+                                        style="min-height:180px;width:100%;"></textarea>
+                                </div>
+                                <div class="form-group meta-description-group" style="grid-column: 1 / -1;">
+                                    <label for="products-meta-description">Meta Description <span
+                                            class="optional">(optional)</span></label>
+                                    <textarea name="meta_description" id="products-meta-description" rows="6"
+                                        style="min-height:120px;width:100%;"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="products-current-price">Current Price <span
+                                            class="required">*</span></label>
+                                    <input type="number" name="current_price" id="products-current-price" step="0.01"
+                                        required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="products-original-price">Original Price <span
+                                            class="optional">(optional)</span></label>
+                                    <input type="number" name="original_price" id="products-original-price" step="0.01">
+                                </div>
+                                <div class="form-group">
+                                    <label for="products-currency">Currency <span class="required">*</span></label>
+                                    <input type="text" name="currency" id="products-currency" value="NPR" required>
+                                </div>
+                                <!-- Category field: change from input to select -->
+                                <div class="form-group">
+                                    <label for="products-category">Category <span class="required">*</span></label>
+                                    <select id="products-category" name="category" class="form-input" required>
+                                        <option value="">Select Category</option>
+                                        <!-- Options will be loaded dynamically -->
+                                    </select>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="products-tags">Tags (comma separated)</label>
+                                    <textarea name="tags" id="products-tags" rows="2"
+                                        style="min-height:60px;width:100%;"></textarea>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="products-seo-title">SEO Title <span
+                                            class="optional">(optional)</span></label>
+                                    <textarea name="seo_title" id="products-seo-title" rows="2"
+                                        style="min-height:60px;width:100%;"></textarea>
+                                </div>
+                                <div class="form-group full-width">
+                                    <label for="products-seo-keywords">SEO Keywords (comma separated) <span
+                                            class="optional">(optional)</span></label>
+                                    <textarea name="seo_keywords" id="products-seo-keywords" rows="2"
+                                        style="min-height:60px;width:100%;"></textarea>
+                                </div>
+                                <div class="form-group">
+                                    <label for="products-stock-status">Stock Status <span
+                                            class="required">*</span></label>
+                                    <select name="stock_status" id="products-stock-status" required>
+                                        <option value="in_stock">In Stock</option>
+                                        <option value="out_of_stock">Out of Stock</option>
+                                        <option value="low_stock">Low Stock</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="products-is-featured">Featured <span
+                                            class="optional">(optional)</span></label>
+                                    <select name="is_featured" id="products-is-featured">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="products-is-active">Active <span class="required">*</span></label>
+                                    <select name="is_active" id="products-is-active" required>
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="products-media-upload">Media (up to 5 images/videos, max 100MB each) <span
+                                        class="required">*</span></label>
+                                <input type="file" id="products-media-upload" class="products-media-upload" name="media"
+                                    accept="image/*,video/*" multiple style="display:none;" required>
+                                <label for="products-media-upload" class="products-media-upload-label">
+                                    <span id="products-media-upload-text">Click or drag files here to upload</span>
+                                </label>
+                                <div class="products-media-preview" id="products-media-preview"></div>
+                                <small>Drag to reorder. Click X to remove.</small>
+                            </div>
+                            <div class="products-form-actions">
+                                <button type="button" class="btn btn-secondary" id="products-cancel-btn">Cancel</button>
+                                <button type="submit" class="btn btn-primary">Save Product</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- End Products Page -->
+
+                <!-- Slider Page -->
+                <div class="page-section" id="sliderPage" style="display: none;">
+                    <!-- Slider List View -->
+                    <div id="slider-list-view">
+                        <div class="breadcrumb">
+                            <a href="/" id="slider-home">Home</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span>Slider</span>
+                        </div>
+                        <div class="page-header">
+                            <h1 class="page-title">Slider Management</h1>
+                            <p class="page-subtitle">Manage homepage slider images</p>
+                        </div>
+                        <section class="admin-section">
+                            <button class="btn btn-primary" onclick="window.showSliderCreate()">Add Slider
+                                Image</button>
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Description</th>
+                                        <th>Status</th>
+                                        <th>Order</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="slider-images-table"></tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                    <!-- Slider Create View -->
+                    <div id="slider-create-view" style="display: none;">
+                        <div class="breadcrumb">
+                            <a href="/" id="slider-home">Home</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="#" onclick="window.showSliderList()">Slider</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span>Create</span>
+                        </div>
+                        <div class="page-header">
+                            <h1 class="page-title">Create Slider Image</h1>
+                            <p class="page-subtitle">Add a new slider image to the homepage</p>
+                        </div>
+                        <section class="admin-section">
+                            <form id="slider-create-form" class="admin-form">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Title <span class="required">*</span></label>
+                                        <input type="text" name="title" required placeholder="Enter slider title">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sort Order</label>
+                                        <input type="number" name="sort_order" value="0" min="0"
+                                            placeholder="Display order">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label>Description</label>
+                                        <textarea name="description" rows="3"
+                                            placeholder="Enter slider description"></textarea>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label>Image <span class="required">*</span></label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" name="image" accept="image/*" required
+                                                class="file-upload-input" id="slider-image-upload">
+                                            <label for="slider-image-upload" class="file-upload-label">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <span>Choose a file or drag it here</span>
+                                            </label>
+                                        </div>
+                                        <div id="slider-image-preview" class="image-preview"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Alt Text</label>
+                                        <input type="text" name="alt_text" placeholder="Image alt text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link URL</label>
+                                        <input type="url" name="link_url" placeholder="https://...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Button Text</label>
+                                        <input type="text" name="button_text" placeholder="Call to action text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Button URL</label>
+                                        <input type="url" name="button_url" placeholder="https://...">
+                                    </div>
+                                    <div class="form-group switch-group">
+                                        <label class="switch-label">
+                                            Active Status
+                                            <div class="switch">
+                                                <input type="checkbox" name="is_active" checked>
+                                                <span class="switch-slider"></span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="window.showSliderList()">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Create Slider</button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+
+                    <!-- Slider Edit View -->
+                    <div id="slider-edit-view" style="display: none;">
+                        <div class="breadcrumb">
+                            <a href="/" id="slider-home">Home</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="#" onclick="window.showSliderList()">Slider</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span>Edit</span>
+                        </div>
+                        <div class="page-header">
+                            <h1 class="page-title">Edit Slider Image</h1>
+                            <p class="page-subtitle">Modify existing slider image</p>
+                        </div>
+                        <section class="admin-section">
+                            <form id="slider-edit-form" class="admin-form">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Title <span class="required">*</span></label>
+                                        <input type="text" name="title" required placeholder="Enter slider title">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sort Order</label>
+                                        <input type="number" name="sort_order" value="0" min="0"
+                                            placeholder="Display order">
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label>Description</label>
+                                        <textarea name="description" rows="3"
+                                            placeholder="Enter slider description"></textarea>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label>Image</label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" name="image" accept="image/*" class="file-upload-input"
+                                                id="slider-edit-image-upload">
+                                            <label for="slider-edit-image-upload" class="file-upload-label">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <span>Choose a file or drag it here</span>
+                                            </label>
+                                        </div>
+                                        <div id="slider-edit-image-preview" class="image-preview"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Alt Text</label>
+                                        <input type="text" name="alt_text" placeholder="Image alt text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link URL</label>
+                                        <input type="url" name="link_url" placeholder="https://...">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Button Text</label>
+                                        <input type="text" name="button_text" placeholder="Call to action text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Button URL</label>
+                                        <input type="url" name="button_url" placeholder="https://...">
+                                    </div>
+                                    <div class="form-group switch-group">
+                                        <label class="switch-label">
+                                            Active Status
+                                            <div class="switch">
+                                                <input type="checkbox" name="is_active">
+                                                <span class="switch-slider"></span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="window.showSliderList()">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Update Slider</button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Promo Page -->
+                <div class="page-section" id="promoPage" style="display: none;">
+                    <!-- Promo List View -->
+                    <div id="promo-list-view">
+                        <div class="breadcrumb">
+                            <a href="/" id="promo-home">Home</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span>Promo</span>
+                        </div>
+                        <div class="page-header">
+                            <h1 class="page-title">Promo Management</h1>
+                            <p class="page-subtitle">Manage homepage promo images</p>
+                        </div>
+                        <section class="admin-section">
+                            <button class="btn btn-primary" onclick="window.showPromoCreate()">Add Promo Image</button>
+                            <table class="admin-table">
+                                <thead>
+                                    <tr>
+                                        <th>Image</th>
+                                        <th>Title</th>
+                                        <th>Type</th>
+                                        <th>Status</th>
+                                        <th>Order</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="promo-images-table"></tbody>
+                            </table>
+                        </section>
+                    </div>
+
+                    <!-- Promo Create View -->
+                    <div id="promo-create-view" style="display: none;">
+                        <div class="breadcrumb">
+                            <a href="/" id="promo-home">Home</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="#" onclick="window.showPromoList()">Promo</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span>Create</span>
+                        </div>
+                        <div class="page-header">
+                            <h1 class="page-title">Create Promo Image</h1>
+                            <p class="page-subtitle">Add a new promotional image</p>
+                        </div>
+                        <section class="admin-section">
+                            <form id="promo-create-form" class="admin-form">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Title <span class="required">*</span></label>
+                                        <input type="text" name="title" required placeholder="Enter promo title">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sort Order</label>
+                                        <input type="number" name="sort_order" value="0" min="0"
+                                            placeholder="Display order">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Promo Type <span class="required">*</span></label>
+                                        <select name="promo_type" required>
+                                            <option value="">Select type</option>
+                                            <option value="marquee">Marquee</option>
+                                            <option value="banner">Banner</option>
+                                            <option value="advertisement">Advertisement</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label>Image <span class="required">*</span></label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" name="image" accept="image/*" required
+                                                class="file-upload-input" id="promo-image-upload">
+                                            <label for="promo-image-upload" class="file-upload-label">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <span>Choose a file or drag it here</span>
+                                            </label>
+                                        </div>
+                                        <div id="promo-image-preview" class="image-preview"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Alt Text</label>
+                                        <input type="text" name="alt_text" placeholder="Image alt text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link URL</label>
+                                        <input type="url" name="link_url" placeholder="https://...">
+                                    </div>
+                                    <div class="form-group switch-group">
+                                        <label class="switch-label">
+                                            Active Status
+                                            <div class="switch">
+                                                <input type="checkbox" name="is_active" checked>
+                                                <span class="switch-slider"></span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="window.showPromoList()">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Create Promo</button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+
+                    <!-- Promo Edit View -->
+                    <div id="promo-edit-view" style="display: none;">
+                        <div class="breadcrumb">
+                            <a href="/" id="promo-home">Home</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <a href="#" onclick="window.showPromoList()">Promo</a>
+                            <span class="breadcrumb-separator">/</span>
+                            <span>Edit</span>
+                        </div>
+                        <div class="page-header">
+                            <h1 class="page-title">Edit Promo Image</h1>
+                            <p class="page-subtitle">Modify existing promotional image</p>
+                        </div>
+                        <section class="admin-section">
+                            <form id="promo-edit-form" class="admin-form">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label>Title <span class="required">*</span></label>
+                                        <input type="text" name="title" required placeholder="Enter promo title">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Sort Order</label>
+                                        <input type="number" name="sort_order" value="0" min="0"
+                                            placeholder="Display order">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Promo Type <span class="required">*</span></label>
+                                        <select name="promo_type" required>
+                                            <option value="">Select type</option>
+                                            <option value="marquee">Marquee</option>
+                                            <option value="banner">Banner</option>
+                                            <option value="advertisement">Advertisement</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group full-width">
+                                        <label>Image</label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" name="image" accept="image/*" class="file-upload-input"
+                                                id="promo-edit-image-upload">
+                                            <label for="promo-edit-image-upload" class="file-upload-label">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <span>Choose a file or drag it here</span>
+                                            </label>
+                                        </div>
+                                        <div id="promo-edit-image-preview" class="image-preview"></div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Alt Text</label>
+                                        <input type="text" name="alt_text" placeholder="Image alt text">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Link URL</label>
+                                        <input type="url" name="link_url" placeholder="https://...">
+                                    </div>
+                                    <div class="form-group switch-group">
+                                        <label class="switch-label">
+                                            Active Status
+                                            <div class="switch">
+                                                <input type="checkbox" name="is_active">
+                                                <span class="switch-slider"></span>
+                                            </div>
+                                        </label>
+                                    </div>
+                                </div>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary"
+                                        onclick="window.showPromoList()">Cancel</button>
+                                    <button type="submit" class="btn btn-primary">Update Promo</button>
+                                </div>
+                            </form>
+                        </section>
+                    </div>
+                </div>
+
+                <!-- Games Section -->
+                <div id="gamesPage" class="page-section" style="display: none;">
+                    <!-- Games List View -->
+                    <div id="games-list-view">
+                        <div class="admin-section">
+                            <h2>Game Management</h2>
+                            <div class="games-controls">
+                                <div class="games-search-bar">
+                                    <input type="text" id="games-search-input" placeholder="Search games...">
+                                </div>
+                                <button class="btn btn-primary" onclick="showGameCreate()">
+                                    <i class="fas fa-plus"></i> Add New Game
+                                </button>
+                            </div>
+                            <div class="admin-table-container">
+                                <table class="admin-table" id="games-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Image</th>
+                                            <th>Name</th>
+                                            <th>Variants</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="games-table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Games Create View -->
+                    <div id="games-create-view" style="display: none;">
+                        <div class="admin-section">
+                            <h2>Create New Game</h2>
+                            <form id="games-create-form" class="admin-form games-create-form">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="game-name">Game Name <span class="required">*</span></label>
+                                        <input type="text" id="game-name" name="game_name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <div class="switch-group">
+                                            <label class="switch">
+                                                <input type="checkbox" name="is_active" checked>
+                                                <span class="switch-slider"></span>
+                                            </label>
+                                            <span class="switch-label">Active</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group description-group">
+                                        <label for="game-description">Description</label>
+                                        <textarea id="game-description" name="description" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Game Image <span class="required">*</span></label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" id="game-image-upload" name="image" accept="image/*"
+                                                required>
+                                            <label for="game-image-upload" class="file-upload-label">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <span>Click or drag image here</span>
+                                            </label>
+                                        </div>
+                                        <div id="game-image-preview" class="image-preview"></div>
+                                    </div>
+                                </div>
+
+                                <h3>Game Variants</h3>
+                                <div id="variants-container">
+                                    <!-- Variants will be added here dynamically -->
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addVariant()">
+                                    <i class="fas fa-plus"></i> Add Variant
+                                </button>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" onclick="showGamesList()">
+                                        <i class="fas fa-arrow-left"></i> Back
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Save Game
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Games Edit View -->
+                    <div id="games-edit-view" style="display: none;">
+                        <div class="admin-section">
+                            <h2>Edit Game</h2>
+                            <form id="games-edit-form" class="admin-form games-create-form">
+                                <input type="hidden" id="edit-game-id" name="game_id">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="edit-game-name">Game Name <span class="required">*</span></label>
+                                        <input type="text" id="edit-game-name" name="game_name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <div class="switch-group">
+                                            <label class="switch">
+                                                <input type="checkbox" id="edit-game-status" name="is_active">
+                                                <span class="switch-slider"></span>
+                                            </label>
+                                            <span class="switch-label">Active</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group description-group">
+                                        <label for="edit-game-description">Description</label>
+                                        <textarea id="edit-game-description" name="description" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Game Image</label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" id="edit-game-image-upload" name="image"
+                                                accept="image/*">
+                                            <label for="edit-game-image-upload" class="file-upload-label">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <span>Click or drag to change image</span>
+                                            </label>
+                                        </div>
+                                        <div id="edit-game-image-preview" class="image-preview"></div>
+                                    </div>
+                                </div>
+
+                                <h3>Game Variants</h3>
+                                <div id="edit-variants-container">
+                                    <!-- Existing variants will be loaded here -->
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addEditVariant()">
+                                    <i class="fas fa-plus"></i> Add Variant
+                                </button>
+
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" onclick="showGamesList()">
+                                        <i class="fas fa-arrow-left"></i> Back
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Update Game
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Delete Game Modal -->
+                    <div id="game-delete-modal" class="action-modal">
+                        <div class="action-modal-content">
+                            <div class="action-modal-header">
+                                <h2><i class="fas fa-exclamation-triangle"></i> Delete Game</h2>
+                            </div>
+                            <div class="action-modal-body">
+                                <div class="confirmation-content">
+                                    <div class="confirmation-icon">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </div>
+                                    <div class="confirmation-text">
+                                        <h4>Delete Game</h4>
+                                        <p>Are you sure you want to delete:</p>
+                                        <p><strong id="delete-game-name"></strong></p>
+                                        <p class="text-warning">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            This action cannot be undone. All variants will also be deleted.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-modal-footer">
+                                <button type="button" class="btn btn-secondary" onclick="closeGameDeleteModal()">
+                                    Cancel
+                                </button>
+                                <button type="button" class="btn btn-danger" id="confirm-delete-game-btn">
+                                    <i class="fas fa-trash-alt"></i> Delete Game
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Subscriptions Page Section -->
+                <div id="subscriptionsPage" class="page-section" style="display: none;">
+                    <!-- Subscriptions List View -->
+                    <div id="subscriptions-list-view">
+                        <div class="admin-section">
+                            <h2>Subscription Management</h2>
+                            <div class="subscriptions-controls">
+                                <div class="subscriptions-search-bar">
+                                    <input type="text" id="subscriptions-search-input"
+                                        placeholder="Search subscriptions...">
+                                </div>
+                                <button class="btn btn-primary" id="subscriptions-create-btn">
+                                    <i class="fas fa-plus"></i> Add New Subscription
+                                </button>
+                            </div>
+                            <div class="admin-table-container">
+                                <table class="admin-table" id="subscriptions-table">
+                                    <thead>
+                                        <tr>
+                                            <th>Logo</th>
+                                            <th>Name</th>
+                                            <th>Plans</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="subscriptions-table-body"></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Subscriptions Create View -->
+                    <div id="subscriptions-create-view" style="display: none;">
+                        <div class="admin-section">
+                            <h2>Create New Subscription</h2>
+                            <form id="subscriptions-create-form" class="admin-form subscriptions-create-form">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="subscription-name">Name <span class="required">*</span></label>
+                                        <input type="text" id="subscription-name" name="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <div class="switch-group">
+                                            <label class="switch">
+                                                <input type="checkbox" name="is_active" checked>
+                                                <span class="switch-slider"></span>
+                                            </label>
+                                            <span class="switch-label">Active</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group description-group full-width">
+                                        <label for="subscription-description">Description</label>
+                                        <textarea id="subscription-description" name="description" rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Logo <span class="required">*</span></label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" id="subscription-logo-upload" name="logo"
+                                                accept="image/*" required class="file-upload-input">
+                                            <label for="subscription-logo-upload" class="file-upload-label">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <span>Click or drag image here</span>
+                                            </label>
+                                        </div>
+                                        <div id="subscription-logo-preview" class="image-preview"></div>
+                                    </div>
+                                </div>
+                                <h3>Subscription Plans</h3>
+                                <div id="plans-container">
+                                    <!-- Plans will be added here dynamically -->
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addPlan()">
+                                    <i class="fas fa-plus"></i> Add Plan
+                                </button>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" onclick="showSubscriptionsList()">
+                                        <i class="fas fa-arrow-left"></i> Back
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Save Subscription
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Subscriptions Edit View -->
+                    <div id="subscriptions-edit-view" style="display: none;">
+                        <div class="admin-section">
+                            <h2>Edit Subscription</h2>
+                            <form id="subscriptions-edit-form" class="admin-form subscriptions-create-form">
+                                <input type="hidden" id="edit-subscription-id" name="subscription_id">
+                                <div class="form-grid">
+                                    <div class="form-group">
+                                        <label for="edit-subscription-name">Name <span class="required">*</span></label>
+                                        <input type="text" id="edit-subscription-name" name="name" required>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Status</label>
+                                        <div class="switch-group">
+                                            <label class="switch">
+                                                <input type="checkbox" id="edit-subscription-status" name="is_active">
+                                                <span class="switch-slider"></span>
+                                            </label>
+                                            <span class="switch-label">Active</span>
+                                        </div>
+                                    </div>
+                                    <div class="form-group description-group full-width">
+                                        <label for="edit-subscription-description">Description</label>
+                                        <textarea id="edit-subscription-description" name="description"
+                                            rows="4"></textarea>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Logo <span class="required">*</span></label>
+                                        <div class="file-upload-wrapper">
+                                            <input type="file" id="edit-subscription-logo-upload" name="logo"
+                                                accept="image/*" class="file-upload-input">
+                                            <label for="edit-subscription-logo-upload" class="file-upload-label">
+                                                <i class="fas fa-cloud-upload-alt"></i>
+                                                <span>Click or drag image here</span>
+                                            </label>
+                                        </div>
+                                        <div id="edit-subscription-logo-preview" class="image-preview"></div>
+                                    </div>
+                                </div>
+                                <h3>Subscription Plans</h3>
+                                <div id="edit-plans-container">
+                                    <!-- Plans will be added here dynamically -->
+                                </div>
+                                <button type="button" class="btn btn-secondary" onclick="addEditPlan()">
+                                    <i class="fas fa-plus"></i> Add Plan
+                                </button>
+                                <div class="form-actions">
+                                    <button type="button" class="btn btn-secondary" onclick="showSubscriptionsList()">
+                                        <i class="fas fa-arrow-left"></i> Back
+                                    </button>
+                                    <button type="submit" class="btn btn-primary">
+                                        <i class="fas fa-save"></i> Update Subscription
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Delete Subscription Modal -->
+                    <div id="subscription-delete-modal" class="action-modal">
+                        <div class="action-modal-content">
+                            <div class="action-modal-header">
+                                <h2><i class="fas fa-exclamation-triangle"></i> Delete Subscription</h2>
+                            </div>
+                            <div class="action-modal-body">
+                                <div class="confirmation-content">
+                                    <div class="confirmation-icon">
+                                        <i class="fas fa-trash-alt"></i>
+                                    </div>
+                                    <div class="confirmation-text">
+                                        <h4>Delete Subscription</h4>
+                                        <p>Are you sure you want to delete:</p>
+                                        <p><strong id="delete-subscription-name"></strong></p>
+                                        <p class="text-warning">
+                                            <i class="fas fa-exclamation-triangle"></i>
+                                            This action cannot be undone. All plans will also be deleted.
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="action-modal-footer">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="closeSubscriptionDeleteModal()">
+                                    Cancel
+                                </button>
+                                <button type="button" class="btn btn-danger" id="confirm-delete-subscription-btn">
+                                    <i class="fas fa-trash-alt"></i> Delete Subscription
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Email Marketing Page -->
+                <div class="page-section" id="emailMarketingPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/" id="email-home">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Email Marketing</span>
+                    </div>
+
+                    <div class="page-header">
+                        <h1 class="page-title">Email Marketing</h1>
+                        <p class="page-subtitle">Send emails to subscribers and customers</p>
+                    </div>
+
+                    <div class="content-grid">
+                        <!-- Send Email Section (Full Width) -->
+                        <div class="content-card" style="grid-column: 1 / -1;">
+                            <div class="content-card-header">
+                                <h3 class="content-card-title">Send Email</h3>
+                            </div>
+                            <div class="content-card-body">
+                                <form id="emailMarketingForm" class="admin-form">
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="emailRecipientType">Send To</label>
+                                            <select id="emailRecipientType" class="form-input" required>
+                                                <option value="">Select Recipients</option>
+                                                <option value="all_subscribers">All Newsletter Subscribers</option>
+                                                <option value="all_customers">All Customers</option>
+                                                <option value="specific_user">Specific User</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-group" id="specificUserGroup"
+                                        style="display: none; position: relative;">
+                                        <label for="specificUserSearch">Search User</label>
+                                        <input type="text" id="specificUserSearch" class="form-input"
+                                            placeholder="Search by email or username">
+                                        <div id="userSearchResults" class="search-results" style="display: none;"></div>
+                                        <input type="hidden" id="selectedUserId">
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="emailSubject">Subject</label>
+                                            <input type="text" id="emailSubject" class="form-input" required
+                                                placeholder="Email subject">
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="emailTemplate">Template</label>
+                                            <select id="emailTemplate" class="form-input">
+                                                <option value="">Select Template</option>
+                                                <option value="newsletter">Newsletter</option>
+                                                <option value="promotion">Promotion</option>
+                                                <option value="announcement">Announcement</option>
+                                                <option value="custom">Custom</option>
+                                            </select>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group" style="width: 100%;">
+                                            <label for="emailContent">Content</label>
+                                            <textarea id="emailContent" class="form-input" rows="10" required
+                                                placeholder="Email content"
+                                                style="width: 100%; min-height: 250px;"></textarea>
+                                        </div>
+                                    </div>
+
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <button type="submit" class="btn btn-primary" id="sendEmailBtn">
+                                                <i class="fas fa-paper-plane"></i> Send Email
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+
+                        <!-- Newsletter Subscribers Section -->
+                        <div class="content-card" style="grid-column: 1 / -1;">
+                            <div class="content-card-header">
+                                <h3 class="content-card-title">Newsletter Subscribers</h3>
+                            </div>
+                            <div class="content-card-body">
+                                <div class="users-controls" style="margin-bottom: 20px;">
+                                    <div class="users-search">
+                                        <input type="text" id="subscriberSearch" class="search-input"
+                                            placeholder="Search subscribers...">
+                                    </div>
+                                </div>
+                                <div class="admin-table-container">
+                                    <table class="admin-table" id="subscribersTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Email</th>
+                                                <th>Name</th>
+                                                <th>Subscribed Date</th>
+                                                <th>Status</th>
+                                                <th>Actions</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody id="subscribersTableBody">
+                                            <!-- Subscribers will be loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="subscribersPagination" class="table-pagination">
+                                    <!-- Pagination controls will be added here -->
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Email History Section -->
+                        <div class="content-card" style="grid-column: 1 / -1;">
+                            <div class="content-card-header">
+                                <h3 class="content-card-title">Email History</h3>
+                            </div>
+                            <div class="content-card-body">
+                                <div class="admin-table-container">
+                                    <table class="admin-table" id="emailHistoryTable">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Subject</th>
+                                                <th>Recipients</th>
+                                                <th>Sent By</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody id="emailHistoryTableBody">
+                                            <!-- Email history will be loaded here -->
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div id="emailHistoryPagination" class="table-pagination">
+                                    <!-- Pagination controls will be added here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Page -->
+                <div class="page-section" id="ordersPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/" id="orders-home">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Orders</span>
+                    </div>
+                    <div class="page-header">
+                        <h1 class="page-title">Order Management</h1>
+                        <p class="page-subtitle">Manage customer orders and process payments</p>
+                    </div>
+                    <div class="orders-section">
+                        <!-- Orders Controls -->
+                        <div class="orders-controls">
+                            <div class="orders-search-bar">
+                                <span class="orders-search-icon"><i class="fas fa-search"></i></span>
+                                <input type="text" id="orders-search-input" class="orders-search-input"
+                                    placeholder="Search orders by ID, customer...">
+                            </div>
+                            <div class="orders-filters">
+                                <select id="orders-status-filter" class="orders-filter-select">
+                                    <option value="">All Statuses</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="processing">Processing</option>
+                                    <option value="completed">Completed</option>
+                                    <option value="cancelled">Cancelled</option>
+                                    <option value="failed">Failed</option>
+                                </select>
+                                <select id="orders-payment-filter" class="orders-filter-select">
+                                    <option value="">All Payments</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="paid">Paid</option>
+                                    <option value="failed">Failed</option>
+                                    <option value="refunded">Refunded</option>
+                                </select>
+                                <select id="orders-date-filter" class="orders-filter-select">
+                                    <option value="">All Time</option>
+                                    <option value="today">Today</option>
+                                    <option value="week">This Week</option>
+                                    <option value="month">This Month</option>
+                                    <option value="year">This Year</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Orders List Container -->
+                        <div class="orders-list-container">
+                            <!-- Orders List Header -->
+                            <div class="orders-list-header">
+                                <h3>All Orders</h3>
+                                <div class="column-toggles">
+                                    <button class="btn btn-secondary" id="orders-toggle-columns-btn">
+                                        <i class="fas fa-columns"></i>
+                                        Columns
+                                    </button>
+                                    <div class="column-toggle-dropdown" id="orders-column-toggles"
+                                        style="display: none;">
+                                        <label><input type="checkbox" data-column="order_id" checked> Order ID</label>
+                                        <label><input type="checkbox" data-column="customer" checked> Customer</label>
+                                        <label><input type="checkbox" data-column="date" checked> Date</label>
+                                        <label><input type="checkbox" data-column="total" checked> Total</label>
+                                        <label><input type="checkbox" data-column="status" checked> Status</label>
+                                        <label><input type="checkbox" data-column="payment" checked> Payment</label>
+                                        <label><input type="checkbox" data-column="items" checked> Items</label>
+                                        <label><input type="checkbox" data-column="images" checked> Images</label>
+                                        <label><input type="checkbox" data-column="actions" checked> Actions</label>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Orders List -->
+                            <ul class="orders-list" id="orders-list">
+                                <!-- Orders will be loaded here dynamically -->
+                            </ul>
+                            
+                            <!-- Empty State (Hidden by default) -->
+                            <div class="orders-empty-state" id="orders-empty-state" style="display: none;">
+                                <i class="fas fa-shopping-bag"></i>
+                                <h3>No Orders Found</h3>
+                                <p>No orders match your current filters or there are no orders in the system.</p>
+                            </div>
+                            
+                            <!-- Loading Overlay -->
+                            <div class="orders-loading-overlay" id="orders-loading-overlay" style="display: none;">
+                                <div class="loading-spinner"></div>
+                                <div class="loading-text">Loading orders...</div>
+                            </div>
+                            
+                            <!-- Orders Footer with Pagination -->
+                            <div class="orders-list-footer">
+                                <div class="table-info">
+                                    Showing <span id="orders-showing-start">0</span> to <span
+                                        id="orders-showing-end">0</span> of <span id="orders-total-entries">0</span>
+                                    orders
+                                </div>
+                                <div class="table-pagination">
+                                    <button class="btn btn-secondary" id="orders-prev-page" disabled>
+                                        <i class="fas fa-chevron-left"></i>
+                                    </button>
+                                    <span id="orders-current-page">1</span> of <span id="orders-total-pages">1</span>
+                                    <button class="btn btn-secondary" id="orders-next-page" disabled>
+                                        <i class="fas fa-chevron-right"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Details Modal -->
+                <div id="order-details-modal" class="action-modal">
+                    <div class="action-modal-content">
+                        <div class="action-modal-header">
+                            <h2><i class="fas fa-shopping-bag"></i> Order Details</h2>
+                            <button class="modal-close" onclick="closeOrderDetailsModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="action-modal-body">
+                            <div id="order-details-content">
+                                <!-- Order details will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="action-modal-footer">
+                            <button class="btn btn-secondary" onclick="closeOrderDetailsModal()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Status Update Modal -->
+                <div id="order-status-modal" class="action-modal">
+                    <div class="action-modal-content">
+                        <div class="action-modal-header">
+                            <h2><i class="fas fa-edit"></i> Update Order Status</h2>
+                            <button class="modal-close" onclick="closeOrderStatusModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="action-modal-body">
+                            <form id="order-status-form">
+                                <input type="hidden" id="status-order-id">
+                                <div class="form-group">
+                                    <label for="order-status">Order Status</label>
+                                    <select id="order-status" name="status" class="form-input">
+                                        <option value="pending">Pending</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="cancelled">Cancelled</option>
+                                        <option value="failed">Failed</option>
+                                    </select>
+                                </div>
+                                <div class="form-group">
+                                    <label for="payment-status">Payment Status</label>
+                                    <select id="payment-status" name="payment_status" class="form-input">
+                                        <option value="pending">Pending</option>
+                                        <option value="paid">Paid</option>
+                                        <option value="failed">Failed</option>
+                                        <option value="refunded">Refunded</option>
+                                    </select>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="action-modal-footer">
+                            <button class="btn btn-secondary" onclick="closeOrderStatusModal()">
+                                Cancel
+                            </button>
+                            <button class="btn btn-primary" id="update-order-status-btn">
+                                <i class="fas fa-save"></i> Update Status
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Delete Confirmation Modal -->
+                <div id="order-delete-modal" class="action-modal">
+                    <div class="action-modal-content">
+                        <div class="action-modal-header">
+                            <h2><i class="fas fa-trash-alt"></i> Delete Order</h2>
+                            <button class="modal-close" onclick="closeOrderDeleteModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="action-modal-body">
+                            <div class="confirmation-content">
+                                <div class="confirmation-icon">
+                                    <i class="fas fa-exclamation-triangle text-warning"></i>
+                                </div>
+                                <div class="confirmation-text">
+                                    <h4>Confirm Order Deletion</h4>
+                                    <p>You are about to delete the order:</p>
+                                    <p><strong id="delete-order-id" style="color: #1e293b; font-size: 16px;"></strong>
+                                    </p>
+                                    <p class="text-warning" style="border-left-color: #d97706;">
+                                        <i class="fas fa-exclamation-triangle"></i> This action cannot be undone.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-modal-footer">
+                            <button class="btn btn-secondary" onclick="closeOrderDeleteModal()">
+                                Cancel
+                            </button>
+                            <button class="btn btn-danger" id="confirm-delete-order-btn">
+                                <i class="fas fa-trash-alt"></i> Delete Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Proof Modal -->
+                <div id="payment-proof-modal" class="action-modal">
+                    <div class="action-modal-content">
+                        <div class="action-modal-header">
+                            <h2><i class="fas fa-receipt"></i> Payment Proof</h2>
+                            <button class="modal-close" onclick="closePaymentProofModal()">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="action-modal-body">
+                            <div id="payment-proof-content">
+                                <!-- Payment proof images will be loaded here -->
+                            </div>
+                        </div>
+                        <div class="action-modal-footer">
+                            <button class="btn btn-secondary" onclick="closePaymentProofModal()">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            <!-- Active Subscriptions Page -->
+            <div class="page-section" id="activeSubscriptionsPage" style="display: none; padding:5px">
+                <div class="breadcrumb">
+                    <a href="/">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Active Subscriptions</span>
+                </div>
+
+                <div class="page-header">
+                    <h1 class="page-title">Active Subscriptions</h1>
+                    <p class="page-subtitle">Manage user subscriptions and access credentials</p>
+                </div>
+
+                <!-- Active Subscriptions Controls -->
+                <div class="subscriptions-controls">
+                    <div class="subscriptions-search-bar">
+                        <span class="subscriptions-search-icon"><i class="fas fa-search"></i></span>
+                        <input type="text" id="active-subscriptions-search-input" class="subscriptions-search-input"
+                            placeholder="Search by username, email, subscription...">
+                        <div class="subscriptions-filters">
+                            <select id="active-subscriptions-status-filter" class="subscriptions-filter-select">
+                                <option value="">All Statuses</option>
+                                <option value="active">Active</option>
+                                <option value="expired">Expired</option>
+                                <option value="cancelled">Cancelled</option>
+                            </select>
+                            <select id="active-subscriptions-date-filter" class="subscriptions-filter-select">
+                                <option value="">All Dates</option>
+                                <option value="expiring-soon">Expiring Soon (7 days)</option>
+                                <option value="expired">Expired</option>
+                                <option value="this-month">This Month</option>
+                                <option value="last-month">Last Month</option>
+                            </select>
+                        </div>
+                    </div>
+                    <button id="create-active-subscription-btn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Create Subscription
+                    </button>
+                </div>
+
+                <!-- Active Subscriptions Table -->
+                <div class="subscriptions-table-container">
+                    <div class="subscriptions-table-header">
+                        <div class="column-toggles">
+                            <button class="btn btn-secondary" id="active-subscriptions-toggle-columns-btn">
+                                <i class="fas fa-columns"></i>
+                                Columns
+                            </button>
+                            <div class="column-toggle-dropdown" id="active-subscriptions-column-toggles"
+                                style="display: none;">
+                                <label><input type="checkbox" data-column="username" checked> Username</label>
+                                <label><input type="checkbox" data-column="subscription" checked> Subscription</label>
+                                <label><input type="checkbox" data-column="plan" checked> Plan</label>
+                                <label><input type="checkbox" data-column="start-date" checked> Start Date</label>
+                                <label><input type="checkbox" data-column="end-date" checked> End Date</label>
+                                <label><input type="checkbox" data-column="days-left" checked> Days Left</label>
+                                <label><input type="checkbox" data-column="status" checked> Status</label>
+                                <label><input type="checkbox" data-column="auto-renew" checked> Auto Renew</label>
+                                <label><input type="checkbox" data-column="actions" checked> Actions</label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="active-subscriptions-loading-overlay" id="active-subscriptions-loading-overlay"
+                        style="display:none; background-color: white;">
+                        <div class="loading-spinner"></div>
+                    </div>
+                    <table class="subscriptions-table" id="active-subscriptions-table">
+                        <thead id="active-subscriptions-table-head">
+                            <tr>
+                                <th class="col-username">Username</th>
+                                <th class="col-subscription">Subscription</th>
+                                <th class="col-plan">Plan</th>
+                                <th class="col-start-date">Start Date</th>
+                                <th class="col-end-date">End Date</th>
+                                <th class="col-days-left">Days Left</th>
+                                <th class="col-status">Status</th>
+                                <th class="col-auto-renew">Auto Renew</th>
+                                <th class="col-actions">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="active-subscriptions-table-body">
+                            <!-- Subscriptions will be loaded here -->
+                        </tbody>
+                    </table>
+                    <div class="subscriptions-table-footer">
+                        <div class="table-info">
+                            Showing <span id="active-subscriptions-showing-start">0</span> to <span
+                                id="active-subscriptions-showing-end">0</span> of <span
+                                id="active-subscriptions-total-entries">0</span> subscriptions
+                        </div>
+                        <div class="table-pagination">
+                            <button class="btn btn-secondary" id="active-subscriptions-prev-page" disabled>
+                                <i class="fas fa-chevron-left"></i>
+                            </button>
+                            <span id="active-subscriptions-current-page">1</span> of <span
+                                id="active-subscriptions-total-pages">1</span>
+                            <button class="btn btn-secondary" id="active-subscriptions-next-page" disabled>
+                                <i class="fas fa-chevron-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Create/Edit Active Subscription Modal -->
+            <div id="active-subscription-modal" class="action-modal">
+                <div class="action-modal-content" style="max-width: 700px;">
+                    <div class="action-modal-header">
+                        <h2 id="active-subscription-modal-title"><i class="fas fa-id-card"></i> Create Active
+                            Subscription</h2>
+                        <button class="modal-close" id="close-active-subscription-modal-btn">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    </div>
+                    <div class="action-modal-body">
+                        <form id="active-subscription-form">
+                            <input type="hidden" id="active-subscription-id">
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="active-subscription-user">User <span class="required">*</span></label>
+                                    <div id="user-search-container">
+                                        <input type="text" id="user-search-input" placeholder="Type to search user...">
+                                    </div>
+                                    <select id="active-subscription-user" name="user_id" required>
+                                        <option value="">Select User</option>
+                                        <!-- Users will be loaded dynamically -->
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="active-subscription-plan">Subscription Plan <span
+                                            class="required">*</span></label>
+                                    <select id="active-subscription-plan" name="subscription_plan_id" required>
+                                        <option value="">Select Plan</option>
+                                        <!-- Plans will be loaded dynamically -->
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="active-subscription-start-date">Start Date <span
+                                            class="required">*</span></label>
+                                    <input type="date" id="active-subscription-start-date" name="start_date" required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="active-subscription-end-date">End Date <span
+                                            class="required">*</span></label>
+                                    <input type="date" id="active-subscription-end-date" name="end_date" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="active-subscription-status">Status</label>
+                                    <select id="active-subscription-status" name="status">
+                                        <option value="active">Active</option>
+                                        <option value="expired">Expired</option>
+                                        <option value="cancelled">Cancelled</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="active-subscription-auto-renew">Auto Renew</label>
+                                    <div class="switch-group">
+                                        <label class="switch">
+                                            <input type="checkbox" id="active-subscription-auto-renew"
+                                                name="auto_renew">
+                                            <span class="switch-slider"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="active-subscription-email">Subscription Email</label>
+                                    <input type="email" id="active-subscription-email" name="subscription_email">
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="active-subscription-password">Subscription Password</label>
+                                    <input type="password" id="active-subscription-password"
+                                        name="subscription_password">
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="active-subscription-pin">Subscription PIN</label>
+                                <input type="text" id="active-subscription-pin" name="subscription_pin">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="active-subscription-notes">Notes</label>
+                                <textarea id="active-subscription-notes" name="notes" rows="3"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="action-modal-footer">
+                        <button class="btn btn-secondary" id="cancel-active-subscription-btn">
+                            Cancel
+                        </button>
+                        <button class="btn btn-primary" id="save-active-subscription-btn">
+                            <i class="fas fa-save"></i> Save Subscription
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Page -->
+            <div class="page-section" id="supportPage" style="display: none; padding: 15px;">
+                <div class="breadcrumb">
+                    <a href="/">Home</a>
+                    <span class="breadcrumb-separator">/</span>
+                    <span>Support</span>
+                </div>
+                <div class="page-header">
+                    <h1 class="page-title">Support Tickets</h1>
+                    <p class="page-subtitle">Manage and respond to user support tickets</p>
+                </div>
+                <div class="support-controls">
+                    <div class="support-search-bar">
+                        <input type="text" id="support-search-input" placeholder="Search by username, subject..."
+                            class="search-input">
+                        <div class="support-filters">
+                            <select id="support-status-filter" class="filter-select">
+                                <option value="">All Status</option>
+                                <option value="open">Open</option>
+                                <option value="pending">Pending</option>
+                                <option value="resolved">Resolved</option>
+                                <option value="closed">Closed</option>
+                            </select>
+                            <input type="date" id="support-date-filter" class="filter-select" style="min-width: 140px;">
+                        </div>
+                    </div>
+                </div>
+                <div class="support-table-container">
+                    <table class="support-table">
+                        <thead>
+                            <tr>
+                                <th>Username</th>
+                                <th>Subject</th>
+                                <th>Status</th>
+                                <th>Message</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="supportTableBody">
+                            <!-- Support tickets will be loaded here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Support View Modal -->
+            <div id="support-view-modal" class="action-modal">
+                <div class="action-modal-content">
+                    <div class="action-modal-header">
+                        <h2><i class="fas fa-eye"></i> View Ticket</h2>
+                        <button class="modal-close" id="close-support-view-modal"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="action-modal-body">
+                        <div class="support-view-details">
+                            <div><strong>Username:</strong> <span id="support-view-username"></span></div>
+                            <div><strong>Email:</strong> <span id="support-view-email"></span></div>
+                            <div><strong>Subject:</strong> <span id="support-view-subject"></span></div>
+                            <div><strong>Date:</strong> <span id="support-view-date"></span></div>
+                            <div><strong>Message:</strong>
+                                <div id="support-view-message" style="margin-top:8px;"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-modal-footer">
+                        <button class="btn btn-secondary" id="close-support-view-btn">Close</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Status Modal -->
+            <div id="support-status-modal" class="action-modal">
+                <div class="action-modal-content">
+                    <div class="action-modal-header">
+                        <h2><i class="fas fa-exchange-alt"></i> Change Status</h2>
+                        <button class="modal-close" id="close-support-status-modal"><i
+                                class="fas fa-times"></i></button>
+                    </div>
+                    <div class="action-modal-body">
+                        <form id="support-status-form">
+                            <input type="hidden" id="support-status-ticket-id">
+                            <div class="form-group">
+                                <label for="support-status-select">Status</label>
+                                <select id="support-status-select" class="form-input">
+                                    <option value="open">Open</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="action-modal-footer">
+                        <button class="btn btn-secondary" id="cancel-support-status-btn">Cancel</button>
+                        <button class="btn btn-primary" id="save-support-status-btn"><i class="fas fa-save"></i>
+                            Save</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Delete Modal -->
+            <div id="support-delete-modal" class="action-modal">
+                <div class="action-modal-content">
+                    <div class="action-modal-header">
+                        <h2><i class="fas fa-trash-alt"></i> Delete Ticket</h2>
+                        <button class="modal-close" id="close-support-delete-modal"><i
+                                class="fas fa-times"></i></button>
+                    </div>
+                    <div class="action-modal-body">
+                        <div class="confirmation-content">
+                            <div class="confirmation-icon">
+                                <i class="fas fa-exclamation-triangle text-warning"></i>
+                            </div>
+                            <div class="confirmation-text">
+                                <h4>Confirm Ticket Deletion</h4>
+                                <p>You are about to delete the support ticket for:</p>
+                                <p><strong id="delete-support-username"
+                                        style="color: #1e293b; font-size: 16px;"></strong></p>
+                                <p><strong id="delete-support-subject" style="color: #1e293b;"></strong></p>
+                                <p class="text-warning" style="border-left-color: #d97706;">
+                                    <i class="fas fa-exclamation-triangle"></i> This action cannot be undone.
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="action-modal-footer">
+                        <button class="btn btn-secondary" id="cancel-delete-support-btn">Cancel</button>
+                        <button class="btn btn-danger" id="confirm-delete-support-btn"><i class="fas fa-trash-alt"></i>
+                            Delete Ticket</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Support Reply Modal -->
+            <div id="support-reply-modal" class="action-modal">
+                <div class="action-modal-content">
+                    <div class="action-modal-header">
+                        <h2><i class="fas fa-reply"></i> Reply to Ticket</h2>
+                        <button class="modal-close" id="close-support-reply-modal"><i class="fas fa-times"></i></button>
+                    </div>
+                    <div class="action-modal-body">
+                        <form id="support-reply-form">
+                            <input type="hidden" id="support-reply-ticket-id">
+                            <div class="form-group">
+                                <label for="support-reply-message">Message</label>
+                                <textarea id="support-reply-message" class="form-input" rows="5" required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="action-modal-footer">
+                        <button class="btn btn-secondary" id="cancel-support-reply-btn">Cancel</button>
+                        <button class="btn btn-primary" id="send-support-reply-btn"><i class="fas fa-paper-plane"></i>
+                            Send Reply</button>
+                    </div>
+                </div>
+            </div>
+
+        </main>
+    </div>
+
+    <!-- View Subscription Credentials Modal -->
+    <div id="view-credentials-modal" class="action-modal">
+        <div class="action-modal-content">
+            <div class="action-modal-header">
+                <h2><i class="fas fa-key"></i> Subscription Credentials</h2>
+                <button class="modal-close" id="close-credentials-modal-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="action-modal-body">
+                <div class="credentials-container">
+                    <div class="credential-item">
+                        <div class="credential-label">Email:</div>
+                        <div class="credential-value" id="credential-email"></div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-label">Password:</div>
+                        <div class="credential-value password-field">
+                            <span id="credential-password" class="password-hidden">••••••••</span>
+                            <button class="toggle-password-btn" id="toggle-password-btn">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-label">PIN:</div>
+                        <div class="credential-value" id="credential-pin"></div>
+                    </div>
+                    <div class="credential-item">
+                        <div class="credential-label">Notes:</div>
+                        <div class="credential-value" id="credential-notes"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="action-modal-footer">
+                <button class="btn btn-secondary" id="close-view-credentials-btn">
+                    Close
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Delete Subscription Confirmation Modal -->
+    <div id="delete-subscription-modal" class="action-modal">
+        <div class="action-modal-content">
+            <div class="action-modal-header">
+                <h2><i class="fas fa-trash-alt"></i> Delete Subscription</h2>
+                <button class="modal-close" id="close-delete-subscription-modal-btn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="action-modal-body">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon">
+                        <i class="fas fa-exclamation-triangle text-warning"></i>
+                    </div>
+                    <div class="confirmation-text">
+                        <h4>Confirm Subscription Deletion</h4>
+                        <p>You are about to delete the subscription for:</p>
+                        <p><strong id="delete-subscription-username" style="color: #1e293b; font-size: 16px;"></strong>
+                        </p>
+                        <p><strong id="delete-subscription-name" style="color: #1e293b;"></strong></p>
+                        <p class="text-warning" style="border-left-color: #d97706;">
+                            <i class="fas fa-exclamation-triangle"></i> This action cannot be undone.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="action-modal-footer">
+                <button class="btn btn-secondary" id="cancel-delete-subscription-btn">
+                    Cancel
+                </button>
+                <button class="btn btn-danger" id="confirm-delete-subscription-btn">
+                    <i class="fas fa-trash-alt"></i> Delete Subscription
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div id="email-verification-modal" class="modal" role="dialog" aria-labelledby="verification-title"
+        aria-modal="true">
+        <div class="modal-content">
+            <button type="button" class="modal-close" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h2 id="verification-title">Verify Your Email</h2>
+            <p>We've sent a 6-digit verification code to your email address. Enter the code below to confirm your email.
+            </p>
+            <form id="email-verification-form">
+                <div class="code-input-container">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="First digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Second digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Third digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Fourth digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Fifth digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Sixth digit" placeholder="0">
+                </div>
+                <p class="code-hint">You can paste the code here</p>
+                <button type="submit" class=" btn-primary2 btn  btn-block">
+                    <span class="btn-text">Verify</span>
+                    <span class="btn-loader"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- 2FA Authenticator Modal -->
+    <div class="custom-modal" id="twoFactorAuthModal" aria-hidden="true">
+        <div class="custom-modal-dialog">
+            <div class="custom-modal-content">
+                <div class="custom-modal-header">
+                    <h5 class="custom-modal-title">Set Up Authenticator App</h5>
+
+                </div>
+                <div class="custom-modal-body">
+                    <div id="authQrCodeContainer" class="text-center mb-3"></div>
+                    <label for="authTotpCodeInput" class="custom-form-label">Enter the 6-digit code from your
+                        app:</label>
+                    <input type="text" id="authTotpCodeInput" class="custom-form-control mb-2" maxlength="6"
+                        autocomplete="one-time-code">
+                    <div id="authTotpError" class="text-danger small"></div>
+                </div>
+                <div class="custom-modal-footer">
+                    <button type="button" class="custom-btn custom-btn-secondary" id="2faAuthenticatorclose"
+                        onclick="closeCustomModal('twoFactorAuthModal')">Cancel</button>
+                    <button type="button" class="custom-btn custom-btn-primary" id="verifyTwoFactorAuthBtn"
+                        onclick="verifyAuthenticator()">Enable</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 2FA Email OTP Modal -->
+    <div class="custom-modal" id="emailTwoFactorModal" aria-hidden="true">
+        <div class="custom-modal-dialog">
+            <div class="custom-modal-content">
+                <div class="custom-modal-header">
+                    <h5 class="custom-modal-title">Verify Email for 2FA</h5>
+
+                </div>
+                <div class="custom-modal-body">
+                    <label for="emailTwoFactorInput" class="custom-form-label">Enter the 6-digit code sent to your
+                        email:</label>
+                    <input type="text" id="emailTwoFactorInput" class="custom-form-control mb-2" maxlength="6"
+                        autocomplete="one-time-code">
+                    <div id="emailTwoFactorError" class="text-danger small"></div>
+                </div>
+                <div class="custom-modal-footer">
+                    <button type="button" class="custom-btn custom-btn-secondary" id="2faemailclose">Cancel</button>
+                    <button type="button" class="custom-btn custom-btn-primary"
+                        id="verifyTwoFactorEmailBtn">Enable</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Product Delete Confirmation Modal -->
+    <div id="product-delete-modal" class="action-modal">
+        <div class="action-modal-content">
+            <div class="action-modal-header">
+                <h2><i class="fas fa-trash-alt"></i> Delete Product</h2>
+                <button class="modal-close" onclick="closeProductDeleteModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="action-modal-body">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon">
+                        <i class="fas fa-exclamation-triangle text-warning"></i>
+                    </div>
+                    <div class="confirmation-text">
+                        <h4>Confirm Product Deletion</h4>
+                        <p>You are about to delete the product:</p>
+                        <p><strong id="delete-product-name" style="color: #1e293b; font-size: 16px;"></strong></p>
+                        <p class="text-warning" style="border-left-color: #d97706;"><i
+                                class="fas fa-exclamation-triangle"></i> This action cannot be undone.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="action-modal-footer">
+                <button class="btn btn-secondary" onclick="closeProductDeleteModal()">
+                    Cancel
+                </button>
+                <button class="btn btn-danger" id="confirm-delete-product-btn">
+                    <i class="fas fa-trash-alt"></i> Delete Product
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Slider Delete Confirmation Modal -->
+    <div id="slider-delete-modal" class="action-modal">
+        <div class="action-modal-content">
+            <div class="action-modal-header">
+                <h2><i class="fas fa-trash-alt"></i> Delete Slider</h2>
+                <button class="modal-close" onclick="closeSliderDeleteModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="action-modal-body">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon">
+                        <i class="fas fa-exclamation-triangle text-warning"></i>
+                    </div>
+                    <div class="confirmation-text">
+                        <h4>Confirm Slider Deletion</h4>
+                        <p>You are about to delete the slider:</p>
+                        <p><strong id="delete-slider-name" style="color: #1e293b; font-size: 16px;"></strong></p>
+                        <p class="text-warning" style="border-left-color: #d97706;">
+                            <i class="fas fa-exclamation-triangle"></i> This action cannot be undone.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="action-modal-footer">
+                <button class="btn btn-secondary" onclick="closeSliderDeleteModal()">
+                    Cancel
+                </button>
+                <button class="btn btn-danger" id="confirm-delete-slider-btn">
+                    <i class="fas fa-trash-alt"></i> Delete Slider
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Promo Delete Confirmation Modal -->
+    <div id="promo-delete-modal" class="action-modal">
+        <div class="action-modal-content">
+            <div class="action-modal-header">
+                <h2><i class="fas fa-trash-alt"></i> Delete Promo</h2>
+                <button class="modal-close" onclick="closePromoDeleteModal()">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="action-modal-body">
+                <div class="confirmation-content">
+                    <div class="confirmation-icon">
+                        <i class="fas fa-exclamation-triangle text-warning"></i>
+                    </div>
+                    <div class="confirmation-text">
+                        <h4>Confirm Promo Deletion</h4>
+                        <p>You are about to delete the promo:</p>
+                        <p><strong id="delete-promo-name" style="color: #1e293b; font-size: 16px;"></strong></p>
+                        <p class="text-warning" style="border-left-color: #d97706;">
+                            <i class="fas fa-exclamation-triangle"></i> This action cannot be undone.
+                        </p>
+                    </div>
+                </div>
+            </div>
+            <div class="action-modal-footer">
+                <button class="btn btn-secondary" onclick="closePromoDeleteModal()">
+                    Cancel
+                </button>
+                <button class="btn btn-danger" id="confirm-delete-promo-btn">
+                    <i class="fas fa-trash-alt"></i> Delete Promo
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="../e4jsm2ad/admin.js" type="module"></script>
+    <script src="../e4jsm2ad/admin2.js" type="module"></script>
+
+    <script>
+        // Loading overlay handler
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                const overlay = document.getElementById('loading-overlay');
+                overlay.style.opacity = '0';
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 300); // Wait for fade out animation
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

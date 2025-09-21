@@ -1,0 +1,55 @@
+<style>
+.unsubscribe-container {
+  max-width: 400px;
+  margin: 60px auto;
+  padding: 32px 24px;
+  background: #fff;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+  font-family: 'Segoe UI', Arial, sans-serif;
+}
+.unsubscribe-container h1 {
+  font-size: 2rem;
+  margin-bottom: 16px;
+}
+.unsubscribe-container p {
+  font-size: 1.1rem;
+  color: #444;
+  margin-bottom: 28px;
+}
+.btn {
+  display: inline-block;
+  padding: 12px 32px;
+  background: linear-gradient(90deg, #007bff 0%, #0056b3 100%);
+  color: #fff;
+  border-radius: 6px;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 1rem;
+  transition: background 0.2s, box-shadow 0.2s;
+  box-shadow: 0 2px 8px rgba(0,123,255,0.10);
+}
+.btn:hover {
+  background: linear-gradient(90deg, #0056b3 0%, #007bff 100%);
+  box-shadow: 0 4px 16px rgba(0,123,255,0.15);
+}
+.unsubscribe-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  display: block;
+}
+</style>
+
+<div class="unsubscribe-container">
+  <% if (success) { %>
+    <span class="unsubscribe-icon">✅</span>
+    <h1 style="color: #28a745;">Unsubscribed Successfully</h1>
+    <p>You have been removed from our mailing list. We're sorry to see you go!</p>
+  <% } else { %>
+    <span class="unsubscribe-icon">❌</span>
+    <h1 style="color: #dc3545;">Unsubscribe Failed</h1>
+    <p>We were unable to process your request. Please try again later or contact support.</p>
+  <% } %>
+  <a href="/" class="btn">Back to Home</a>
+</div> 

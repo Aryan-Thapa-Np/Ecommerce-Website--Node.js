@@ -1,0 +1,910 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home - Cartify</title>
+  <link rel="stylesheet" href="../css/homepage.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+<body>
+  <!-- Top Bar -->
+  <div class="top-bar">
+    <div class="top-bar-content">
+      <div class="top-bar-left">
+        <a href="#" class="top-bar-item"><i class="fa-solid fa-headset"></i> Customer Support</a>
+        <a href="#" class="top-bar-item"><i class="fa-solid fa-phone"></i> +977 1-4444444</a>
+      </div>
+      <div class="top-bar-right">
+        <a href="#" class="top-bar-item">Track Order</a>
+        <a href="#" class="top-bar-item">Help Center</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- Main Header -->
+  <header class="header">
+    <div class="header-left">
+      <a href="#" class="logo">
+        <span class="logo-icon"><i class="fa-solid fa-store"></i></span>
+        <h2>Cartify</h2>
+      </a>
+      <nav class="nav-menu">
+        <div class="nav-section">
+          <div class="nav-item dropdown">
+            <a href="#" class="category-btn">
+              <i class="fa-solid fa-bars"></i>
+              Categories
+              <i class="fa-solid fa-chevron-down"></i>
+            </a>
+            <div class="dropdown-content mega-menu">
+              <div class="mega-menu-item">
+                <h3><i class="fa-solid fa-ticket"></i> Subscriptions</h3>
+                <ul>
+                  <li><a href="#">Netflix Premium</a></li>
+                  <li><a href="#">Spotify Premium</a></li>
+                  <li><a href="#">YouTube Premium</a></li>
+                  <li><a href="#">Amazon Prime</a></li>
+                  <li><a href="#">Disney+ Hotstar</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu-item">
+                <h3><i class="fa-solid fa-gamepad"></i> Game Top-up</h3>
+                <ul>
+                  <li><a href="#">Clash of Clans</a></li>
+                  <li><a href="#">Clash Royale</a></li>
+                  <li><a href="#">PUBG Mobile</a></li>
+                  <li><a href="#">Free Fire</a></li>
+                  <li><a href="#">Mobile Legends</a></li>
+                  <li><a href="#">Steam Wallet</a></li>
+                </ul>
+              </div>
+              <div class="mega-menu-item">
+                <h3><i class="fa-solid fa-box"></i> Products</h3>
+                <ul>
+                  <li><a href="#">Home Decor</a></li>
+                  <li><a href="#">Electronics</a></li>
+                  <li><a href="#">Fashion</a></li>
+                  <li><a href="#">Beauty</a></li>
+                  <li><a href="#">Sports</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </div>
+    <div class="header-right">
+      <div class="search-bar">
+        <input class="search-input" type="text" placeholder="Search for products, brands...">
+        <span class="search-icon"><i class="fa-solid fa-magnifying-glass"></i></span>
+      </div>
+      <button class="mobile-search-btn" title="Search">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+      <button class="header-btn" title="Notifications">
+        <i class="fa-regular fa-bell"></i>
+        <span class="notification-badge">3</span>
+      </button>
+      <button class="header-btn" title="Wishlist">
+        <i class="fa-regular fa-heart"></i>
+        <span class="notification-badge">5</span>
+      </button>
+      <button class="header-btn" title="Cart">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span class="notification-badge">2</span>
+      </button>
+      <div class="user-menu">
+        <img src="https://randomuser.me/api/portraits/men/32.jpg" class="user-avatar" alt="User">
+        <div class="user-info">
+          <h4>John Doe</h4>
+          <p>Profile</p>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Mobile Search Container -->
+  <div class="mobile-search-container">
+    <form class="mobile-search-form">
+      <input type="text" class="mobile-search-input" placeholder="Search for products, brands...">
+      <button type="submit" class="btn btn-primary">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+  </div>
+
+  <!-- Main Content -->
+  <main class="page-content">
+    <!-- Image Slider -->
+    <section class="slider">
+      <button class="slider-nav prev"><i class="fa-solid fa-chevron-left"></i></button>
+      <button class="slider-nav next"><i class="fa-solid fa-chevron-right"></i></button>
+      <div class="slider-track">
+        <div class="slider-item">
+          <img class="slider-img" src="https://images.unsplash.com/photo-1519125323398-675f0ddb6308?auto=format&fit=crop&w=1920&q=80" alt="Special Offer">
+        </div>
+        <div class="slider-item">
+          <img class="slider-img" src="https://images.unsplash.com/photo-1506744038136-46273834b3fb?auto=format&fit=crop&w=1920&q=80" alt="New Collection">
+        </div>
+        <div class="slider-item">
+          <img class="slider-img" src="https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=1920&q=80" alt="Summer Sale">
+        </div>
+      </div>
+      <div class="slider-dots"></div>
+    </section>
+
+    <!-- Marquee Products Section -->
+    <section class="marquee-section">
+      <div class="marquee-track">
+        <!-- First set of items -->
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" alt="Product" class="marquee-img">
+        </div>
+
+        <!-- Duplicate set for seamless loop -->
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1505740420928-5e560c06d30e?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1546868871-7041f2a55e12?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1583394838336-acd977736f90?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1585386959984-a4155224a1ad?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1572635196237-14b3f281503f?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1526170375885-4d8ecf77b99f?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1485955900006-10f4d324d411?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=300" alt="Product" class="marquee-img">
+        </div>
+        <div class="marquee-item">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=300" alt="Product" class="marquee-img">
+        </div>
+      </div>
+    </section>
+
+    <!-- Update the Subscriptions Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Popular Subscriptions</h2>
+        <a href="#" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="subscriptions-slider slider">
+        <button class="slider-nav prev"><i class="fa-solid fa-chevron-left"></i></button>
+        <button class="slider-nav next"><i class="fa-solid fa-chevron-right"></i></button>
+        <div class="subscriptions-track">
+          <div class="subscriptions-item">
+            <img class="subscriptions-logo" src="https://upload.wikimedia.org/wikipedia/commons/0/08/Netflix_2015_logo.svg" alt="Netflix">
+            <div class="subscription-title">Netflix Premium</div>
+            <div class="subscription-price">NPR 1,099/month</div>
+            <ul class="subscription-features">
+              <li><i class="fa-solid fa-check"></i> 4K + HDR Quality</li>
+              <li><i class="fa-solid fa-check"></i> Watch on 4 devices</li>
+              <li><i class="fa-solid fa-check"></i> Ad-free experience</li>
+              <li><i class="fa-solid fa-check"></i> Download & watch offline</li>
+            </ul>
+            <button class="btn btn-primary">Subscribe Now</button>
+          </div>
+          <div class="subscriptions-item">
+            <img class="subscriptions-logo" src="https://upload.wikimedia.org/wikipedia/commons/2/26/Spotify_logo_with_text.svg" alt="Spotify">
+            <div class="subscription-title">Spotify Premium</div>
+            <div class="subscription-price">NPR 599/month</div>
+            <ul class="subscription-features">
+              <li><i class="fa-solid fa-check"></i> Ad-free music</li>
+              <li><i class="fa-solid fa-check"></i> High quality audio</li>
+              <li><i class="fa-solid fa-check"></i> Download tracks</li>
+              <li><i class="fa-solid fa-check"></i> Group sessions</li>
+            </ul>
+            <button class="btn btn-primary">Subscribe Now</button>
+          </div>
+          <div class="subscriptions-item">
+            <img class="subscriptions-logo" src="https://upload.wikimedia.org/wikipedia/commons/4/4f/YouTube_Music_icon_%282020%29.svg" alt="YouTube Premium">
+            <div class="subscription-title">YouTube Premium</div>
+            <div class="subscription-price">NPR 849/month</div>
+            <ul class="subscription-features">
+              <li><i class="fa-solid fa-check"></i> Ad-free videos</li>
+              <li><i class="fa-solid fa-check"></i> Background play</li>
+              <li><i class="fa-solid fa-check"></i> YouTube Music included</li>
+              <li><i class="fa-solid fa-check"></i> Download videos</li>
+            </ul>
+            <button class="btn btn-primary">Subscribe Now</button>
+          </div>
+          <div class="subscriptions-item">
+            <img class="subscriptions-logo" src="https://upload.wikimedia.org/wikipedia/commons/4/44/Prime_Video.png" alt="Prime Video">
+            <div class="subscription-title">Prime Video</div>
+            <div class="subscription-price">NPR 799/month</div>
+            <ul class="subscription-features">
+              <li><i class="fa-solid fa-check"></i> 4K streaming</li>
+              <li><i class="fa-solid fa-check"></i> Multiple profiles</li>
+              <li><i class="fa-solid fa-check"></i> Prime benefits included</li>
+              <li><i class="fa-solid fa-check"></i> Watch on any device</li>
+            </ul>
+            <button class="btn btn-primary">Subscribe Now</button>
+          </div>
+        </div>
+        <div class="slider-dots"></div>
+      </div>
+    </section>
+
+    <!-- Game Top-up Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Game Top-up</h2>
+        <a href="#" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="game-grid">
+        <div class="game-card">
+          <img src="https://play-lh.googleusercontent.com/LByrur1mTmPeNr0ljI-uAUcct1rzmTve5Esau1SwoAzjBXQUby6uHIfHbF9TAT51mgHm" alt="Clash of Clans" class="game-img">
+          <div class="game-content">
+            <h3>Clash of Clans</h3>
+            <p>Gems & Resources</p>
+            <div class="price-range">NPR 500 - NPR 10,000</div>
+            <button class="btn btn-primary">Top Up Now</button>
+          </div>
+        </div>
+        <div class="game-card">
+          <img src="https://play-lh.googleusercontent.com/LByrur1mTmPeNr0ljI-uAUcct1rzmTve5Esau1SwoAzjBXQUby6uHIfHbF9TAT51mgHm" alt="Clash of Clans Gold Pass" class="game-img">
+          <div class="game-content">
+            <span class="game-pass-tag">Gold Pass</span>
+            <h3>Clash of Clans</h3>
+            <p>Monthly Gold Pass</p>
+            <div class="price-range">NPR 1,099/month</div>
+            <button class="btn btn-primary">Subscribe</button>
+          </div>
+        </div>
+        <div class="game-card">
+          <img src="https://play-lh.googleusercontent.com/rIvZQ_H3hfmexC8vurmLczLtMNBFtxCEdmb2NwkSPz2ZuJJ5nRPD0HbSJ7YTyFGdADQ" alt="Clash Royale" class="game-img">
+          <div class="game-content">
+            <h3>Clash Royale</h3>
+            <p>Gems & Gold</p>
+            <div class="price-range">NPR 400 - NPR 8,000</div>
+            <button class="btn btn-primary">Top Up Now</button>
+          </div>
+        </div>
+        <div class="game-card">
+          <img src="https://play-lh.googleusercontent.com/rIvZQ_H3hfmexC8vurmLczLtMNBFtxCEdmb2NwkSPz2ZuJJ5nRPD0HbSJ7YTyFGdADQ" alt="Clash Royale Pass" class="game-img">
+          <div class="game-content">
+            <span class="game-pass-tag">Royal Pass</span>
+            <h3>Clash Royale</h3>
+            <p>Monthly Royal Pass</p>
+            <div class="price-range">NPR 899/month</div>
+            <button class="btn btn-primary">Subscribe</button>
+          </div>
+        </div>
+        <div class="game-card">
+          <img src="https://play-lh.googleusercontent.com/JRd05pyBH41qjgsJuWduRJpDeZG0Hnb0yjf2nWqO7VaGKL10-G5UIygxED-WNOc3pg" alt="PUBG Mobile" class="game-img">
+          <div class="game-content">
+            <h3>PUBG Mobile</h3>
+            <p>UC Top-up</p>
+            <div class="price-range">NPR 300 - NPR 15,000</div>
+            <button class="btn btn-primary">Top Up Now</button>
+          </div>
+        </div>
+        <div class="game-card">
+          <img src="https://play-lh.googleusercontent.com/JRd05pyBH41qjgsJuWduRJpDeZG0Hnb0yjf2nWqO7VaGKL10-G5UIygxED-WNOc3pg" alt="PUBG Royal Pass" class="game-img">
+          <div class="game-content">
+            <span class="game-pass-tag">Royal Pass</span>
+            <h3>PUBG Mobile</h3>
+            <p>Season Royal Pass</p>
+            <div class="price-range">NPR 999/season</div>
+            <button class="btn btn-primary">Subscribe</button>
+          </div>
+        </div>
+        <div class="game-card">
+          <img src="https://cdn.cloudflare.steamstatic.com/steam/apps/753640/header.jpg" alt="Steam" class="game-img">
+          <div class="game-content">
+            <h3>Steam Wallet</h3>
+            <p>Add funds to Steam wallet</p>
+            <div class="price-range">NPR 500 - NPR 20,000</div>
+            <button class="btn btn-primary">Top Up Now</button>
+          </div>
+        </div>
+        <div class="game-card">
+          <img src="https://play-lh.googleusercontent.com/VHB9bVB8cTcnqwnu0nJqKYbiutRclnbGxTpwnayKB4vMxZj8pk1220Rg-6oQ68DwAkqO=w240-h480-rw" alt="Free Fire" class="game-img">
+          <div class="game-content">
+            <h3>Free Fire</h3>
+            <p>Diamonds & Items</p>
+            <div class="price-range">NPR 200 - NPR 5,000</div>
+            <button class="btn btn-primary">Top Up Now</button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="section">
+      <div class="section-header">
+        <h2 class="section-title">Featured Products</h2>
+        <a href="#" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+      </div>
+      <div class="products-grid">
+        <div class="product-card">
+          <img class="product-img" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=400&q=80" alt="Watch">
+          <div class="product-content">
+            <div class="product-tags">
+              <span class="tag tag-new">New Arrival</span>
+              <span class="tag tag-discount">-20%</span>
+            </div>
+            <h3 class="product-title">Smart Watch Pro</h3>
+            <div class="product-price">NPR 15,999 <span class="price-original">NPR 19,999</span></div>
+            <div class="product-meta">
+              <div class="product-rating">
+                <i class="fa-solid fa-star"></i> 4.7 (210 reviews)
+              </div>
+              <div class="text-success"><i class="fa-solid fa-check-circle"></i> In Stock</div>
+            </div>
+          </div>
+        </div>
+        <!-- More product cards... -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="newsletter-section">
+        <div class="newsletter-content">
+          <h2>Subscribe to Our Newsletter</h2>
+          <p>Stay updated with our latest deals and offers</p>
+          <form class="newsletter-form">
+            <div class="newsletter-input-group">
+              <input type="email" class="newsletter-input" placeholder="Enter your email address" required>
+              <button type="submit" class="newsletter-btn">Subscribe</button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <div class="footer-grid">
+        <div class="footer-section">
+          <h3>Quick Links</h3>
+          <ul class="footer-links">
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#">FAQs</a></li>
+            <li><a href="#">Support</a></li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Contact Us</h3>
+          <ul class="footer-links">
+            <li><i class="fa-solid fa-phone"></i> +977 1-4444444</li>
+            <li><i class="fa-solid fa-envelope"></i> support@yourshop.com</li>
+            <li><i class="fa-solid fa-location-dot"></i> Kathmandu, Nepal</li>
+          </ul>
+        </div>
+        <div class="footer-section">
+          <h3>Follow Us</h3>
+          <div class="social-links">
+            <a href="#"><i class="fab fa-facebook"></i></a>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+            <a href="#"><i class="fab fa-linkedin"></i></a>
+          </div>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>&copy; 2024 YourShop. All rights reserved.</p>
+        <div class="footer-bottom-links">
+          <a href="#">Privacy Policy</a>
+          <span>|</span>
+          <a href="#">Terms of Service</a>
+          <span>|</span>
+          <a href="#">Refund Policy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Navigation -->
+  <nav class="mobile-bottom-nav">
+    <div class="mobile-nav-grid">
+      <a href="#" class="mobile-nav-item active">
+        <i class="fa-solid fa-house"></i>
+        <span>Home</span>
+      </a>
+      <a href="#" class="mobile-nav-item">
+        <i class="fa-solid fa-gamepad"></i>
+        <span>Games</span>
+      </a>
+      <a href="#" class="mobile-nav-item">
+        <i class="fa-solid fa-ticket"></i>
+        <span>Subscriptions</span>
+      </a>
+      <a href="#" class="mobile-nav-item">
+        <i class="fa-solid fa-cart-shopping"></i>
+        <span>Cart</span>
+      </a>
+      <a href="#" class="mobile-nav-item">
+        <i class="fa-solid fa-user"></i>
+        <span>Profile</span>
+      </a>
+    </div>
+  </nav>
+
+  <script>
+    // Main Slider Class for Hero Section
+    class MainSlider {
+      constructor(element) {
+        this.slider = element;
+        this.track = element.querySelector('.slider-track');
+        if (!this.track) return;
+
+        this.slides = Array.from(this.track.children);
+        if (this.slides.length === 0) return;
+
+        this.dotsContainer = element.querySelector('.slider-dots');
+        this.prevButton = element.querySelector('.prev');
+        this.nextButton = element.querySelector('.next');
+
+        this.currentIndex = 0;
+        this.slideWidth = 0;
+        this.autoplayInterval = null;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.touchStartY = 0;
+        this.touchEndY = 0;
+        this.isScrolling = undefined;
+        this.isDragging = false;
+        this.startPos = 0;
+        this.currentTranslate = 0;
+        this.prevTranslate = 0;
+
+        this.init();
+      }
+
+      init() {
+        this.calculateSlideWidth();
+        this.createDots();
+        this.updateDots();
+        this.addEventListeners();
+        this.startAutoplay();
+        this.goToSlide(0);
+
+        window.addEventListener('resize', () => {
+          this.calculateSlideWidth();
+          this.goToSlide(this.currentIndex);
+        });
+      }
+
+      calculateSlideWidth() {
+        this.slideWidth = this.slider.offsetWidth;
+      }
+
+      createDots() {
+        if (!this.dotsContainer) return;
+        this.dotsContainer.innerHTML = '';
+        this.slides.forEach((_, index) => {
+          const dot = document.createElement('button');
+          dot.classList.add('slider-dot');
+          dot.addEventListener('click', () => this.goToSlide(index));
+          this.dotsContainer.appendChild(dot);
+        });
+      }
+
+      updateDots() {
+        if (!this.dotsContainer) return;
+        Array.from(this.dotsContainer.children).forEach((dot, index) => {
+          dot.classList.toggle('active', index === this.currentIndex);
+        });
+      }
+
+      addEventListeners() {
+        // Touch events with better handling
+        this.track.addEventListener('touchstart', (e) => {
+          this.stopAutoplay();
+          if (e.touches.length > 1) return; // Ignore multi-touch
+
+          this.isDragging = true;
+          this.touchStartX = e.touches[0].clientX;
+          this.touchStartY = e.touches[0].clientY;
+          this.startPos = this.touchStartX;
+          this.isScrolling = undefined;
+
+          // Add active class for visual feedback
+          this.track.classList.add('touching');
+        }, { passive: true });
+
+        this.track.addEventListener('touchmove', (e) => {
+          if (!this.isDragging) return;
+          
+          const currentX = e.touches[0].clientX;
+          const currentY = e.touches[0].clientY;
+          const diffX = currentX - this.touchStartX;
+          const diffY = currentY - this.touchStartY;
+
+          // Determine scroll direction on first move
+          if (typeof this.isScrolling === 'undefined') {
+            this.isScrolling = Math.abs(diffY) > Math.abs(diffX);
+          }
+
+          if (this.isScrolling) {
+            this.isDragging = false;
+            return;
+          }
+
+          e.preventDefault();
+          this.currentTranslate = this.prevTranslate + diffX;
+          this.setSliderPosition(this.currentTranslate);
+        }, { passive: false });
+
+        this.track.addEventListener('touchend', (e) => {
+          if (!this.isDragging) return;
+          
+          this.isDragging = false;
+          this.track.classList.remove('touching');
+          
+          const movedBy = e.changedTouches[0].clientX - this.startPos;
+          
+          if (Math.abs(movedBy) > this.slideWidth * 0.2) {
+            if (movedBy < 0) {
+              this.next();
+            } else {
+              this.prev();
+            }
+          } else {
+            this.goToSlide(this.currentIndex);
+          }
+          
+          this.startAutoplay();
+        }, { passive: true });
+
+        // Navigation buttons
+        if (this.prevButton) {
+          this.prevButton.addEventListener('click', () => {
+            this.stopAutoplay();
+            this.prev();
+            this.startAutoplay();
+          });
+        }
+
+        if (this.nextButton) {
+          this.nextButton.addEventListener('click', () => {
+            this.stopAutoplay();
+            this.next();
+            this.startAutoplay();
+          });
+        }
+
+        // Mouse enter/leave
+        this.slider.addEventListener('mouseenter', () => this.stopAutoplay());
+        this.slider.addEventListener('mouseleave', () => this.startAutoplay());
+      }
+
+      setSliderPosition(position) {
+        this.track.style.transform = `translateX(${position}px)`;
+      }
+
+      next() {
+        this.goToSlide((this.currentIndex + 1) % this.slides.length);
+      }
+
+      prev() {
+        this.goToSlide((this.currentIndex - 1 + this.slides.length) % this.slides.length);
+      }
+
+      goToSlide(index) {
+        this.currentIndex = index;
+        this.prevTranslate = -this.currentIndex * this.slideWidth;
+        this.currentTranslate = this.prevTranslate;
+        this.track.style.transition = 'transform 0.5s ease';
+        this.setSliderPosition(this.currentTranslate);
+        this.updateDots();
+      }
+
+      startAutoplay() {
+        this.stopAutoplay();
+        this.autoplayInterval = setInterval(() => this.next(), 5000);
+      }
+
+      stopAutoplay() {
+        if (this.autoplayInterval) {
+          clearInterval(this.autoplayInterval);
+          this.autoplayInterval = null;
+        }
+      }
+    }
+
+    // Subscription Slider Class
+    class SubscriptionSlider {
+      constructor(element) {
+        this.slider = element;
+        this.track = element.querySelector('.subscriptions-track');
+        if (!this.track) return;
+
+        this.slides = Array.from(this.track.children);
+        if (this.slides.length === 0) return;
+
+        this.prevButton = element.querySelector('.prev');
+        this.nextButton = element.querySelector('.next');
+
+        this.currentIndex = 0;
+        this.cardWidth = 0;
+        this.gap = 24; // 1.5rem gap
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.touchStartY = 0;
+        this.touchEndY = 0;
+        this.autoplayInterval = null;
+        this.isScrolling = false;
+
+        // Set touch-action to manipulation for better touch handling
+        this.slider.style.touchAction = 'pan-y pan-x';
+        this.track.style.touchAction = 'pan-y pan-x';
+        this.slides.forEach(slide => {
+          slide.style.touchAction = 'pan-y pan-x';
+        });
+
+        this.init();
+      }
+
+      init() {
+        this.calculateCardWidth();
+        this.addEventListeners();
+        this.updateNavigation();
+        this.startAutoplay();
+
+        window.addEventListener('resize', () => {
+          this.calculateCardWidth();
+          this.goToSlide(this.currentIndex);
+        });
+      }
+
+      calculateCardWidth() {
+        const firstCard = this.slides[0];
+        this.cardWidth = firstCard.offsetWidth + this.gap;
+        this.visibleCards = Math.floor(this.slider.offsetWidth / this.cardWidth);
+        this.maxScroll = Math.max(0, this.slides.length - this.visibleCards);
+      }
+
+      addEventListeners() {
+        // Touch event handling
+        this.track.addEventListener('touchstart', (e) => {
+          if (e.touches.length > 1) return; // Ignore multi-touch
+          this.stopAutoplay();
+          this.touchStartX = e.touches[0].clientX;
+          this.touchStartY = e.touches[0].pageY;
+          this.isScrolling = undefined;
+        }, { passive: true });
+
+        this.track.addEventListener('touchmove', (e) => {
+          if (e.touches.length > 1) return; // Ignore multi-touch
+          
+          const touchCurrentX = e.touches[0].clientX;
+          const touchCurrentY = e.touches[0].pageY;
+          const deltaX = touchCurrentX - this.touchStartX;
+          const deltaY = touchCurrentY - this.touchStartY;
+
+          // Determine scroll direction on first move
+          if (typeof this.isScrolling === 'undefined') {
+            this.isScrolling = Math.abs(deltaY) > Math.abs(deltaX);
+          }
+
+          // If vertical scrolling, don't prevent default behavior
+          if (this.isScrolling) {
+            return;
+          }
+
+          // If horizontal swiping, prevent unintended vertical scroll
+          if (Math.abs(deltaX) > 10 && !this.isScrolling) {
+            e.preventDefault();
+          }
+        }, { passive: false });
+
+        this.track.addEventListener('touchend', (e) => {
+          if (this.isScrolling) {
+            this.startAutoplay();
+            return;
+          }
+
+          this.touchEndX = e.changedTouches[0].clientX;
+          this.touchEndY = e.changedTouches[0].pageY;
+          
+          const swipeDistanceX = this.touchEndX - this.touchStartX;
+          
+          // Only handle horizontal swipes
+          if (Math.abs(swipeDistanceX) > 50) {
+            if (swipeDistanceX > 0) {
+              this.prev();
+            } else {
+              this.next();
+            }
+          }
+          
+          this.startAutoplay();
+        }, { passive: true });
+
+        // Navigation buttons
+        if (this.prevButton) {
+          this.prevButton.addEventListener('click', () => {
+            this.stopAutoplay();
+            this.prev();
+            this.startAutoplay();
+          });
+        }
+
+        if (this.nextButton) {
+          this.nextButton.addEventListener('click', () => {
+            this.stopAutoplay();
+            this.next();
+            this.startAutoplay();
+          });
+        }
+
+        // Mouse enter/leave for autoplay control
+        this.slider.addEventListener('mouseenter', () => this.stopAutoplay());
+        this.slider.addEventListener('mouseleave', () => this.startAutoplay());
+      }
+
+      next() {
+        if (this.currentIndex < this.maxScroll) {
+          this.goToSlide(this.currentIndex + 1);
+        } else {
+          this.goToSlide(0);
+        }
+      }
+
+      prev() {
+        if (this.currentIndex > 0) {
+          this.goToSlide(this.currentIndex - 1);
+        }
+      }
+
+      goToSlide(index) {
+        this.currentIndex = index;
+        const offset = -this.currentIndex * this.cardWidth;
+        this.track.style.transition = 'transform 0.5s ease';
+        this.track.style.transform = `translateX(${offset}px)`;
+        this.updateNavigation();
+      }
+
+      updateNavigation() {
+        if (this.prevButton) {
+          this.prevButton.style.display = this.currentIndex > 0 ? 'flex' : 'none';
+        }
+        if (this.nextButton) {
+          this.nextButton.style.display = this.currentIndex < this.maxScroll ? 'flex' : 'none';
+        }
+      }
+
+      startAutoplay() {
+        this.stopAutoplay();
+        this.autoplayInterval = setInterval(() => this.next(), 4000);
+      }
+
+      stopAutoplay() {
+        if (this.autoplayInterval) {
+          clearInterval(this.autoplayInterval);
+          this.autoplayInterval = null;
+        }
+      }
+    }
+
+    // Mobile Navigation Scroll Behavior
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+
+    function updateMobileNav() {
+      const mobileNav = document.querySelector('.mobile-bottom-nav');
+      if (!mobileNav) return;
+
+      if (window.scrollY > lastScrollY) { // Scrolling down
+        mobileNav.style.transform = 'translateY(0)';
+      } else { // Scrolling up
+        mobileNav.style.transform = 'translateY(100%)';
+      }
+
+      lastScrollY = window.scrollY;
+      ticking = false;
+    }
+
+    window.addEventListener('scroll', () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          updateMobileNav();
+        });
+        ticking = true;
+      }
+    });
+
+    // Initialize sliders when DOM is ready
+    document.addEventListener('DOMContentLoaded', () => {
+      // Initialize main slider
+      const mainSlider = document.querySelector('.slider:not(.subscriptions-slider)');
+      if (mainSlider) {
+        new MainSlider(mainSlider);
+      }
+
+      // Initialize subscription slider
+      const subscriptionSlider = document.querySelector('.subscriptions-slider');
+      if (subscriptionSlider) {
+        new SubscriptionSlider(subscriptionSlider);
+      }
+    });
+  </script>
+
+  <script>
+    // Mobile Search Functionality
+    document.addEventListener('DOMContentLoaded', () => {
+      const searchBtn = document.querySelector('.mobile-search-btn');
+      const searchContainer = document.querySelector('.mobile-search-container');
+      const searchInput = document.querySelector('.mobile-search-input');
+      let isSearchVisible = false;
+
+      // Toggle search container
+      searchBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        isSearchVisible = !isSearchVisible;
+        searchContainer.classList.toggle('active', isSearchVisible);
+        if (isSearchVisible) {
+          searchInput.focus();
+        }
+      });
+
+      // Close search when clicking outside
+      document.addEventListener('click', (e) => {
+        if (isSearchVisible && !searchContainer.contains(e.target) && e.target !== searchBtn) {
+          isSearchVisible = false;
+          searchContainer.classList.remove('active');
+        }
+      });
+
+      // Prevent search container from closing when clicking inside it
+      searchContainer.addEventListener('click', (e) => {
+        e.stopPropagation();
+      });
+
+      // Handle form submission
+      const searchForm = document.querySelector('.mobile-search-form');
+      searchForm.addEventListener('submit', (e) => {
+        e.preventDefault();
+        // Add your search logic here
+        console.log('Search query:', searchInput.value);
+        // Optionally close the search container
+        isSearchVisible = false;
+        searchContainer.classList.remove('active');
+      });
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,337 @@
+<% function normalizeImageUrl(url) { if (!url) return url; url = url.replace(/\\/g, '/'); if (url.startsWith('public/')) return '/' + url.slice(7); if (url.startsWith('/public/')) return '/' + url.slice(8); return url; } %>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= typeof title !=='undefined' ? title : 'Cartify' %></title>
+  <meta name="description" content="<%= product.meta_description || product.description || 'Product details' %>">
+  <meta name="keywords" content="<%= product.seo_keywords || '' %>">
+
+  <!-- Default CSS -->
+  <link rel="stylesheet" href="/css/homepage.css">
+  <link rel="stylesheet" href="/css/utils/header+footer.css">
+  <link rel="stylesheet" href="/css/product-details.css">
+  <link rel="stylesheet" href="/css/utils/toast.css">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <style>
+    .media-gallery-thumbnails .gallery-thumb.active {
+      border: 2px solid #2563eb; /* blue-600 */
+      box-shadow: 0 0 0 2px #93c5fd; /* blue-300 */
+    }
+  </style>
+</head>
+
+<body>
+  <!-- Loading Overlay -->
+  <div id="loading-overlay" class="loading-overlay">
+    <div class="loading-content">
+      <div class="loading-spinner"></div>
+      <p>Loading product details...</p>
+    </div>
+  </div>
+
+  <%- include('partials/header') %>
+
+  <div class="page-content">
+    <div class="product-details-container">
+      <!-- Product Type Badge -->
+      <div class="product-type-badge product">
+        <i class="fa-solid fa-box"></i> Product
+      </div>
+
+      <div class="product-main">
+        <div class="product-image">
+          <% let discount = null;
+             if (product.original_price && product.original_price > product.current_price) {
+               discount = Math.round(100 * (product.original_price - product.current_price) / product.original_price);
+             }
+          %>
+          <% if (discount) { %>
+            <span class="discount-label"><%= discount %>% OFF</span>
+          <% } %>
+          <!-- Main Media Display -->
+          <div id="main-media-container" style="width:100%;height:400px;display:flex;align-items:center;justify-content:center; object-fit:contain;">
+            <% let galleryMedia = (product.media && product.media.length > 0) ? product.media : [{ media_url: product.image_url, media_type: 'image', id: 'fallback' }]; %>
+            <% let firstMedia = galleryMedia[0]; %>
+            <% if (firstMedia.media_type === 'video' || (firstMedia.media_url && /\.(mp4|webm|mov|avi|mkv)$/i.test(firstMedia.media_url))) { %>
+              <video id="main-media" src="<%= normalizeImageUrl(firstMedia.media_url) %>" class="main-image" style="width:100%;height:100%;object-fit:contain;border-radius:0.75rem;" controls autoplay></video>
+            <% } else { %>
+              <img id="main-media" src="<%= normalizeImageUrl(firstMedia.media_url) %>" alt="<%= product.name %>" class="main-image" style="width:100%;height:100%;object-fit:contain;border-radius:0.75rem;" />
+            <% } %>
+          </div>
+        </div>
+        <div class="product-info">
+          <h1 class="product-title"><%= product.name %></h1>
+          <% if (product.tags && Array.isArray(product.tags) && product.tags.length > 0) { %>
+            <div class="product-tags">
+              <% product.tags.forEach(function(tag) { %>
+                <span class="tag <%= tag.includes('New') ? 'tag-new' : tag.includes('-') ? 'tag-discount' : '' %>"><%= tag %></span>
+              <% }); %>
+            </div>
+          <% } %>
+          <div class="product-price">
+            <div class="current-price">NPR <%= product.current_price.toLocaleString() %></div>
+            <% if (product.original_price && product.original_price > product.current_price) { %>
+              <div class="original-price">NPR <%= product.original_price.toLocaleString() %></div>
+            <% } %>
+          </div>
+          <div class="product-meta">
+            <div class="product-rating">
+              <i class="fa-solid fa-star"></i>
+              <span><%= product.rating %></span>
+              <span class="review-count">(<%= product.review_count %> reviews)</span>
+            </div>
+            <div class="stock-status <%= product.stock_status %>">
+              <i class="fa-solid fa-<%= product.stock_status === 'in_stock' ? 'check' : 'times' %>-circle"></i>
+              <%= product.stock_status === 'in_stock' ? 'In Stock' : 'Out of Stock' %>
+            </div>
+          </div>
+          <div class="product-description">
+            <%= product.description %>
+          </div>
+          <!-- Gallery Thumbnails moved here -->
+          <div class="media-gallery-thumbnails" style="display:flex;gap:0.5rem;justify-content:center;margin-bottom:1rem;">
+            <% galleryMedia.forEach(function(m, idx) { %>
+              <% let isActive = idx === 0 ? 'active' : ''; %>
+              <% if (m.media_type === 'video' || (m.media_url && /\.(mp4|webm|mov|avi|mkv)$/i.test(m.media_url))) { %>
+                <video class="gallery-thumb <%= isActive %>" data-idx="<%= idx %>" src="<%= normalizeImageUrl(m.media_url) %>" style="width:60px;height:60px;object-fit:cover;border-radius:0.5rem;cursor:pointer;" muted preload="metadata"></video>
+              <% } else { %>
+                <img class="gallery-thumb <%= isActive %>" data-idx="<%= idx %>" src="<%= normalizeImageUrl(m.media_url) %>" alt="thumb" style="width:60px;height:60px;object-fit:cover;border-radius:0.5rem;cursor:pointer;" />
+              <% } %>
+            <% }); %>
+          </div>
+          <div class="quantity-controls">
+            <button class="quantity-btn minus" aria-label="Decrease quantity">
+                <i class="fa-solid fa-minus"></i>
+            </button>
+            <input type="number" class="quantity-input" value="1" min="1" max="99">
+            <button class="quantity-btn plus" aria-label="Increase quantity">
+                <i class="fa-solid fa-plus"></i>
+            </button>
+          </div>
+
+          <div class="product-actions">
+          
+            <button class="btn btn-primary add-to-cart-btn" <%= product.stock_status !== 'in_stock' ? 'disabled' : '' %>>
+              <i class="fa-solid fa-cart-plus"></i> Add to Cart
+            </button>
+            <button class="btn btn-outline add-to-wishlist-btn">
+              <i class="fa-regular fa-heart"></i> Add to Wishlist
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Long Description Section -->
+      <div class="long-description-section" style="background:white; border-radius:1rem; margin:2rem 0; padding:2rem; box-shadow:0 4px 12px rgba(0,0,0,0.05);">
+        <h2 style="font-size:1.25rem; font-weight:600; margin-bottom:1rem;">Description</h2>
+        <% if (product.long_description && product.long_description.trim()) { %>
+          <div class="long-description-content">
+            <%= product.long_description %>
+          </div>
+        <% } else { %>
+          <div class="long-description-content" style="color:#888;">Not available.</div>
+        <% } %>
+      </div>
+
+      <!-- Reviews Section -->
+      <div class="reviews-section">
+        <div class="section-header">
+          <h2>Customer Reviews</h2>
+          <% if (user) { %>
+            <button class="btn btn-primary write-review-btn">
+              <i class="fa-solid fa-pen"></i> Write a Review
+            </button>
+          <% } else { %>
+            <a href="/login?redirect=<%= encodeURIComponent(currentUrl) %>" class="btn btn-primary">
+              <i class="fa-solid fa-sign-in"></i> Login to Review
+            </a>
+          <% } %>
+        </div>
+
+        <div class="reviews-summary">
+          <div class="rating-overview">
+            <div class="average-rating">
+              <span class="rating-number"><%= (product.rating || 0).toFixed(1) %></span>
+              <div class="rating-stars">
+                <% for(let i=1; i <=5; i++) { %>
+                  <i class="fa-<%= i <= Math.round(product.rating || 0) ? 'solid' : 'regular' %> fa-star"></i>
+                <% } %>
+              </div>
+              <span class="total-reviews">(<%= product.review_count || 0 %> reviews)</span>
+            </div>
+          </div>
+          <div class="reviews-filter">
+            <select class="sort-reviews">
+              <option value="newest">Newest First</option>
+              <option value="helpful">Most Helpful</option>
+              <option value="rating">Highest Rated</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Reviews List -->
+        <div class="reviews-list">
+          <!-- Reviews will be loaded dynamically -->
+          <div class="loading-reviews">
+            <div class="spinner"></div>
+            <p>Loading reviews...</p>
+          </div>
+        </div>
+
+        <!-- Review Pagination -->
+        <div class="reviews-pagination">
+          <!-- Pagination will be added dynamically -->
+        </div>
+      </div>
+
+      <!-- Similar Products Section -->
+      <div class="similar-products-section">
+        <div class="section-header">
+          <h2>Similar Products</h2>
+          <a href="#" class="view-all">View All <i class="fa-solid fa-arrow-right"></i></a>
+        </div>
+        <div class="similar-products-grid">
+          <!-- Similar products will be loaded dynamically -->
+          <div class="loading-similar">
+            <div class="spinner"></div>
+            <p>Loading similar products...</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Review Modal -->
+      <div class="modal review-modal">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h3>Write a Review</h3>
+            <button class="modal-close">
+              <i class="fa-solid fa-times"></i>
+            </button>
+          </div>
+          <div class="modal-body">
+            <form id="reviewForm">
+              <div class="form-group">
+                <label>Rating</label>
+                <div class="rating-input">
+                  <% for(let i=5; i>= 1; i--) { %>
+                    <input type="radio" id="star<%= i %>" name="rating" value="<%= i %>">
+                    <label for="star<%= i %>"><i class="fa-solid fa-star"></i></label>
+                  <% } %>
+                </div>
+              </div>
+              <div class="form-group">
+                <label for="reviewTitle">Title</label>
+                <input type="text" id="reviewTitle" name="title" placeholder="Summarize your review" required>
+              </div>
+              <div class="form-group">
+                <label for="reviewText">Review</label>
+                <textarea id="reviewText" name="review_text" placeholder="Write your detailed review here" required></textarea>
+              </div>
+              <div class="form-group">
+                <label for="reviewPros">Pros</label>
+                <textarea id="reviewPros" name="pros" placeholder="What did you like? (Optional)"></textarea>
+              </div>
+              <div class="form-group">
+                <label for="reviewCons">Cons</label>
+                <textarea id="reviewCons" name="cons" placeholder="What could be improved? (Optional)"></textarea>
+              </div>
+              <div class="form-actions">
+                <button type="button" class="btn btn-secondary cancel-review">Cancel</button>
+                <button type="submit" class="btn btn-primary submit-review">Submit Review</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <%- include('partials/footer') %>
+
+  <script type="module" src="/js/product-details.js"></script>
+  <script src="/js/header.js" type="module"></script>
+
+  <script>
+    // Loading overlay handler
+    document.addEventListener('DOMContentLoaded', () => {
+      document.body.style.overflow = 'hidden';
+      setTimeout(() => {
+        const overlay = document.getElementById('loading-overlay');
+        overlay.style.opacity = '0';
+        document.body.style.overflow = '';
+        setTimeout(() => {
+          overlay.style.display = 'none';
+        }, 300); // Wait for fade out animation
+      }, 1000);
+    });
+  </script>
+  <!-- Store gallery media as JSON for JS -->
+  <script id="gallery-media-json" type="application/json">
+    <%- JSON.stringify((product.media && product.media.length > 0) ? product.media : [{ media_url: product.image_url, media_type: 'image', id: 'fallback' }]) %>
+  </script>
+  <script>
+// Product Media Gallery JS
+function getGalleryMedia() {
+  const el = document.getElementById('gallery-media-json');
+  if (!el) return [];
+  try { return JSON.parse(el.textContent); } catch { return []; }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+  const galleryThumbs = document.querySelectorAll('.media-gallery-thumbnails .gallery-thumb');
+  const mainMediaContainer = document.getElementById('main-media-container');
+  let currentIdx = 0;
+  if (galleryThumbs.length > 0 && mainMediaContainer) {
+    galleryThumbs.forEach(thumb => {
+      thumb.addEventListener('click', function() {
+        const idx = parseInt(this.dataset.idx);
+        if (isNaN(idx)) return;
+        if (idx === currentIdx) return;
+        // Remove active class from all
+        galleryThumbs.forEach(t => t.classList.remove('active'));
+        this.classList.add('active');
+        currentIdx = idx;
+        // Remove old main media
+        while (mainMediaContainer.firstChild) mainMediaContainer.removeChild(mainMediaContainer.firstChild);
+        // Get media info from JSON
+        const galleryMedia = getGalleryMedia();
+        const m = galleryMedia[idx];
+        let el;
+        if (m.media_type === 'video' || (m.media_url && /\.(mp4|webm|mov|avi|mkv)$/i.test(m.media_url))) {
+          el = document.createElement('video');
+          el.src = m.media_url;
+          el.className = 'main-image';
+          el.style.width = '100%';
+          el.style.height = '100%';
+          el.style.objectFit = 'cover';
+          el.style.borderRadius = '0.75rem';
+          el.controls = true;
+          el.autoplay = true;
+        } else {
+          el = document.createElement('img');
+          el.src = m.media_url;
+          el.className = 'main-image';
+          el.alt = '';
+          el.style.width = '100%';
+          el.style.height = '100%';
+          el.style.objectFit = 'cover';
+          el.style.borderRadius = '0.75rem';
+        }
+        // Fade transition
+        el.style.opacity = 0;
+        mainMediaContainer.appendChild(el);
+        setTimeout(() => { el.style.transition = 'opacity 0.3s'; el.style.opacity = 1; }, 10);
+      });
+    });
+    // Set initial active
+    galleryThumbs[0].classList.add('active');
+  }
+});
+</script>
+</body>
+
+</html>

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%= typeof title !== 'undefined' ? title : 'Search - Cartify' %></title>
+    <meta name="description" content="Search products, subscriptions, and game top-ups on Cartify">
+
+    <!-- Default CSS -->
+    <link rel="stylesheet" href="/css/utils/header+footer.css">
+    <link rel="stylesheet" href="/css/homepage.css">
+    <link rel="stylesheet" href="/css/searchpage.css">
+    <link rel="stylesheet" href="/css/utils/toast.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <%- include('partials/header') %>
+
+    <main class="page-content">
+        <div class="search-container">
+            <div class="search-filters">
+                <div class="filter-section">
+                    <h3>Categories</h3>
+                    <div class="category-list">
+                        <!-- Categories will be populated here -->
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Price Range</h3>
+                    <div class="price-range">
+                        <input type="number" id="minPrice" placeholder="Min Price" min="0">
+                        <span>to</span>
+                        <input type="number" id="maxPrice" placeholder="Max Price" min="0">
+                        <button id="applyPrice" class="btn btn-primary">Apply</button>
+                    </div>
+                </div>
+
+                <div class="filter-section">
+                    <h3>Sort By</h3>
+                    <select id="sortBy" class="sort-select">
+                        <option value="name-asc">Name (A-Z)</option>
+                        <option value="name-desc">Name (Z-A)</option>
+                        <option value="price-asc">Price (Low to High)</option>
+                        <option value="price-desc">Price (High to Low)</option>
+                        <option value="rating-desc">Rating (Highest)</option>
+                        <option value="created_at-desc">Newest First</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="search-results">
+                <div class="search-header">
+                    <h2>Search Results</h2>
+                    <div class="search-stats">
+                        <span class="total-results">0 results found</span>
+                        <select id="itemsPerPage" class="items-per-page">
+                            <option value="20">20 per page</option>
+                            <option value="40">40 per page</option>
+                            <option value="60">60 per page</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="search-results-grid">
+                    <!-- Results will be rendered here by JS -->
+                </div>
+                <div class="pagination"></div>
+            </div>
+        </div>
+    </main>
+
+    <%- include('partials/footer') %>
+
+    <!-- Default JavaScript -->
+    <script src="/js/search page.js" type="module"></script>
+    <script src="/js/header.js" type="module"></script>
+</body>
+
+</html>

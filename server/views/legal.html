@@ -1,0 +1,555 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legal - Carity</title>
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --primary-dark: #1d4ed8;
+      --primary-light: rgba(59, 130, 246, 0.1);
+      --secondary: #64748b;
+      --success: #10b981;
+      --warning: #f59e0b;
+      --danger: #ef4444;
+      --gray-50: #f8fafc;
+      --gray-100: #f1f5f9;
+      --gray-200: #e2e8f0;
+      --gray-300: #cbd5e1;
+      --gray-400: #94a3b8;
+      --gray-500: #64748b;
+      --gray-600: #475569;
+      --gray-700: #334155;
+      --gray-800: #1e293b;
+      --gray-900: #0f172a;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      color: var(--gray-800);
+      background-color: var(--gray-50);
+    }
+
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 2rem 1rem;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 2rem;
+      text-decoration: none;
+    }
+
+    .logo h2 {
+      font-size: 1.8rem;
+      color: var(--gray-900);
+      margin-left: 0.5rem;
+    }
+
+    .logo-icon {
+      color: var(--primary);
+      font-size: 1.8rem;
+    }
+
+    .nav-container {
+      position: sticky;
+      top: 0;
+      background-color: white;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      z-index: 100;
+    }
+
+    .nav-tabs {
+      display: flex;
+      max-width: 1000px;
+      margin: 0 auto;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .nav-tab {
+      padding: 1rem 2rem;
+      cursor: pointer;
+      border-bottom: 3px solid transparent;
+      font-weight: 600;
+      color: var(--gray-600);
+      transition: all 0.3s ease;
+    }
+
+    .nav-tab:hover {
+      color: var(--primary);
+    }
+
+    .nav-tab.active {
+      color: var(--primary);
+      border-bottom-color: var(--primary);
+    }
+
+    .content-section {
+      display: none;
+      background-color: white;
+      padding: 2rem;
+      border-radius: 8px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+      margin-top: 2rem;
+    }
+
+    .content-section.active {
+      display: block;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      color: var(--gray-900);
+      margin-bottom: 1.5rem;
+      padding-bottom: 0.75rem;
+      border-bottom: 2px solid var(--gray-200);
+    }
+
+    .sub-section {
+      margin-bottom: 2rem;
+    }
+
+    .sub-title {
+      font-size: 1.4rem;
+      color: var(--gray-800);
+      margin-bottom: 1rem;
+    }
+
+    p, ul, ol {
+      margin-bottom: 1rem;
+      color: var(--gray-700);
+    }
+
+    ul, ol {
+      padding-left: 1.5rem;
+    }
+
+    li {
+      margin-bottom: 0.5rem;
+    }
+
+    .highlight {
+      background-color: var(--primary-light);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 1.5rem;
+    }
+
+    .highlight p {
+      margin-bottom: 0;
+    }
+
+    .last-updated {
+      font-style: italic;
+      color: var(--gray-500);
+      margin-top: 2rem;
+      text-align: right;
+    }
+
+    .back-to-site {
+      display: inline-block;
+      margin-top: 2rem;
+      color: var(--primary);
+      text-decoration: none;
+      font-weight: 600;
+    }
+
+    .back-to-site:hover {
+      text-decoration: underline;
+    }
+
+    .table-of-contents {
+      background-color: var(--gray-100);
+      padding: 1.5rem;
+      border-radius: 8px;
+      margin-bottom: 2rem;
+    }
+
+    .table-of-contents h3 {
+      margin-bottom: 1rem;
+      font-size: 1.2rem;
+    }
+
+    .table-of-contents ul {
+      list-style-type: none;
+      padding-left: 0;
+    }
+
+    .table-of-contents li {
+      margin-bottom: 0.5rem;
+    }
+
+    .table-of-contents a {
+      color: var(--primary);
+      text-decoration: none;
+      display: block;
+      padding: 0.5rem 0;
+      border-bottom: 1px solid var(--gray-200);
+    }
+
+    .table-of-contents a:hover {
+      color: var(--primary-dark);
+    }
+
+    @media (max-width: 768px) {
+      .nav-tab {
+        padding: 1rem;
+        font-size: 0.9rem;
+      }
+
+      .section-title {
+        font-size: 1.5rem;
+      }
+
+      .sub-title {
+        font-size: 1.2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <a href="/" class="logo">
+      <span class="logo-icon"><img src="/noice/placeholder.webp" alt="Carity" style="width: 30px; height: 30px;"></span>
+      <h2>Carity</h2>
+    </a>
+
+    <div class="nav-container">
+      <div class="nav-tabs">
+        <div class="nav-tab active" data-tab="privacy">Privacy Policy</div>
+        <div class="nav-tab" data-tab="terms">Terms & Conditions</div>
+      </div>
+    </div>
+
+    <!-- Privacy Policy Section -->
+    <div id="privacy" class="content-section active">
+      <h1 class="section-title">Privacy Policy</h1>
+
+      <div class="highlight">
+        <p>This Privacy Policy describes how Carity ("we", "our", or "us") collects, uses, and shares your personal information when you visit our website, use our services, or make purchases from our online store.</p>
+      </div>
+
+      <div class="table-of-contents">
+        <h3>Table of Contents</h3>
+        <ul>
+          <li><a href="#privacy-information">Information We Collect</a></li>
+          <li><a href="#privacy-use">How We Use Your Information</a></li>
+          <li><a href="#privacy-sharing">Information Sharing and Disclosure</a></li>
+          <!-- <li><a href="#privacy-cookies">Cookies and Tracking Technologies</a></li> -->
+          <li><a href="#privacy-rights">Your Rights and Choices</a></li>
+          <li><a href="#privacy-security">Data Security</a></li>
+          <li><a href="#privacy-children">Children's Privacy</a></li>
+          <li><a href="#privacy-changes">Changes to This Privacy Policy</a></li>
+          <li><a href="#privacy-contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div id="privacy-information" class="sub-section">
+        <h2 class="sub-title">Information We Collect</h2>
+        <p>We collect several types of information from and about users of our website, including:</p>
+        <ul>
+          <li><strong>Personal Information:</strong> This includes your name, email address, postal address, phone number, and payment information when you create an account, place an order, or contact our customer support.</li>
+          <li><strong>Account Information:</strong> Information related to your account, purchase history, product preferences, and any reviews or feedback you provide.</li>
+          <li><strong>Device and Usage Information:</strong> Information about your device, browser type, IP address, referring/exit pages, operating system, date/time stamps, and clickstream data.</li>
+          <li><strong>Location Information:</strong> General location information derived from your IP address or more precise location if you allow location services.</li>
+        </ul>
+      </div>
+
+      <div id="privacy-use" class="sub-section">
+        <h2 class="sub-title">How We Use Your Information</h2>
+        <p>We use the information we collect to:</p>
+        <ul>
+          <li>Process and fulfill your orders, including payment processing and delivery</li>
+          <li>Create and manage your account</li>
+          <li>Provide customer support and respond to your inquiries</li>
+          <li>Send transactional emails and order updates</li>
+          <li>Send marketing communications (with your consent)</li>
+          <li>Improve our website, products, and services</li>
+          <li>Analyze usage patterns and trends</li>
+          <li>Protect against fraud and unauthorized transactions</li>
+          <li>Comply with legal obligations</li>
+        </ul>
+      </div>
+
+      <div id="privacy-sharing" class="sub-section">
+        <h2 class="sub-title">Information Sharing and Disclosure</h2>
+        <p>We may share your personal information with:</p>
+        <ul>
+          <li><strong>Service Providers:</strong> Third-party companies that perform services on our behalf, such as payment processing, order fulfillment, delivery, customer support, and marketing.</li>
+          <li><strong>Business Partners:</strong> Companies we partner with to offer joint promotions or products.</li>
+          <li><strong>Legal Requirements:</strong> When required by law, court order, or other legal process.</li>
+          <li><strong>Business Transfers:</strong> In connection with a merger, acquisition, or sale of assets.</li>
+        </ul>
+        <p>We do not sell your personal information to third parties for their marketing purposes.</p>
+      </div>
+
+      <!-- <div id="privacy-cookies" class="sub-section">
+        <h2 class="sub-title">Cookies and Tracking Technologies</h2>
+        <p>We use cookies to enhance your experience,  and deliver personalized content. These technologies help us:</p>
+        <ul>
+          <li>Remember your preferences and settings</li>
+          <li>Recognize you across different devices</li>
+          <li>Improve our website and marketing efforts</li>
+        </ul>
+        <p>You can manage your cookie preferences through your browser settings. However, disabling certain cookies may limit your ability to use some features of our website.</p>
+      </div> -->
+
+      <div id="privacy-rights" class="sub-section">
+        <h2 class="sub-title">Your Rights and Choices</h2>
+        <p>Depending on your location, you may have certain rights regarding your personal information, including:</p>
+        <ul>
+          <li>Access to your personal information</li>
+          <li>Correction of inaccurate or incomplete information</li>
+          <li>Deletion of your personal information</li>
+          <li>Restriction or objection to certain processing activities</li>
+          <li>Data portability</li>
+          <li>Withdrawal of consent</li>
+        </ul>
+        <p>To exercise these rights, please contact us using the information provided in the "Contact Us" section.</p>
+      </div>
+
+      <div id="privacy-security" class="sub-section">
+        <h2 class="sub-title">Data Security</h2>
+        <p>We implement appropriate technical and organizational measures to protect your personal information against unauthorized access, alteration, disclosure, or destruction. However, no method of transmission over the Internet or electronic storage is 100% secure, so we cannot guarantee absolute security.</p>
+      </div>
+
+      <div id="privacy-children" class="sub-section">
+        <h2 class="sub-title">Children's Privacy</h2>
+        <p>Our website is not intended for children under 13 years of age. We do not knowingly collect personal information from children under 13. If you are a parent or guardian and believe that your child has provided us with personal information, please contact us so that we can take appropriate action.</p>
+      </div>
+
+      <div id="privacy-changes" class="sub-section">
+        <h2 class="sub-title">Changes to This Privacy Policy</h2>
+        <p>We may update this Privacy Policy from time to time to reflect changes in our practices or for other operational, legal, or regulatory reasons. We will notify you of any material changes by posting the updated Privacy Policy on this page with a new effective date.</p>
+      </div>
+
+      <div id="privacy-contact" class="sub-section">
+        <h2 class="sub-title">Contact Us</h2>
+        <p>If you have any questions or concerns about this Privacy Policy or our data practices, please contact us at:</p>
+        <p>
+          Email: support@carity.com<br>
+          Phone: +977 9808000000<br>
+          Address: Itahari, Nepal
+        </p>
+      </div>
+
+      <p class="last-updated">Last Updated: June 1, 2024</p>
+    </div>
+
+    <!-- Terms & Conditions Section -->
+    <div id="terms" class="content-section">
+      <h1 class="section-title">Terms & Conditions</h1>
+
+      <div class="highlight">
+        <p>These Terms & Conditions govern your use of the Carity website and services. By accessing or using our website, you agree to be bound by these Terms & Conditions. Please read them carefully.</p>
+      </div>
+
+      <div class="table-of-contents">
+        <h3>Table of Contents</h3>
+        <ul>
+          <li><a href="#terms-acceptance">Acceptance of Terms</a></li>
+          <li><a href="#terms-accounts">User Accounts</a></li>
+          <li><a href="#terms-purchases">Purchases and Payments</a></li>
+          <li><a href="#terms-products">Product Information</a></li>
+          <li><a href="#terms-shipping">Shipping and Delivery</a></li>
+          <li><a href="#terms-returns">Returns and Refunds</a></li>
+          <li><a href="#terms-intellectual">Intellectual Property</a></li>
+          <li><a href="#terms-prohibited">Prohibited Activities</a></li>
+          <li><a href="#terms-disclaimer">Disclaimer of Warranties</a></li>
+          <li><a href="#terms-limitation">Limitation of Liability</a></li>
+          <li><a href="#terms-indemnification">Indemnification</a></li>
+          <li><a href="#terms-termination">Termination</a></li>
+          <li><a href="#terms-governing">Governing Law</a></li>
+          <li><a href="#terms-changes">Changes to Terms</a></li>
+          <li><a href="#terms-contact">Contact Us</a></li>
+        </ul>
+      </div>
+
+      <div id="terms-acceptance" class="sub-section">
+        <h2 class="sub-title">Acceptance of Terms</h2>
+        <p>By accessing or using the Carity website, you acknowledge that you have read, understood, and agree to be bound by these Terms & Conditions. If you do not agree to these terms, please do not use our website or services.</p>
+      </div>
+
+      <div id="terms-accounts" class="sub-section">
+        <h2 class="sub-title">User Accounts</h2>
+        <p>To access certain features of our website, you may need to create an account. When you create an account, you agree to:</p>
+        <ul>
+          <li>Provide accurate, current, and complete information</li>
+          <li>Maintain and promptly update your account information</li>
+          <li>Keep your password confidential and secure</li>
+          <li>Be responsible for all activities that occur under your account</li>
+          <li>Notify us immediately of any unauthorized use of your account</li>
+        </ul>
+        <p>We reserve the right to suspend or terminate your account if any information provided is inaccurate, false, or violates these Terms & Conditions.</p>
+      </div>
+
+      <div id="terms-purchases" class="sub-section">
+        <h2 class="sub-title">Purchases and Payments</h2>
+        <p>When you make a purchase through our website, you agree to:</p>
+        <ul>
+          <li>Provide valid payment information</li>
+          <li>Pay all fees and charges associated with your purchase</li>
+          <li>Pay applicable taxes</li>
+          <li>Use the products or services in accordance with these Terms & Conditions</li>
+        </ul>
+        <p>All prices are displayed in the applicable currency and are subject to change without notice. We are not responsible for pricing, typographical, or other errors, and we reserve the right to cancel orders arising from such errors.</p>
+      </div>
+
+      <div id="terms-products" class="sub-section">
+        <h2 class="sub-title">Product Information</h2>
+        <p>We strive to provide accurate product descriptions, pricing, and availability information. However, we do not warrant that product descriptions, pricing, or other content on our website is accurate, complete, reliable, current, or error-free. If a product offered on our website is not as described, your sole remedy is to return it in unused condition.</p>
+      </div>
+
+      <div id="terms-shipping" class="sub-section">
+        <h2 class="sub-title">Shipping and Delivery</h2>
+        <p>We will make reasonable efforts to deliver products within the estimated delivery time. However, delivery times are not guaranteed, and we are not responsible for delays caused by factors beyond our control. Risk of loss and title for items purchased from our website pass to you upon delivery of the items to the carrier.</p>
+      </div>
+
+      <div id="terms-returns" class="sub-section">
+        <h2 class="sub-title">Returns and Refunds</h2>
+        <p>Our return and refund policy is as follows:</p>
+        <ul>
+          <li>Physical products may be returned within 12 hours of delivery for a full refund if they are in their original condition.</li>
+          <li>Digital products, including subscriptions and game top-ups, are non-refundable once activated.</li>
+          <li>Refunds will be issued to the original payment method.</li>
+          <li>Shipping charges are non-refundable unless the return is due to our error.</li>
+        </ul>
+        <p>For detailed instructions on how to return a product, please visit our Help Center or contact our customer support.</p>
+      </div>
+
+      <div id="terms-intellectual" class="sub-section">
+        <h2 class="sub-title">Intellectual Property</h2>
+        <p>All content on our website, including text, graphics, logos, images, software, and other material, is owned by Carity or our licensors and is protected by copyright, trademark, and other intellectual property laws. You may not reproduce, distribute, modify, create derivative works of, publicly display, or use any content from our website without our prior written consent.</p>
+      </div>
+
+      <div id="terms-prohibited" class="sub-section">
+        <h2 class="sub-title">Prohibited Activities</h2>
+        <p>You agree not to:</p>
+        <ul>
+          <li>Use our website for any illegal purpose or in violation of any local, state, national, or international law</li>
+          <li>Violate or infringe upon the rights of others, including their intellectual property rights</li>
+          <li>Interfere with or disrupt the operation of our website or servers</li>
+          <li>Attempt to gain unauthorized access to our website, user accounts, or computer systems</li>
+          <li>Use any data mining, robots, or similar data gathering or extraction methods</li>
+          <li>Engage in fraudulent activities or misrepresent yourself or your affiliation with any person or entity</li>
+        </ul>
+      </div>
+
+      <div id="terms-disclaimer" class="sub-section">
+        <h2 class="sub-title">Disclaimer of Warranties</h2>
+        <p>OUR WEBSITE AND ALL PRODUCTS AND SERVICES OFFERED THROUGH OUR WEBSITE ARE PROVIDED "AS IS" AND "AS AVAILABLE" WITHOUT ANY WARRANTIES OF ANY KIND, EITHER EXPRESS OR IMPLIED. TO THE FULLEST EXTENT PERMISSIBLE UNDER APPLICABLE LAW, WE DISCLAIM ALL WARRANTIES, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO, IMPLIED WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE, AND NON-INFRINGEMENT.</p>
+      </div>
+
+      <div id="terms-limitation" class="sub-section">
+        <h2 class="sub-title">Limitation of Liability</h2>
+        <p>TO THE FULLEST EXTENT PERMITTED BY APPLICABLE LAW, IN NO EVENT SHALL CARITY, ITS AFFILIATES, OR THEIR RESPECTIVE OFFICERS, DIRECTORS, EMPLOYEES, AGENTS, OR LICENSORS BE LIABLE FOR ANY INDIRECT, INCIDENTAL, SPECIAL, CONSEQUENTIAL, OR PUNITIVE DAMAGES ARISING OUT OF OR RELATING TO YOUR USE OF OUR WEBSITE OR ANY PRODUCTS OR SERVICES PURCHASED THROUGH OUR WEBSITE.</p>
+      </div>
+
+      <div id="terms-indemnification" class="sub-section">
+        <h2 class="sub-title">Indemnification</h2>
+        <p>You agree to indemnify, defend, and hold harmless Carity, its affiliates, and their respective officers, directors, employees, agents, and licensors from and against any claims, liabilities, damages, judgments, awards, losses, costs, expenses, or fees (including reasonable attorneys' fees) arising out of or relating to your violation of these Terms & Conditions or your use of our website.</p>
+      </div>
+
+      <div id="terms-termination" class="sub-section">
+        <h2 class="sub-title">Termination</h2>
+        <p>We may terminate or suspend your account and access to our website immediately, without prior notice or liability, for any reason, including if you breach these Terms & Conditions. Upon termination, your right to use our website will immediately cease.</p>
+      </div>
+
+      <div id="terms-governing" class="sub-section">
+        <h2 class="sub-title">Governing Law</h2>
+        <p>These Terms & Conditions shall be governed by and construed in accordance with the laws of Nepal, without regard to its conflict of law provisions. Any dispute arising from these terms shall be resolved exclusively in the courts of Kathmandu, Nepal.</p>
+      </div>
+
+      <div id="terms-changes" class="sub-section">
+        <h2 class="sub-title">Changes to Terms</h2>
+        <p>We may revise these Terms & Conditions at any time by updating this page. By continuing to use our website after such changes, you agree to be bound by the revised Terms & Conditions.</p>
+      </div>
+
+      <div id="terms-contact" class="sub-section">
+        <h2 class="sub-title">Contact Us</h2>
+        <p>If you have any questions or concerns about these Terms & Conditions, please contact us at:</p>
+        <p>
+          Email: support@carity.com<br>
+          Phone: +977 9808000000<br>
+          Address: Itahari, Nepal
+        </p>
+      </div>
+
+      <p class="last-updated">Last Updated: June 1, 2024</p>
+    </div>
+
+    <a href="/" class="back-to-site">← Back to Carity</a>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      const tabs = document.querySelectorAll('.nav-tab');
+      const sections = document.querySelectorAll('.content-section');
+      
+      // Tab switching functionality
+      tabs.forEach(tab => {
+        tab.addEventListener('click', function() {
+          const tabId = this.getAttribute('data-tab');
+          
+          // Update active tab
+          tabs.forEach(t => t.classList.remove('active'));
+          this.classList.add('active');
+          
+          // Show corresponding section
+          sections.forEach(section => {
+            if (section.id === tabId) {
+              section.classList.add('active');
+            } else {
+              section.classList.remove('active');
+            }
+          });
+          
+          // Update URL hash
+          window.location.hash = tabId;
+        });
+      });
+      
+      // Handle URL hash on page load
+      const handleHash = () => {
+        const hash = window.location.hash.substring(1);
+        if (hash === 'terms' || hash === 'privacy') {
+          const activeTab = document.querySelector(`.nav-tab[data-tab="${hash}"]`);
+          if (activeTab) {
+            activeTab.click();
+          }
+        }
+      };
+      
+      handleHash();
+      
+      // Smooth scrolling for table of contents links
+      document.querySelectorAll('.table-of-contents a').forEach(link => {
+        link.addEventListener('click', function(e) {
+          e.preventDefault();
+          const targetId = this.getAttribute('href').substring(1);
+          const targetElement = document.getElementById(targetId);
+          
+          if (targetElement) {
+            window.scrollTo({
+              top: targetElement.offsetTop - 100,
+              behavior: 'smooth'
+            });
+          }
+        });
+      });
+    });
+  </script>
+</body>
+</html> 

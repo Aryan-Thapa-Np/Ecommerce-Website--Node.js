@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <%= typeof title !=='undefined' ? title : 'Checkout - Cartify' %>
+    </title>
+    <meta name="description" content="Complete your purchase on Cartify">
+
+    <!-- Default CSS -->
+    <link rel="stylesheet" href="/css/utils/header+footer.css">
+    <link rel="stylesheet" href="/css/homepage.css">
+    <link rel="stylesheet" href="/css/checkout.css">
+    <link rel="stylesheet" href="/css/utils/toast.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+</head>
+
+<body>
+    <%- include('partials/header') %>
+
+        <div class="checkout-container">
+            <div class="checkout-header">
+                <h1>Checkout</h1>
+                <p>Complete your purchase by following these steps</p>
+            </div>
+
+            <!-- Checkout Steps -->
+            <div class="checkout-steps">
+                <div class="step active" data-step="1">
+                    <div class="step-number">1</div>
+                    <div class="step-text">Shipping</div>
+                </div>
+                <div class="step" data-step="2">
+                    <div class="step-number">2</div>
+                    <div class="step-text">Payment</div>
+                </div>
+                <div class="step" data-step="3">
+                    <div class="step-number">3</div>
+                    <div class="step-text">Complete</div>
+                </div>
+            </div>
+
+            <div class="checkout-content">
+                <!-- Checkout Form -->
+                <div class="checkout-form">
+                    <!-- Step 1: Shipping Information -->
+                    <div class="checkout-step" id="step-1">
+                        <div class="form-section">
+                            <h2>Shipping Information</h2>
+                            <form id="shipping-form">
+                                <div class="form-row">
+                                    <div class="form-group">
+                                        <label for="first_name">First Name</label>
+                                        <input type="text" id="first_name" name="first_name"
+                                            value="<%= userData?.first_name || '' %>" required pattern="[A-Za-z ]+"
+                                            title="Only letters and spaces allowed" maxlength="50">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="last_name">Last Name</label>
+                                        <input type="text" id="last_name" name="last_name"
+                                            value="<%= userData?.last_name || '' %>" required pattern="[A-Za-z ]+"
+                                            title="Only letters and spaces allowed" maxlength="50">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label for="phone">Phone Number</label>
+                                    <input type="tel" id="phone" name="phone" value="<%= userData?.phone || '' %>"
+                                        required pattern="[0-9]+" title="Only numbers allowed" maxlength="15">
+                                </div>
+                                <% if (hasPhysicalProducts) { %>
+                                    <div class="form-group">
+                                        <label for="address">Address</label>
+                                        <input type="text" id="address" name="address" required maxlength="200">
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="city">City</label>
+                                            <input type="text" id="city" name="city" required pattern="[A-Za-z ]+"
+                                                title="Only letters and spaces allowed" maxlength="50">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="state">State/Province</label>
+                                            <input type="text" id="state" name="state" required
+                                                pattern="[A-Za-z0-9 ]+-*"
+                                                title="Letters, numbers, spaces and hyphens allowed" maxlength="50">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <div class="form-group">
+                                            <label for="postal_code">Postal Code</label>
+                                            <input type="text" id="postal_code" name="postal_code" required
+                                                pattern="[0-9]+" title="Only numbers allowed" maxlength="10">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="country">Country</label>
+                                            <select id="country" name="country" required>
+                                                <option value="Nepal" selected>Nepal</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <% } %>
+                                        <div class="btn-group">
+                                            <button type="button" class="btn btn-outline" id="back-to-cart">Back to
+                                                Shopping</button>
+                                            <button type="button" class="btn btn-primary" id="next-to-payment">Continue
+                                                to Payment</button>
+                                        </div>
+                            </form>
+                        </div>
+                    </div>
+
+                    <!-- Step 2: Payment Method -->
+                    <div class="checkout-step" id="step-2" style="display: none;">
+                        <div class="form-section">
+                            <h2>Payment Method</h2>
+                            <p>Select your preferred payment method</p>
+
+                            <div class="payment-methods">
+                                <div class="payment-method" data-method="esewa">
+                                    <img src="https://esewa.com.np/common/images/esewa_logo.png" alt="eSewa">
+                                    <h3>eSewa</h3>
+                                </div>
+                                <div class="payment-method" data-method="khalti">
+                                    <img src="https://khalti.com/static/images/khalti-logo.svg" alt="Khalti">
+                                    <h3>Khalti</h3>
+                                </div>
+                                <div class="payment-method" data-method="bank">
+                                    <img src="https://cdn-icons-png.flaticon.com/512/2830/2830284.png"
+                                        alt="Bank Transfer">
+                                    <h3>Bank Transfer</h3>
+                                </div>
+                                <% if (hasPhysicalProducts) { %>
+                                <div class="payment-method" data-method="cash">
+                                    <img src="/uploads/others/image.png" alt="Cash on Delivery">
+                                    <h3>Cash on Delivery</h3>
+                                </div>
+                                <% } %>
+                            </div>
+
+                            <div class="btn-group">
+                                <button type="button" class="btn btn-outline" id="back-to-shipping">Back to
+                                    Shipping</button>
+                                <button type="button" class="btn btn-primary" id="proceed-to-payment" disabled>Proceed
+                                    to Payment</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Order Complete -->
+                    <div class="checkout-step" id="step-3" style="display: none;">
+                        <div class="form-section">
+                            <div class="success-message">
+                                <div class="success-icon">
+                                    <i class="fas fa-check-circle"></i>
+                                </div>
+                                <h2>Order Placed Successfully!</h2>
+                                <p>Thank you for your purchase. Your order has been received.</p>
+
+                                <div class="order-details">
+                                    <div class="order-detail-row">
+                                        <span class="order-detail-label">Order ID:</span>
+                                        <span id="order-id"></span>
+                                    </div>
+                                    <div class="order-detail-row">
+                                        <span class="order-detail-label">Date:</span>
+                                        <span id="order-date"></span>
+                                    </div>
+                                    <div class="order-detail-row">
+                                        <span class="order-detail-label">Total:</span>
+                                        <span id="order-total">NPR <%= Number(total).toFixed(2) %></span>
+                                    </div>
+                                    <div class="order-detail-row">
+                                        <span class="order-detail-label">Payment Method:</span>
+                                        <span id="order-payment-method"></span>
+                                    </div>
+                                </div>
+
+                                <div class="btn-group">
+                                    <a href="/" class="btn btn-outline">Continue Shopping</a>
+                                    <a class="btn btn-primary" id="view-orders-dashboard">View Orders</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary -->
+                <div class="order-summary">
+                    <h2>Order Summary</h2>
+
+                    <div class="order-items">
+                        <% if (cartItems && cartItems.length> 0) { %>
+                            <% cartItems.forEach(item=> { %>
+                                <div class="order-item">
+                                    <% let imagePath=item.item_image ? item.item_image : '/noice/placeholder.webp' ;
+                                        imagePath=imagePath.replace('/public/', '/' ).replace('\\public\\', '/' ); %>
+                                        <img src="<%= imagePath %>" alt="<%= item.item_name %>"
+                                            class="order-item-image">
+                                        <div class="order-item-details">
+                                            <div class="order-item-name">
+                                                <%= item.item_name %>
+                                            </div>
+                                            <div class="order-item-price">
+                                                NPR <%= Number(item.price).toFixed(2) %>
+                                                    <span class="order-item-quantity">x<%= item.quantity %></span>
+                                            </div>
+                                        </div>
+                                </div>
+                                <% }); %>
+                                    <% } else { %>
+                                        <p>Your cart is empty.</p>
+                                        <% } %>
+                    </div>
+
+                    <div class="order-totals">
+                        <div class="order-total-row">
+                            <span>Subtotal</span>
+                            <span>NPR <%= Number(subtotal).toFixed(2) %></span>
+                        </div>
+                        <div class="order-total-row">
+                            <span>Shipping</span>
+                            <span>NPR <%= Number(shipping).toFixed(2) %></span>
+                        </div>
+                        <% if (hasPhysicalProducts) { %>
+                            <div class="shipping-note">
+                                <small>* Shipping fee applies for physical products</small>
+                            </div>
+                            <% } else { %>
+                                <div class="shipping-note">
+                                    <small>* Free shipping for digital items</small>
+                                </div>
+                                <% } %>
+                                    <div class="order-total-row final">
+                                        <span>Total</span>
+                                        <span>NPR <%= Number(total).toFixed(2) %></span>
+                                    </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Payment Modals -->
+        <!-- eSewa Modal -->
+        <div class="payment-modal-overlay" id="esewa-modal">
+            <div class="payment-modal">
+                <button class="payment-modal-close">&times;</button>
+                <div class="payment-modal-header">
+                    <img src="https://esewa.com.np/common/images/esewa_logo.png" alt="eSewa">
+                    <h3>Pay with eSewa</h3>
+                </div>
+                <div class="payment-modal-body">
+                    <div class="payment-modal-qr">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://esewa.com.np"
+                            alt="eSewa QR Code">
+                    </div>
+                    <div class="payment-modal-info">
+                        <p><strong>Amount:</strong> NPR <%= Number(total).toFixed(2) %>
+                        </p>
+                        <p><strong>Merchant:</strong> Cartify</p>
+                        <p><strong>Instructions:</strong> Scan the QR code with your eSewa app and complete the payment.
+                        </p>
+                    </div>
+                    <div class="file-upload">
+                        <label for="esewa-payment-proof" class="file-upload-label">
+                            <div class="file-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="file-upload-text">
+                                Upload Payment Screenshot
+                                <p>Click or drag and drop your payment screenshot here</p>
+                            </div>
+                        </label>
+                        <input type="file" id="esewa-payment-proof" class="file-upload-input" accept="image/*">
+                        <div class="file-preview" id="esewa-file-preview"></div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline modal-close-btn">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="esewa-submit">Complete Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Khalti Modal -->
+        <div class="payment-modal-overlay" id="khalti-modal">
+            <div class="payment-modal">
+                <button class="payment-modal-close">&times;</button>
+                <div class="payment-modal-header">
+                    <img src="https://khalti.com/static/images/khalti-logo.svg" alt="Khalti">
+                    <h3>Pay with Khalti</h3>
+                </div>
+                <div class="payment-modal-body">
+                    <div class="payment-modal-qr">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://khalti.com/"
+                            alt="Khalti QR Code">
+                    </div>
+                    <div class="payment-modal-info">
+                        <p><strong>Amount:</strong> NPR <%= Number(total).toFixed(2) %>
+                        </p>
+                        <p><strong>Merchant:</strong> Cartify</p>
+                        <p><strong>Instructions:</strong> Scan the QR code with your Khalti app and complete the
+                            payment.</p>
+                    </div>
+                    <div class="file-upload">
+                        <label for="khalti-payment-proof" class="file-upload-label">
+                            <div class="file-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="file-upload-text">
+                                Upload Payment Screenshot
+                                <p>Click or drag and drop your payment screenshot here</p>
+                            </div>
+                        </label>
+                        <input type="file" id="khalti-payment-proof" class="file-upload-input" accept="image/*">
+                        <div class="file-preview" id="khalti-file-preview"></div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline modal-close-btn">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="khalti-submit">Complete Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Bank Transfer Modal -->
+        <div class="payment-modal-overlay" id="bank-modal">
+            <div class="payment-modal">
+                <button class="payment-modal-close">&times;</button>
+                <div class="payment-modal-header">
+                    <img src="https://cdn-icons-png.flaticon.com/512/2830/2830284.png" alt="Bank Transfer"
+                        style="height: 40px;">
+                    <h3>Pay with Bank Transfer</h3>
+                </div>
+                <div class="payment-modal-body">
+                    <div class="payment-modal-qr">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=https://nepalbank.com.np/account/1234567890123456"
+                            alt="Bank Transfer QR Code">
+                    </div>
+                    <div class="payment-modal-info">
+                        <p><strong>Bank Name:</strong> Nepal Bank Ltd.</p>
+                        <p><strong>Account Name:</strong> Cartify Pvt. Ltd.</p>
+                        <p><strong>Account Number:</strong> 1234567890123456</p>
+                        <p><strong>Branch:</strong> Kathmandu</p>
+                        <p><strong>Amount:</strong> NPR <%= Number(total).toFixed(2) %>
+                        </p>
+                        <p><strong>Instructions:</strong> Please transfer the exact amount and upload the payment
+                            receipt.</p>
+                    </div>
+                    <div class="file-upload">
+                        <label for="bank-payment-proof" class="file-upload-label">
+                            <div class="file-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="file-upload-text">
+                                Upload Payment Receipt
+                                <p>Click or drag and drop your payment receipt here</p>
+                            </div>
+                        </label>
+                        <input type="file" id="bank-payment-proof" class="file-upload-input" accept="image/*">
+                        <div class="file-preview" id="bank-file-preview"></div>
+                    </div>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-outline modal-close-btn">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="bank-submit">Complete Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Cash on Delivery  Modal -->
+        <% if (hasPhysicalProducts) { %>
+        <div class="payment-modal-overlay" id="cod-modal">
+            <div class="payment-modal">
+                <button class="payment-modal-close">&times;</button>
+                <div class="payment-modal-body" style="padding-top: 0;">
+                    <div class="payment-modal-qr" style="display: flex; justify-content: center; margin-bottom: 16px;">
+                        <img src="/uploads/others/image.png" alt="Cash on Delivery image" style="height: 120px; width: 120px; object-fit: contain; border-radius: 8px;">
+                    </div>
+                    <div class="payment-modal-info" style="margin-bottom: 18px; text-align: justify;">
+                        <p style="margin-bottom: 0;">
+                            <strong>Note:</strong> scan the present payment methods qr code for the <span style="font-weight: 500;">initial delivery amount</span>, upload the payment receipt below.
+                        </p>
+                        <p style="margin-bottom: 8px; margin-top: 10px;">
+                            <strong>How it works:</strong> 
+                            <br>
+                            1. Confirm your order and shipping details.<br>
+                            2. You will pay the initial delivery amount right now.<br>
+                            3. You will pay the product cost in cash when your order is delivered.<br>
+                            4. Please upload any advance payment proof if required by the seller.
+                        </p>
+                        <p style="margin-bottom: 0; margin-top: 10px;">
+                            <strong>Note:</strong> If you have paid the <span style="font-weight: 500;">initial delivery amount</span>, upload the payment receipt below.
+                        </p>
+                    </div>
+                    <div class="file-upload" style="margin-bottom: 18px;">
+                        <label for="cash-payment-proof" class="file-upload-label" style="display: flex; align-items: center; gap: 12px;">
+                            <div class="file-upload-icon">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                            </div>
+                            <div class="file-upload-text">
+                                <span style="font-weight: 500;">Upload Payment Receipt (Mandatory)</span>
+                                <p style="margin: 2px 0 0 0; font-size: 0.95rem;">Click or drag and drop your payment receipt here</p>
+                            </div>
+                        </label>
+                        <input type="file" id="cash-payment-proof" class="file-upload-input" accept="image/*">
+                        <div class="file-preview" id="cash-file-preview"></div>
+                    </div>
+                    <div class="btn-group" style="display: flex; gap: 12px;">
+                        <button type="button" class="btn btn-outline modal-close-btn">Cancel</button>
+                        <button type="button" class="btn btn-primary" id="cash-submit">Complete Order</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <% } %>
+
+
+        <%- include('partials/footer') %>
+            <script src="/js/header.js" type="module"></script>
+            <script src="/js/checkout.js" type="module"></script>
+</body>
+
+</html>

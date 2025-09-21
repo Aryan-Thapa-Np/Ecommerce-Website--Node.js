@@ -1,0 +1,114 @@
+/* Notifications Page Styles */
+
+.notifications-list {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    padding: 24px;
+}
+
+.notification-item {
+    display: flex;
+    align-items: flex-start;
+    padding: 16px 0;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.notification-item:last-child {
+    border-bottom: none;
+}
+
+.notification-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 16px;
+    flex-shrink: 0;
+}
+
+.notification-icon.info {
+    background-color: #e0f2fe;
+    color: #0ea5e9;
+}
+
+.notification-icon.success {
+    background-color: #dcfce7;
+    color: #22c55e;
+}
+
+.notification-icon.warning {
+    background-color: #fef9c3;
+    color: #eab308;
+}
+
+.notification-icon.error {
+    background-color: #fee2e2;
+    color: #ef4444;
+}
+
+.notification-content {
+    flex-grow: 1;
+}
+
+.notification-title {
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 4px;
+}
+
+.notification-message {
+    color: #475569;
+    line-height: 1.5;
+}
+
+.notification-timestamp {
+    font-size: 0.875rem;
+    color: #94a3b8;
+    margin-top: 8px;
+}
+
+.activity-item.new {
+    background-color: #f9fafb;
+    border-left: 3px solid #3b82f6;
+}
+
+#notifi {
+    cursor: pointer;
+    position: relative;
+
+}
+
+
+.notifiback {
+    border-left: 3px solid #76a7f5;
+    border-radius: 5px;
+    display: flex;
+    gap: 10px;
+    margin: 0 -10px;
+}
+
+
+.closenoti {
+    cursor: pointer;
+    color: rgb(253, 46, 46);
+    margin: 0 7px;
+}
+
+.notifiback2 {
+    animation: hide 0.8s ease-in-out forwards;
+}
+
+@keyframes hide {
+    from {
+        transform: translateX(0);
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-1000px);
+        opacity: 0;
+    }
+}

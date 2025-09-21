@@ -1,0 +1,1117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/customer.css">
+    <link rel="stylesheet" href="../css/notifications.css">
+    <link rel="stylesheet" href="../css/customer_chat.css">
+    <link rel="stylesheet" href="../css/utils/toast.css">
+    <link rel="stylesheet" href="../css/utils/search-enhancements.css">
+    
+
+
+</head>
+
+<body>
+    <!-- Loading Overlay -->
+    <div id="loading-overlay" class="loading-overlay">
+        <div class="loading-content">
+            <div class="loading-spinner"></div>
+            <p>Loading customer dashboard...</p>
+        </div>
+    </div>
+
+    <div class="dashboard-container">
+        <!-- Sidebar -->
+        <aside class="sidebar" id="sidebar">
+            <div class="logo">
+                <h2>
+                    <div class="logo-icon">
+                        <i class="fas fa-store"></i>
+                    </div>
+                   <a href="/" class="logo-text">Cartify</a>
+                </h2>
+            </div>
+
+            <nav class="nav-menu">
+                <div class="nav-section">
+                    <div class="nav-section-title">Main</div>
+                    <a href="#" class="nav-item active" data-page="dashboard">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Dashboard</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="orders">
+                        <i class="fas fa-shopping-bag"></i>
+                        <span>Orders</span>
+                        <span class="nav-badge orders" id="ordersCount" style="display: none;"></span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="wishlist">
+                        <i class="fas fa-heart"></i>
+                        <span>Wishlist</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="cart">
+                        <i class="fas fa-shopping-cart"></i>
+                        <span>Shopping Cart</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="notifications">
+                        <i class="fas fa-bell"></i>
+                        <span>Notifications</span>
+                        <span class="nav-badge notifications" id="notificationsCount" style="display: none;"></span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="activeSubscriptions">
+                        <i class="fas fa-id-card"></i>
+                        <span>Active Subscriptions</span>
+                    </a>
+                    <a href="#" class="nav-item" data-page="chat">
+                        <i class="fas fa-comments"></i>
+                        <span>Chat Support</span>
+                        <span class="nav-badge chat" id="chatCount" style="display: none;">0</span>
+                    </a>
+                </div>
+
+                <div class="nav-section">
+                    <div class="nav-section-title">Account</div>
+                    <a href="#" class="nav-item" data-page="settings">
+                        <i class="fas fa-cog"></i>
+                        <span>Settings</span>
+                    </a>
+                    <a href="#" class="nav-item" id="supportLink" data-page="support">
+                        <i class="fas fa-headset"></i>
+                        <span>Support</span>
+                        <span class="nav-badge support" id="supportBadge" style="display: none;">0</span>
+                    </a>
+                    <a   class="nav-item" id="logout">
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>Logout</span>
+                    </a>
+                </div>
+            </nav>
+        </aside>
+
+        <!-- Mobile Overlay -->
+        <div class="mobile-overlay" id="mobileOverlay"></div>
+
+        <!-- Main Content -->
+        <main class="main-content" id="mainContent">
+            <!-- Header -->
+            <header class="header">
+                <div class="header-left">
+                    <button class="mobile-menu-btn" id="mobileMenuBtn">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <div class="search-bar">
+                        <input type="text" class="search-input" placeholder="Search pages, orders, settings...">
+                        <i class="fas fa-search search-icon"></i>
+                        <span class="search-shortcut">Ctrl+K</span>
+                    </div>
+                </div>
+
+                <div class="header-right">
+                    <button class="header-btn">
+                        <i class="fas fa-bell"></i>
+                        <div class="notification-badge">99+</div>
+                    </button>
+                    <button class="header-btn">
+                        <i class="fas fa-question-circle"></i>
+                        <span class="nav-badge support2" id="supportBadge2" style="display: none; position: absolute; right: -5px; top: 0;">0</span>
+                    </button>
+                    <div class="user-menu">
+                        <img src="../noice/placeholder.webp" alt="User" class="user-avatar">
+                        <div class="user-info">
+                            <h4></h4> <!-- User name will be populated here -->
+                            <p></p> <!-- User role will be populated here -->
+                        </div>
+
+                    </div>
+                </div>
+            </header>
+
+            <!-- Page Content -->
+            <div class="page-content">
+                <!-- Dashboard Page -->
+                <div class="page-section active" id="dashboardPage">
+                    <div class="breadcrumb">
+                        <a href="/">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Dashboard</span>
+                    </div>
+
+                    <div class="page-header">
+                        <h1 class="page-title">Dashboard</h1>
+                        <p class="page-subtitle">Welcome back! Here's what's happening with your account.</p>
+                    </div>
+
+                    <!-- Stats Cards -->
+                    <div class="stats-grid">
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Total Orders</div>
+                                <div class="stat-icon orders">
+                                    <i class="fa-solid fa-layer-group"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="ordersCount2">0</div>
+                            <div class="stat-change positive" id="ordersChange">
+                                <i class="fas fa-arrow-up"></i>
+                                <span>+0% from last month</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Wishlist Items</div>
+                                <div class="stat-icon wishlist">
+                                    <i class="fas fa-heart"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="wishlistCount">0</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Cart Items</div>
+                                <div class="stat-icon cart">
+                                    <i class="fas fa-shopping-cart"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="cartCount">0</div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Support Tickets</div>
+                                <div class="stat-icon support">
+                                    <i class="fas fa-headset"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="supportCount">0</div>
+                            
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Pending Orders</div>
+                                <div class="stat-icon orders">
+                                    <i class="fa-solid fa-hourglass-half"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="pendingOrdersCount">0</div>
+                            <div class="stat-change">
+                                <i class="fas fa-clock"></i>
+                                <span>Awaiting action</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Processing Orders</div>
+                                <div class="stat-icon orders">
+                                    <i class="fa-solid fa-spinner"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="processingOrdersCount">0</div>
+                            <div class="stat-change">
+                                <i class="fas fa-cogs"></i>
+                                <span>In progress</span>
+                            </div>
+                        </div>
+
+                        <div class="stat-card">
+                            <div class="stat-header">
+                                <div class="stat-title">Completed Orders</div>
+                                <div class="stat-icon orders">
+                                    <i class="fa-solid fa-circle-check"></i>
+                                </div>
+                            </div>
+                            <div class="stat-value" id="completedOrdersCount">0</div>
+                            <div class="stat-change positive">
+                                <i class="fas fa-check"></i>
+                                <span>Delivered</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Content Grid -->
+                    <div class="content-grid">
+                        <div class="content-card">
+                            <div class="content-card-header">
+                                <h3 class="content-card-title">Recent Orders</h3>
+                            </div>
+                            <div class="content-card-body">
+                                <!-- Recent orders list -->
+                                <div id="recentOrdersSkeleton" class="recent-orders-skeleton" style="display: none;">
+                                    <div class="recent-order-item skeleton">
+                                        <div class="recent-order-image skeleton-box"></div>
+                                        <div class="recent-order-details">
+                                            <div class="recent-order-name skeleton-box" style="width: 120px; height: 16px;"></div>
+                                            <div class="recent-order-info">
+                                                <span class="recent-order-id skeleton-box" style="width: 60px; height: 12px;"></span>
+                                                <span class="recent-order-date skeleton-box" style="width: 80px; height: 12px;"></span>
+                                                <span class="recent-order-status skeleton-box" style="width: 50px; height: 12px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="recent-order-item skeleton">
+                                        <div class="recent-order-image skeleton-box"></div>
+                                        <div class="recent-order-details">
+                                            <div class="recent-order-name skeleton-box" style="width: 100px; height: 16px;"></div>
+                                            <div class="recent-order-info">
+                                                <span class="recent-order-id skeleton-box" style="width: 50px; height: 12px;"></span>
+                                                <span class="recent-order-date skeleton-box" style="width: 70px; height: 12px;"></span>
+                                                <span class="recent-order-status skeleton-box" style="width: 40px; height: 12px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="recent-order-item skeleton">
+                                        <div class="recent-order-image skeleton-box"></div>
+                                        <div class="recent-order-details">
+                                            <div class="recent-order-name skeleton-box" style="width: 90px; height: 16px;"></div>
+                                            <div class="recent-order-info">
+                                                <span class="recent-order-id skeleton-box" style="width: 40px; height: 12px;"></span>
+                                                <span class="recent-order-date skeleton-box" style="width: 60px; height: 12px;"></span>
+                                                <span class="recent-order-status skeleton-box" style="width: 30px; height: 12px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="recent-order-item skeleton">
+                                        <div class="recent-order-image skeleton-box"></div>
+                                        <div class="recent-order-details">
+                                            <div class="recent-order-name skeleton-box" style="width: 110px; height: 16px;"></div>
+                                            <div class="recent-order-info">
+                                                <span class="recent-order-id skeleton-box" style="width: 55px; height: 12px;"></span>
+                                                <span class="recent-order-date skeleton-box" style="width: 75px; height: 12px;"></span>
+                                                <span class="recent-order-status skeleton-box" style="width: 45px; height: 12px;"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div id="recentOrdersList" class="recent-orders-list">
+                                    <!-- Recent orders will be populated here -->
+                                </div>
+                                
+                                <!-- Empty state for when there are no orders -->
+                                <div id="noRecentOrdersMessage" class="empty-state">
+                                    <i class="fas fa-shopping-bag"></i>
+                                    <h3>No recent orders</h3>
+                                    <p>Your order history will appear here once you make your first purchase.</p>
+                                </div>
+                                
+                                <!-- View all orders link -->
+                                <div class="view-all-link">
+                                    <a href="#" class="btn btn-secondary" data-page="orders">
+                                        <i class="fas fa-list"></i> View All Orders
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="content-card">
+                            <div class="content-card-header">
+                                <h3 class="content-card-title">Recent Activity</h3>
+                            </div>
+
+
+
+
+
+                            <div class="content-card-body" id="activity">
+                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Chat Page -->
+                <div class="page-section" id="chatPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Chat Support</span>
+                    </div>
+
+                    <div class="page-header">
+                        <h1 class="page-title">Chat Support</h1>
+                        <p class="page-subtitle">Get real-time assistance from our support team</p>
+                    </div>
+
+                    <div class="chat-container">
+                        <div class="chat-header">
+                            <h2>Customer Support</h2>
+                            <div class="chat-header-actions">
+                                <button class="chat-header-btn" id="chatRefreshBtn" title="Refresh">
+                                    <i class="fas fa-sync-alt"></i>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-messages" id="chatMessages">
+                            <!-- Messages will be populated here -->
+                            <div class="chat-empty-state" id="chatEmptyState">
+                                <i class="fas fa-comments"></i>
+                                <h3>No messages yet</h3>
+                                <p>Start a conversation with our support team and we'll respond as soon as possible.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="chat-input-container">
+                            <div id="chatFilePreview" class="chat-file-preview" style="display: none;">
+                                <!-- File preview will be shown here -->
+                            </div>
+                            
+                            <div style="display: flex; align-items: center; gap: 10px;">
+                                <div class="chat-input-actions">
+                                    <input type="file" id="chatFileInput" class="chat-file-input" accept="image/*,video/*">
+                                    <button class="chat-input-btn" id="chatFileBtn" title="Attach file">
+                                        <i class="fas fa-paperclip"></i>
+                                    </button>
+                                </div>
+                                
+                                <input type="text" id="chatInput" class="chat-input" placeholder="Type a message...">
+                                
+                                <button class="chat-send-btn" id="chatSendBtn" disabled>
+                                    <i class="fas fa-paper-plane"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Image Modal for viewing larger images -->
+                    <div class="chat-image-modal" id="chatImageModal">
+                        <button class="chat-image-close" id="chatImageClose">
+                            <i class="fas fa-times"></i>
+                        </button>
+                        <img id="chatModalImage" src="" alt="Enlarged image">
+                    </div>
+                </div>
+
+                <!-- Notifications Page -->
+                <div class="page-section" id="notificationsPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/" id="home">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Notifications</span>
+                    </div>
+
+                    <div class="page-header">
+                        <h1 class="page-title">Notifications</h1>
+                        <p class="page-subtitle">Here are your latest updates.</p>
+                    </div>
+
+                    <div class="notifications-list">
+                        <!-- Notifications will be dynamically inserted here -->
+                        <div class="empty-state">
+                            <i class="fas fa-bell-slash"></i>
+                            <h3>No new notifications</h3>
+                            <p>You're all caught up!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Orders Page -->
+                <div class="page-section" id="ordersPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/" id="home">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Orders</span>
+                    </div>
+
+                    <div class="page-header">
+                        <h1 class="page-title">My Orders</h1>
+                        <p class="page-subtitle">View and track your order history</p>
+                    </div>
+
+                    <div class="order-new-container">
+                        <div class="order-new-actions">
+                            <div class="order-new-search-filter">
+                                <div class="order-new-search-wrapper">
+                                    <input type="text" id="orderSearchInput" placeholder="Search orders..." class="order-new-search">
+                                    <i class="fas fa-search order-new-search-icon"></i>
+                                </div>
+                                <div class="order-new-filter-wrapper">
+                                    <select id="orderStatusFilter" class="order-new-filter">
+                                        <option value="">All Statuses</option>
+                                        <option value="pending">Pending</option>
+                                        <option value="processing">Processing</option>
+                                        <option value="completed">Completed</option>
+                                        <option value="cancelled">Cancelled</option>
+                                        <option value="failed">Failed</option>
+                                    </select>
+                                    <select id="orderDateFilter" class="order-new-filter">
+                                        <option value="">All Time</option>
+                                        <option value="today">Today</option>
+                                        <option value="week">This Week</option>
+                                        <option value="month">This Month</option>
+                                        <option value="year">This Year</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="order-new-column-selector">
+                                <button id="columnToggleBtn" class="order-new-column-toggle">
+                                    <i class="fas fa-columns"></i> Columns
+                                </button>
+                                <div id="columnDropdown" class="order-new-column-dropdown">
+                                    <div class="order-new-column-checkbox">
+                                        <input type="checkbox" id="col-order-id" checked>
+                                        <label for="col-order-id">Order ID</label>
+                                    </div>
+                                    <div class="order-new-column-checkbox">
+                                        <input type="checkbox" id="col-date" checked>
+                                        <label for="col-date">Date</label>
+                                    </div>
+                                    <div class="order-new-column-checkbox">
+                                        <input type="checkbox" id="col-status" checked>
+                                        <label for="col-status">Status</label>
+                                    </div>
+                                    <div class="order-new-column-checkbox">
+                                        <input type="checkbox" id="col-total" checked>
+                                        <label for="col-total">Total</label>
+                                    </div>
+                                    <div class="order-new-column-checkbox">
+                                        <input type="checkbox" id="col-payment" checked>
+                                        <label for="col-payment">Payment</label>
+                                    </div>
+                                    <div class="order-new-column-checkbox">
+                                        <input type="checkbox" id="col-items" checked>
+                                        <label for="col-items">Items</label>
+                                    </div>
+                                    <div class="order-new-column-checkbox">
+                                        <input type="checkbox" id="col-item-name" checked>
+                                        <label for="col-item-name">Item Name</label>
+                                    </div>
+                                    <div class="order-new-column-checkbox">
+                                        <input type="checkbox" id="col-image" checked>
+                                        <label for="col-image">Image</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <button id="resetOrderPreferences" class="btn btn-secondary">
+                                <i class="fas fa-redo"></i> Reset Preferences
+                            </button>
+                        </div>
+                        <!-- Payment status note -->
+                        <div class="orders-note" style="margin: 16px 0 8px 0; padding: 12px; background: #f1f5f9; border-radius: 8px; color: #334155; font-size: 14px;">
+                            <i class="fas fa-info-circle" style="color: #3b82f6; margin-right: 8px;"></i>
+                            <span>Note: Payment status will be updated after admins confirm your payment proof.</span>
+                        </div>
+                        
+                        <!-- Desktop Table View -->
+                        <div class="order-new-table-container">
+                            <table id="ordersTable" class="order-new-table">
+                                <thead>
+                                    <tr>
+                                        <th class="col-order-id">Order ID</th>
+                                        <th class="col-date">Date</th>
+                                        <th class="col-status">Status</th>
+                                        <th class="col-total">Total</th>
+                                        <th class="col-payment">Payment</th>
+                                        <th class="col-items">Items</th>
+                                        <th class="col-item-name">Item Name</th>
+                                        <th class="col-image">Image</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="ordersTableBody">
+                                    <!-- Orders will be populated here -->
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <!-- Mobile Card View -->
+                        <div id="orderNewCards" class="order-new-cards">
+                            <!-- Cards will be populated here by JavaScript -->
+                        </div>
+                            
+                        <!-- Loading Overlay -->
+                        <div id="ordersLoadingOverlay" class="loading-overlay">
+                            <div class="loading-content">
+                                <div class="loading-spinner"></div>
+                                <p>Loading orders...</p>
+                            </div>
+                        </div>
+                            
+                        <!-- No Orders Message -->
+                        <div id="noOrdersMessage" class="empty-state" style="display: none;">
+                            <i class="fas fa-shopping-bag"></i>
+                            <h3>No Orders Found</h3>
+                            <p>You haven't placed any orders yet.</p>
+                        </div>
+                            
+                        <!-- Pagination Controls -->
+                        <div class="order-new-pagination">
+                            <div class="order-new-pagination-info">
+                                Showing <span id="paginationStart">0</span> to <span id="paginationEnd">0</span> of <span id="paginationTotal">0</span> orders
+                            </div>
+                            <div class="order-new-pagination-controls">
+                                <button id="paginationPrev" class="order-new-pagination-btn" disabled>
+                                    <i class="fas fa-chevron-left"></i> Previous
+                                </button>
+                                <div id="paginationNumbers" class="order-new-pagination-numbers">
+                                    <!-- Page numbers will be populated here -->
+                                </div>
+                                <button id="paginationNext" class="order-new-pagination-btn" disabled>
+                                    Next <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Settings Page -->
+                <div class="page-section" id="settingsPage" style="display: none;">
+                    <!-- Profile Details Subsection -->
+                    <div class="settings-section">
+                        <div class="settings-header">
+                            <h3 class="settings-title">
+                                <i class="fas fa-user"></i>
+                                Profile Details
+                            </h3>
+                            <p class="settings-description">Update your profile information and photo.</p>
+                        </div>
+                        <div class="settings-body">
+                            <form id="profileForm" enctype="multipart/form-data" autocomplete="off">
+                                <div style="display: flex; align-items: center; gap: 32px; flex-wrap: wrap;">
+                                    <div style="text-align: center;">
+                                        <img id="profilePreview" src="../noice/placeholder.webp" alt="Profile"
+                                            style="width:80px;height:80px;border-radius:50%;object-fit:cover;border:2px solid #e2e8f0;margin-bottom:8px;">
+                                        <br>
+                                        <input type="file" name="profileImage" accept="image/*" style="display:none"
+                                            id="profileImageInput">
+                                        <button type="button" class="avatar-upload-btn" id="profileImageUploadBtn"
+                                            onclick="document.getElementById('profileImageInput').click();">Upload
+                                            Photo</button>
+                                        <button type="button" id="profileImageSaveBtn" class="btn btn-primary"
+                                            style="margin-top:8px; padding:10px 20px; display:none;">
+                                            <i class="fas fa-save"></i> Save
+                                        </button>
+                                        <button type="button" id="profileImageCancelBtn" class="btn btn-secondary"
+                                            style="margin-top:8px; padding:10px 20px; display:none;">
+                                            <i class="fas fa-times"></i>
+                                        </button>
+                                    </div>
+
+                                    <div style="flex:1;min-width:220px;">
+                                        <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+                                            <label class="form-label" style="flex:0 0 60px;">Name</label>
+                                            <input type="text" class="form-input" name="name" value=" "
+                                                id="profileNameInput" disabled style="flex:1;">
+                                            <button type="button" id="profileNameEditBtn" class="btn btn-secondary"
+                                                style="padding:6px 10px;">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" id="profileNameSaveBtn" class="btn btn-primary"
+                                                style="padding:6px 10px;display:none;">
+                                                <i class="fas fa-save"></i>
+                                            </button>
+                                            <button type="button" id="profileNameCancelBtn" class="btn btn-secondary"
+                                                style="padding:6px 10px;display:none;">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                        <div class="form-group" style="display:flex;align-items:center;gap:8px;">
+                                            <label class="form-label" style="flex:0 0 60px;">Email</label>
+                                            <input type="email" class="form-input" name="email" value=" "
+                                                id="profileEmailInput" disabled style="flex:1;">
+                                            <button type="button" id="profileEmailEditBtn" class="btn btn-secondary"
+                                                style="padding:6px 10px;">
+                                                <i class="fas fa-edit"></i>
+                                            </button>
+                                            <button type="button" id="profileEmailSaveBtn" class="btn btn-primary"
+                                                style="padding:6px 10px;display:none;">
+                                                <i class="fas fa-save"></i>
+                                            </button>
+                                            <button type="button" id="profileEmailCancelBtn" class="btn btn-secondary"
+                                                style="padding:6px 10px;display:none;">
+                                                <i class="fas fa-times"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <div class="settings-header">
+                            <h3 class="settings-title">
+                                <i class="fas fa-shield-alt"></i>
+                                Security Settings
+                            </h3>
+                            <p class="settings-description">Manage your account security and authentication methods.</p>
+                        </div>
+                        <div class="settings-body">
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Two-Factor Authentication (2FA)</h4>
+                                    <p>Secure your account with an authenticator app</p>
+                                </div>
+                                <div class="security-status">
+                                    <span class="status-badge status-disabled" id="test">Disabled</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="toggle-2fa-authenticator">
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="security-item">
+                                <div class="security-info">
+                                    <h4>Email Verification</h4>
+                                    <p>Receive verification codes via email</p>
+                                </div>
+                                <div class="security-status">
+                                    <span class="status-badge status-disabled" id="test">Disabled</span>
+                                    <label class="toggle-switch">
+                                        <input type="checkbox" class="toggle-2fa-email" >
+                                        <span class="toggle-slider"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="settings-section">
+                        <div class="settings-header">
+                            <h3 class="settings-title">
+                                <i class="fas fa-shield-alt"></i>
+                                Session Management
+                            </h3>
+                            <p class="settings-description">Manage your active sessions across different devices.</p>
+                        </div>
+                        <div class="settings-body">
+                            <div id="activeSessions">
+                                <!-- Sessions will be loaded here -->
+                                <div class="loading-spinner centered"></div>
+                            </div>
+                            <div class="security-item mt-4">
+                                <div class="security-info">
+                                    <h4>Revoke All Other Sessions</h4>
+                                    <p>This will sign out all other devices except your current one.</p>
+                                </div>
+                                <div class="security-status">
+                                    <button id="revokeAllBtn" class="btn btn-warning">
+                                        <i class="fas fa-ban"></i>
+                                        Revoke All Others
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Wishlist Page -->
+                <div class="page-section" id="wishlistPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/" id="home">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Wishlist</span>
+                    </div>
+                    <div class="page-header">
+                        <h1 class="page-title">My Wishlist</h1>
+                        <p class="page-subtitle">Products you love and want to save for later.</p>
+                    </div>
+                    <div class="wishlist-container">
+                        <div id="wishlistSkeleton" class="wishlist-skeleton" style="display:none;">
+                            <div class="wishlist-item skeleton">
+                                <div class="wishlist-image skeleton-box"></div>
+                                <div class="wishlist-details">
+                                    <div class="wishlist-name skeleton-box" style="width: 120px; height: 16px;"></div>
+                                    <div class="wishlist-price skeleton-box" style="width: 80px; height: 14px; margin-top: 8px;"></div>
+                                </div>
+                            </div>
+                            <div class="wishlist-item skeleton">
+                                <div class="wishlist-image skeleton-box"></div>
+                                <div class="wishlist-details">
+                                    <div class="wishlist-name skeleton-box" style="width: 100px; height: 16px;"></div>
+                                    <div class="wishlist-price skeleton-box" style="width: 60px; height: 14px; margin-top: 8px;"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div id="wishlistList" class="wishlist-list"></div>
+                        <div id="wishlistEmpty" class="empty-state" style="display: none;">
+                            <i class="fas fa-heart-broken"></i>
+                            <h3>Your wishlist is empty</h3>
+                            <p>Start adding products to your wishlist!</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Cart Page -->
+                <div class="page-section" id="cartPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/" id="home">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Shopping Cart</span>
+                    </div>
+                    <div class="page-header">
+                        <h1 class="page-title">My Cart</h1>
+                        <p class="page-subtitle">Review your cart and proceed to checkout.</p>
+                    </div>
+                    <div class="cart-container">
+                        <div id="cartSkeleton" class="cart-skeleton" style="display:none;">
+                            <div class="cart-item skeleton">
+                                <div class="cart-image skeleton-box"></div>
+                                <div class="cart-details">
+                                    <div class="cart-name skeleton-box" style="width: 120px; height: 16px;"></div>
+                                    <div class="cart-price skeleton-box" style="width: 80px; height: 14px; margin-top: 8px;"></div>
+                                    <div class="cart-qty skeleton-box" style="width: 40px; height: 12px; margin-top: 6px;"></div>
+                                </div>
+                            </div>
+                            <div class="cart-item skeleton">
+                                <div class="cart-image skeleton-box"></div>
+                                <div class="cart-details">
+                                    <div class="cart-name skeleton-box" style="width: 100px; height: 16px;"></div>
+                                    <div class="cart-price skeleton-box" style="width: 60px; height: 14px; margin-top: 8px;"></div>
+                                    <div class="cart-qty skeleton-box" style="width: 30px; height: 12px; margin-top: 6px;"></div>
+                                </div>
+                            </div>
+                            <!-- Skeleton for total/checkout area -->
+                            <div class="cart-total-container" style="margin-top: 18px; display: flex; gap: 12px; align-items: center;">
+                                <div class="cart-total-label skeleton-box" style="width: 80px; height: 18px;"></div>
+                                <div class="cart-total-value skeleton-box" style="width: 60px; height: 20px;"></div>
+                                <div class="btn btn-primary skeleton-box" style="width: 100px; height: 36px;"></div>
+                            </div>
+                        </div>
+                        <div id="cartList" class="cart-list"></div>
+                        <div id="cartEmpty" class="empty-state" style="display: none;">
+                            <i class="fas fa-shopping-cart"></i>
+                            <h3>Your cart is empty</h3>
+                            <p>Looks like you haven't added anything to your cart yet.</p>
+                        </div>
+                        <div id="cartTotalContainer" class="cart-total-container" style="display: none;">
+                            <span class="cart-total-label">Total:</span>
+                            <span id="cartTotalValue" class="cart-total-value">NPR 0.00</span>
+                            <!-- Checkout button is appended by JS -->
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Active Subscriptions Page -->
+                <div class="page-section" id="activeSubscriptionsPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Active Subscriptions</span>
+                    </div>
+                    <div class="page-header">
+                        <h1 class="page-title">Active Subscriptions</h1>
+                        <p class="page-subtitle">View your current subscriptions and credentials</p>
+                    </div>
+                    <div class="subscriptions-controls">
+                        <div class="subscriptions-search-bar">
+                            <span class="subscriptions-search-icon"><i class="fas fa-search"></i></span>
+                            <input type="text" id="active-subscriptions-search-input" class="subscriptions-search-input" placeholder="Search by subscription, plan...">
+                            <div class="subscriptions-filters">
+                                <select id="active-subscriptions-status-filter" class="subscriptions-filter-select">
+                                    <option value="">All Statuses</option>
+                                    <option value="active">Active</option>
+                                    <option value="expired">Expired</option>
+                                    <option value="cancelled">Cancelled</option>
+                                </select>
+                                <select id="active-subscriptions-date-filter" class="subscriptions-filter-select">
+                                    <option value="">All Dates</option>
+                                    <option value="expiring-soon">Expiring Soon (7 days)</option>
+                                    <option value="expired">Expired</option>
+                                    <option value="this-month">This Month</option>
+                                    <option value="last-month">Last Month</option>
+                                </select>
+                            </div>
+                            <div class="column-toggles" style="margin-left:auto;">
+                                <button class="btn btn-secondary" id="active-subscriptions-toggle-columns-btn">
+                                    <i class="fas fa-columns"></i> Columns
+                                </button>
+                                <div class="column-toggle-dropdown" id="active-subscriptions-column-toggles" style="display: none;">
+                                    <label><input type="checkbox" data-column="subscription" checked> Subscription</label>
+                                    <label><input type="checkbox" data-column="plan" checked> Plan</label>
+                                    <label><input type="checkbox" data-column="start-date" checked> Start Date</label>
+                                    <label><input type="checkbox" data-column="end-date" checked> End Date</label>
+                                    <label><input type="checkbox" data-column="days-left" checked> Days Left</label>
+                                    <label><input type="checkbox" data-column="status" checked> Status</label>
+                                    <label><input type="checkbox" data-column="auto-renew" checked> Auto Renew</label>
+                                    <label><input type="checkbox" data-column="actions" checked> Actions</label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="subscriptions-table-container" >    
+                        <div class="active-subscriptions-loading-overlay" id="active-subscriptions-loading-overlay" style="display:none;">
+                            <div class="loading-spinner"></div>
+                        </div>
+                        <table class="subscriptions-table" id="active-subscriptions-table">
+                            <thead id="active-subscriptions-table-head">
+                                <tr>
+                                    <th class="col-subscription">Subscription</th>
+                                    <th class="col-plan">Plan</th>
+                                    <th class="col-start-date">Start Date</th>
+                                    <th class="col-end-date">End Date</th>
+                                    <th class="col-days-left">Days Left</th>
+                                    <th class="col-status">Status</th>
+                                    <th class="col-auto-renew">Auto Renew</th>
+                                    <th class="col-actions">Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="active-subscriptions-table-body" >
+                                <!-- Subscriptions will be loaded here -->
+                            </tbody>
+                        </table>
+                        <div class="subscriptions-table-footer">
+                            <div class="table-info">
+                                Showing <span id="active-subscriptions-showing-start">0</span> to <span id="active-subscriptions-showing-end">0</span> of <span id="active-subscriptions-total-entries">0</span> subscriptions
+                            </div>
+                            <div class="table-pagination">
+                                <button class="btn btn-secondary" id="active-subscriptions-prev-page" disabled>
+                                    <i class="fas fa-chevron-left"></i>
+                                </button>
+                                <span id="active-subscriptions-current-page">1</span> of <span id="active-subscriptions-total-pages">1</span>
+                                <button class="btn btn-secondary" id="active-subscriptions-next-page" disabled>
+                                    <i class="fas fa-chevron-right"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- View Subscription Credentials Modal -->
+                <div id="view-credentials-modal" class="action-modal">
+                    <div class="action-modal-content">
+                        <div class="action-modal-header">
+                            <h2><i class="fas fa-key"></i> Subscription Credentials</h2>
+                            <button class="modal-close" id="close-credentials-modal-btn">
+                                <i class="fas fa-times"></i>
+                            </button>
+                        </div>
+                        <div class="action-modal-body">
+                            <div class="credentials-container">
+                                <div class="credential-item">
+                                    <div class="credential-label">Email:</div>
+                                    <div class="credential-value" id="credential-email"></div>
+                                </div>
+                                <div class="credential-item">
+                                    <div class="credential-label">Password:</div>
+                                    <div class="credential-value password-field">
+                                        <span id="credential-password" class="password-hidden">••••••••</span>
+                                        <button class="toggle-password-btn" id="toggle-password-btn">
+                                            <i class="fas fa-eye"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                                <div class="credential-item">
+                                    <div class="credential-label">PIN:</div>
+                                    <div class="credential-value" id="credential-pin"></div>
+                                </div>
+                                <div class="credential-item">
+                                    <div class="credential-label">Notes:</div>
+                                    <div class="credential-value" id="credential-notes"></div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-modal-footer">
+                            <button class="btn btn-secondary" id="close-view-credentials-btn">
+                                Close
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Support Page -->
+                <div class="page-section" id="supportPage" style="display: none;">
+                    <div class="breadcrumb">
+                        <a href="/">Home</a>
+                        <span class="breadcrumb-separator">/</span>
+                        <span>Support</span>
+                    </div>
+                    <div class="page-header">
+                        <h1 class="page-title">Support Tickets</h1>
+                        <p class="page-subtitle">View your support tickets and responses from our team.</p>
+                    </div>
+                    <div class="support-controls" style="margin-bottom: 18px; display: flex; justify-content: space-between; align-items: center;">
+                        <div class="support-search-bar" style="flex:1;">
+                            <input type="text" id="support-search-input" placeholder="Search by subject..." class="search-input">
+                            <div class="support-filters">
+                                <select id="support-status-filter" class="filter-select">
+                                    <option value="">All Status</option>
+                                    <option value="open">Open</option>
+                                    <option value="pending">Pending</option>
+                                    <option value="resolved">Resolved</option>
+                                    <option value="closed">Closed</option>
+                                </select>
+                                <input type="date" id="support-date-filter" class="filter-select" style="min-width: 140px;">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="createSupportTicketBtn" style="margin-left: 18px;">
+                            <i class="fas fa-plus"></i> Create Support Ticket
+                        </button>
+                    </div>
+                    <div class="support-table-container">
+                        <table class="support-table">
+                            <thead>
+                                <tr>
+                                    <th>Subject</th>
+                                    <th>Status</th>
+                                    <th>Message</th>
+                                    <th>Reply</th>
+                                    <th>Actions</th>
+                                </tr>
+                            </thead>
+                            <tbody id="supportTableBody">
+                                <!-- Support tickets will be loaded here -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Support View Modal -->
+                <div id="support-view-modal" class="action-modal">
+                    <div class="action-modal-content">
+                        <div class="action-modal-header">
+                            <h2><i class="fas fa-eye"></i> View Ticket</h2>
+                            <button class="modal-close" id="close-support-view-modal"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="action-modal-body">
+                            <div class="support-modal-details">
+                                <div class="ticket-meta">
+                                    <div><strong>Subject:</strong> <span id="support-view-subject"></span></div>
+                                    <div><strong>Date:</strong> <span id="support-view-date"></span></div>
+                                    <div><strong>Status:</strong> <span id="support-view-status"></span></div>
+                                </div>
+                                <div class="ticket-messages">
+                                    <div class="message user-message">
+                                        <div class="message-label">You</div>
+                                        <div class="message-body" id="support-view-message"></div>
+                                    </div>
+                                    <div class="message admin-message" id="support-view-reply-block" style="display:none;">
+                                        <div class="message-label">Admin</div>
+                                        <div class="message-body" id="support-view-reply"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="action-modal-footer">
+                            <button class="btn btn-secondary" id="close-support-view-btn">Close</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create Support Ticket Modal -->
+                <div id="support-create-modal" class="action-modal">
+                    <div class="action-modal-content">
+                        <div class="action-modal-header">
+                            <h2><i class="fas fa-plus"></i> Create Support Ticket</h2>
+                            <button class="modal-close" id="close-support-create-modal"><i class="fas fa-times"></i></button>
+                        </div>
+                        <div class="action-modal-body">
+                            <form id="support-create-form">
+                                <div class="form-group">
+                                    <label for="support-create-subject">Subject</label>
+                                    <input type="text" id="support-create-subject" class="form-input" maxlength="255" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="support-create-message">Message</label>
+                                    <textarea id="support-create-message" class="form-input" rows="5" maxlength="1000" required></textarea>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="action-modal-footer">
+                            <button class="btn btn-secondary" id="cancel-support-create-btn">Cancel</button>
+                            <button class="btn btn-primary" id="send-support-create-btn"><i class="fas fa-paper-plane"></i> Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Email Verification Modal -->
+    <div id="email-verification-modal" class="modal" role="dialog" aria-labelledby="verification-title"
+        aria-modal="true">
+        <div class="modal-content">
+            <button type="button" class="modal-close" aria-label="Close">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <h2 id="verification-title">Verify Your Email</h2>
+            <p>We've sent a 6-digit verification code to your email address. Enter the code below to confirm your email.
+            </p>
+            <form id="email-verification-form">
+                <div class="code-input-container">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="First digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Second digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Third digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Fourth digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Fifth digit" placeholder="0">
+                    <input type="text" class="code-input" maxlength="1" required inputmode="numeric" pattern="[0-9]*"
+                        aria-label="Sixth digit" placeholder="0">
+                </div>
+                <p class="code-hint">You can paste the code here</p>
+                <button type="submit" class=" btn-primary2 btn  btn-block">
+                    <span class="btn-text">Verify</span>
+                    <span class="btn-loader"></span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    
+   <!-- 2FA Authenticator Modal -->
+  <div class="custom-modal" id="twoFactorAuthModal" aria-hidden="true">
+    <div class="custom-modal-dialog">
+      <div class="custom-modal-content">
+        <div class="custom-modal-header">
+          <h5 class="custom-modal-title">Set Up Authenticator App</h5>
+       
+        </div>
+        <div class="custom-modal-body">
+          <div id="authQrCodeContainer" class="text-center mb-3"></div>
+          <label for="authTotpCodeInput" class="custom-form-label">Enter the 6-digit code from your app:</label>
+          <input type="text" id="authTotpCodeInput" class="custom-form-control mb-2" maxlength="6" autocomplete="one-time-code">
+          <div id="authTotpError" class="text-danger small"></div>
+        </div>
+        <div class="custom-modal-footer">
+          <button type="button" class="custom-btn custom-btn-secondary" id="2faAuthenticatorclose" onclick="closeCustomModal('twoFactorAuthModal')">Cancel</button>
+          <button type="button" class="custom-btn custom-btn-primary" id="verifyTwoFactorAuthBtn" onclick="verifyAuthenticator()">Enable</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 2FA Email OTP Modal -->
+  <div class="custom-modal" id="emailTwoFactorModal" aria-hidden="true">
+    <div class="custom-modal-dialog">
+      <div class="custom-modal-content">
+        <div class="custom-modal-header">
+          <h5 class="custom-modal-title">Verify Email for 2FA</h5>
+         
+        </div>
+        <div class="custom-modal-body">
+          <label for="emailTwoFactorInput" class="custom-form-label">Enter the 6-digit code sent to your email:</label>
+          <input type="text" id="emailTwoFactorInput" class="custom-form-control mb-2" maxlength="6" autocomplete="one-time-code">
+          <div id="emailTwoFactorError" class="text-danger small"></div>
+        </div>
+        <div class="custom-modal-footer">
+          <button type="button" class="custom-btn custom-btn-secondary" id="2faemailclose">Cancel</button>
+          <button type="button" class="custom-btn custom-btn-primary" id="verifyTwoFactorEmailBtn">Enable</button>
+        </div>
+  </div>
+  
+    <script src="../js/customer.js" type="module"></script>
+
+    <script>
+        // Loading overlay handler
+        document.addEventListener('DOMContentLoaded', () => {
+            document.body.style.overflow = 'hidden';
+            setTimeout(() => {
+                const overlay = document.getElementById('loading-overlay');
+                overlay.style.opacity = '0';
+                document.body.style.overflow = '';
+                setTimeout(() => {
+                    overlay.style.display = 'none';
+                }, 300); // Wait for fade out animation
+            }, 1000);
+        });
+    </script>
+</body>
+
+</html>

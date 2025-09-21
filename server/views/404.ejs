@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - Page Not Found</title>
+    <style>
+        :root {
+            --primary-color: #3b82f6;
+            --primary-dark: #6a9ff4;
+            --primary-light: rgba(129, 214, 250, 0.1);
+            --secondary-color: #ffffff;
+            --text-color: #333333;
+            --text-light: #757575;
+            --error-color: #f44336;
+            --success-color: #4caf50;
+            --warning-color: #ffc107;
+            --border-color: #e0e0e0;
+            --shadow-color: rgba(0, 0, 0, 0.1);
+            --background-gradient: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
+            --surface-color: #fafafa;
+            --neutral-50: #f8fafc;
+            --neutral-100: #f1f5f9;
+            --neutral-200: #e2e8f0;
+            --neutral-300: #cbd5e1;
+            --neutral-400: #94a3b8;
+            --neutral-500: #64748b;
+            --neutral-600: #475569;
+            --neutral-700: #334155;
+            --neutral-800: #1e293b;
+            --neutral-900: #0f172a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', sans-serif;
+            background: var(--neutral-50);
+            color: var(--neutral-800);
+            line-height: 1.5;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .header {
+            background: var(--secondary-color);
+            border-bottom: 1px solid var(--neutral-200);
+            padding: 0 24px;
+            height: 64px;
+            display: flex;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            max-width: 1200px;
+            width: 100%;
+            margin: 0 auto;
+        }
+
+        .logo {
+            font-size: 20px;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 14px;
+            color: var(--neutral-500);
+            margin-left: auto;
+        }
+
+        .main-content {
+            margin-top: 64px;
+            min-height: calc(100vh - 64px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px 24px;
+        }
+
+        .error-container {
+            max-width: 520px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .error-graphic {
+            width: 240px;
+            height: 160px;
+            margin: 0 auto 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--neutral-100);
+            border-radius: 12px;
+            border: 1px solid var(--neutral-200);
+        }
+
+        .error-code {
+            font-size: 80px;
+            font-weight: 700;
+            color: var(--neutral-300);
+            line-height: 1;
+        }
+
+        .error-title {
+            font-size: 24px;
+            font-weight: 600;
+            color: var(--neutral-900);
+            margin-bottom: 12px;
+        }
+
+        .error-description {
+            font-size: 16px;
+            color: var(--neutral-600);
+            margin-bottom: 32px;
+            line-height: 1.6;
+        }
+
+        .error-actions {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 40px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            font-size: 14px;
+            font-weight: 500;
+            line-height: 1.5;
+            border-radius: 6px;
+            border: 1px solid transparent;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .btn-primary {
+            background: var(--primary-color);
+            color: var(--secondary-color);
+            border-color: var(--primary-color);
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            border-color: var(--primary-dark);
+        }
+
+        .btn-secondary {
+            background: var(--secondary-color);
+            color: var(--neutral-700);
+            border-color: var(--neutral-300);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neutral-50);
+            border-color: var(--neutral-400);
+        }
+
+        .help-section {
+            background: var(--secondary-color);
+            border: 1px solid var(--neutral-200);
+            border-radius: 8px;
+            padding: 24px;
+            text-align: left;
+        }
+
+        .help-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--neutral-900);
+            margin-bottom: 16px;
+        }
+
+        .help-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .help-list li {
+            padding: 8px 0;
+            color: var(--neutral-600);
+            font-size: 14px;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .help-list li:last-child {
+            border-bottom: none;
+        }
+
+        .help-list li::before {
+            content: '→';
+            color: var(--primary-color);
+            margin-right: 8px;
+        }
+
+        .support-link {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .support-link:hover {
+            text-decoration: underline;
+        }
+
+        @media (max-width: 768px) {
+            .header {
+                padding: 0 16px;
+            }
+
+            .main-content {
+                padding: 32px 16px;
+            }
+
+            .error-graphic {
+                width: 200px;
+                height: 120px;
+            }
+
+            .error-code {
+                font-size: 60px;
+            }
+
+            .error-title {
+                font-size: 20px;
+            }
+
+            .error-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn {
+                width: 100%;
+                max-width: 280px;
+                justify-content: center;
+            }
+
+            .breadcrumb {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-content">
+            <div class="logo">Cartify</div>
+            <nav class="breadcrumb">
+                <span>Error</span>
+                <span>/</span>
+                <span>404</span>
+            </nav>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="error-container">
+            <div class="error-graphic">
+                <div class="error-code">404</div>
+            </div>
+            
+            <h1 class="error-title">Page not found</h1>
+            <p class="error-description">
+                The page you are looking for might have been removed, had its name changed, or is temporarily unavailable.
+            </p>
+            
+            <div class="error-actions">
+                <a href="/" class="btn btn-primary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/>
+                        <polyline points="9,22 9,12 15,12 15,22"/>
+                    </svg>
+                    Go to homepage
+                </a>
+                <a href="javascript:history.back()" class="btn btn-secondary">
+                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M19 12H5M12 19l-7-7 7-7"/>
+                    </svg>
+                    Go back
+                </a>
+            </div>
+
+            <div class="help-section">
+                <h2 class="help-title">What can I do?</h2>
+                <ul class="help-list">
+                    <li>Check that the web address is correct</li>
+                    <li>Try to access the page again</li>
+                    <li>Use the search function to find information</li>
+                    <li>Browse from the <a href="/" class="support-link">homepage</a></li>
+                    <li>Contact <a href="/support" class="support-link">customer support</a> if you continue to have problems</li>
+                </ul>
+            </div>
+        </div>
+    </main>
+</body>
+</html>
