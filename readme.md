@@ -1,4 +1,5 @@
-Ecommerce Website Project Description
+Ecommerce Website Project Description:
+
 A fully functional ecommerce platform built to support diverse purchasing options, including game top-ups, product subscriptions, and standard products. The website features a robust user management system, secure authentication, real-time chat support, and order tracking capabilities for an enhanced user experience.
 Key Features:
 
