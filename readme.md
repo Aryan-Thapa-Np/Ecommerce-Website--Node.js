@@ -4,12 +4,19 @@ A fully functional ecommerce platform built to support diverse purchasing option
 Key Features:
 
 Game Top-Ups: Seamless in-game currency and credit top-up functionality.
+
 Product Subscriptions: Flexible subscription plans for recurring product purchases.
+
 Standard Products: Traditional ecommerce product browsing, cart, and checkout.
+
 User Management: Account creation, profile management, and personalized settings.
+
 Authentication: Secure login and registration with industry-standard encryption.
+
 Real-Time Chat: Integrated chat system for customer support and interaction.
+
 Order Tracking: Real-time updates on order status and delivery.
+
 
 Tech Stack:
 
